@@ -1,0 +1,7 @@
+CREATE TABLE realms (
+  id        SERIAL PRIMARY KEY,
+  region    CHARACTER VARYING,
+  name     CHARACTER VARYING,
+  slug     CHARACTER VARYING UNIQUE,
+  createdAt TIMESTAMP
+);
