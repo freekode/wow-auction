@@ -1,8 +1,11 @@
 # wow-auction
 Auction statistics for World of Warcraft
 
-Add to your tomcat/conf/server.xml
 
+## Start
+Download Postgres JDBC driver to tomcat/lib 
+
+Add to your tomcat/conf/server.xml
 ```xml
 <Resource name="jdbc/WoWAuctionDB"
           global="jdbc/WoWAuctionDB"
