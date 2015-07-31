@@ -15,19 +15,25 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    /**
+     * unique identifier of the item
+     */
     private Integer identifier;
 
-    // rand
+    /**
+     * enchant identifier, can ber negative, in json represented as rand
+     */
     private Integer suffixId;
 
-    // seed
+    /**
+     * unique id differentiate between two unique items with different enchantment, represented as seed
+     */
     private BigInteger uniqueId;
 
+    /**
+     * i have no idea
+     */
     private Integer context;
-
-    @ManyToOne
-    @JoinColumn(name = "snapshotId")
-    private Snapshot snapshot;
 
     @OneToMany(mappedBy = "item")
     private Set<Bid> bids = new HashSet<>();
@@ -54,14 +60,6 @@ public class Item {
 
     public void setIdentifier(Integer identifier) {
         this.identifier = identifier;
-    }
-
-    public Snapshot getSnapshot() {
-        return snapshot;
-    }
-
-    public void setSnapshot(Snapshot snapshot) {
-        this.snapshot = snapshot;
     }
 
     public Date getCreatedAt() {
@@ -112,7 +110,6 @@ public class Item {
         Item item = (Item) o;
 
         if (!identifier.equals(item.identifier)) return false;
-        if (!suffixId.equals(item.suffixId)) return false;
         return uniqueId.equals(item.uniqueId);
 
     }
@@ -120,7 +117,6 @@ public class Item {
     @Override
     public int hashCode() {
         int result = identifier.hashCode();
-        result = 31 * result + suffixId.hashCode();
         result = 31 * result + uniqueId.hashCode();
         return result;
     }

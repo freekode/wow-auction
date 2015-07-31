@@ -3,6 +3,10 @@ CREATE TABLE realms (
   region    CHARACTER VARYING,
   name      CHARACTER VARYING,
   slug      CHARACTER VARYING UNIQUE,
-  updating  CHARACTER VARYING,
+  updating  BOOLEAN,
   createdAt TIMESTAMP
 );
+
+
+INSERT INTO realms (region, name, slug, updating, createdAt)
+VALUES ('EU', 'Bronze Dragonflight', 'bronze-dragonflight', TRUE, now())

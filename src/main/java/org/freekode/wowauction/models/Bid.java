@@ -11,13 +11,16 @@ public class Bid {
     @Id
     private Long id;
 
-    private Integer bid;
+    private BigInteger rate;
 
-    private Integer buyout;
+    private BigInteger buyout;
 
     private Integer quantity;
 
-    @ManyToOne
+    @Enumerated(EnumType.STRING)
+    private TimeLeft timeLeft;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "itemId")
     private Item item;
 
@@ -25,8 +28,11 @@ public class Bid {
     @JoinColumn(name = "playerId")
     private Player player;
 
-    @Enumerated(EnumType.STRING)
-    private TimeLeft timeLeft;
+    @ManyToOne
+    @JoinColumn(name = "snapshotId")
+    private Snapshot snapshot;
+
+    private Boolean closed = false;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -59,22 +65,6 @@ public class Bid {
         this.player = player;
     }
 
-    public Integer getBid() {
-        return bid;
-    }
-
-    public void setBid(Integer bid) {
-        this.bid = bid;
-    }
-
-    public Integer getBuyout() {
-        return buyout;
-    }
-
-    public void setBuyout(Integer buyout) {
-        this.buyout = buyout;
-    }
-
     public Integer getQuantity() {
         return quantity;
     }
@@ -97,6 +87,38 @@ public class Bid {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public BigInteger getRate() {
+        return rate;
+    }
+
+    public void setRate(BigInteger rate) {
+        this.rate = rate;
+    }
+
+    public BigInteger getBuyout() {
+        return buyout;
+    }
+
+    public void setBuyout(BigInteger buyout) {
+        this.buyout = buyout;
+    }
+
+    public Snapshot getSnapshot() {
+        return snapshot;
+    }
+
+    public void setSnapshot(Snapshot snapshot) {
+        this.snapshot = snapshot;
+    }
+
+    public Boolean getClosed() {
+        return closed;
+    }
+
+    public void setClosed(Boolean closed) {
+        this.closed = closed;
     }
 
     public enum TimeLeft {

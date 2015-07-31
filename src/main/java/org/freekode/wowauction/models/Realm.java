@@ -87,6 +87,14 @@ public class Realm implements SerializableToJson {
         this.slug = slug;
     }
 
+    public Boolean getUpdating() {
+        return updating;
+    }
+
+    public void setUpdating(Boolean updating) {
+        this.updating = updating;
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public JSONObject toJSON() {
@@ -101,12 +109,9 @@ public class Realm implements SerializableToJson {
         return jsonObject;
     }
 
-    public Boolean getUpdating() {
-        return updating;
-    }
-
-    public void setUpdating(Boolean updating) {
-        this.updating = updating;
+    @Override
+    public String toString() {
+        return getRegion() + "; " + getName();
     }
 
     public enum Region {

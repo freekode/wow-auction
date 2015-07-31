@@ -22,9 +22,6 @@ public class Snapshot {
     @JoinColumn(name = "realmId")
     private Realm realm;
 
-    @OneToMany(mappedBy = "snapshot")
-    private Set<Item> items = new HashSet<>();
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
@@ -75,14 +72,6 @@ public class Snapshot {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Set<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(Set<Item> items) {
-        this.items = items;
     }
 
     @Override

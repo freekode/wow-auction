@@ -4,5 +4,4 @@
                   global="jdbc/WoWAuctionDB"
                   auth="Container"
                   type="javax.sql.DataSource" />
-    <!--<ResourceLink global="jdbc/TestAppDS" name="jdbc/TestAppDS" type="javax.sql.DataSource"/>-->
 </Context>

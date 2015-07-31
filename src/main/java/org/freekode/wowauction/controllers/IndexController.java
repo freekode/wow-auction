@@ -16,6 +16,7 @@ public class IndexController {
     @Autowired
     private RealmDAO realmDAO;
 
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView testMethod() {
         List<Realm> realms = realmDAO.getAll();

@@ -4,9 +4,7 @@ CREATE TABLE items (
   suffixId   INTEGER,
   uniqueId   BIGINT,
   context    INTEGER,
-  snapshotId INTEGER,
-  createdAt  TIMESTAMP,
-  CONSTRAINT items_snapshots_fk FOREIGN KEY (snapshotId) REFERENCES snapshots (id)
+  createdAt  TIMESTAMP
 );
 
-CREATE INDEX items_identifier_index on items(identifier);
+CREATE INDEX items_identifier_index ON items (identifier);
