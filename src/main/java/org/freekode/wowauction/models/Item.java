@@ -1,6 +1,7 @@
 package org.freekode.wowauction.models;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +15,15 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String identifier;
+    private Integer identifier;
+
+    // rand
+    private Integer suffixId;
+
+    // seed
+    private BigInteger uniqueId;
+
+    private Integer context;
 
     @ManyToOne
     @JoinColumn(name = "snapshotId")
@@ -39,11 +48,11 @@ public class Item {
         this.id = id;
     }
 
-    public String getIdentifier() {
+    public Integer getIdentifier() {
         return identifier;
     }
 
-    public void setIdentifier(String identifier) {
+    public void setIdentifier(Integer identifier) {
         this.identifier = identifier;
     }
 
@@ -69,5 +78,50 @@ public class Item {
 
     public void setBids(Set<Bid> bids) {
         this.bids = bids;
+    }
+
+    public Integer getSuffixId() {
+        return suffixId;
+    }
+
+    public void setSuffixId(Integer suffixId) {
+        this.suffixId = suffixId;
+    }
+
+    public BigInteger getUniqueId() {
+        return uniqueId;
+    }
+
+    public void setUniqueId(BigInteger uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+
+    public Integer getContext() {
+        return context;
+    }
+
+    public void setContext(Integer context) {
+        this.context = context;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Item item = (Item) o;
+
+        if (!identifier.equals(item.identifier)) return false;
+        if (!suffixId.equals(item.suffixId)) return false;
+        return uniqueId.equals(item.uniqueId);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = identifier.hashCode();
+        result = 31 * result + suffixId.hashCode();
+        result = 31 * result + uniqueId.hashCode();
+        return result;
     }
 }

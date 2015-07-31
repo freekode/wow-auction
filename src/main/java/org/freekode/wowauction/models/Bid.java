@@ -9,11 +9,13 @@ import java.util.Date;
 @Table(name = "bids")
 public class Bid {
     @Id
-    @Column(columnDefinition = "serial")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    private String identifier;
+    private Integer bid;
+
+    private Integer buyout;
+
+    private Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "itemId")
@@ -22,12 +24,6 @@ public class Bid {
     @ManyToOne
     @JoinColumn(name = "playerId")
     private Player player;
-
-    private BigInteger bid;
-
-    private BigInteger buyout;
-
-    private Integer quantity;
 
     @Enumerated(EnumType.STRING)
     private TimeLeft timeLeft;
@@ -39,20 +35,12 @@ public class Bid {
     public Bid() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
     }
 
     public Item getItem() {
@@ -71,19 +59,19 @@ public class Bid {
         this.player = player;
     }
 
-    public BigInteger getBid() {
+    public Integer getBid() {
         return bid;
     }
 
-    public void setBid(BigInteger bid) {
+    public void setBid(Integer bid) {
         this.bid = bid;
     }
 
-    public BigInteger getBuyout() {
+    public Integer getBuyout() {
         return buyout;
     }
 
-    public void setBuyout(BigInteger buyout) {
+    public void setBuyout(Integer buyout) {
         this.buyout = buyout;
     }
 

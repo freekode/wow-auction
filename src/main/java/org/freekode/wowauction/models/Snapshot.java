@@ -84,4 +84,9 @@ public class Snapshot {
     public void setItems(Set<Item> items) {
         this.items = items;
     }
+
+    @Override
+    public String toString() {
+        return realm.getName() + "; " + lastModified;
+    }
 }

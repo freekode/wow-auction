@@ -22,6 +22,8 @@ public class Realm implements SerializableToJson {
 
     private String slug;
 
+    private Boolean updating = false;
+
     @OneToMany(mappedBy = "realm")
     private Set<Snapshot> snapshots = new HashSet<>();
 
@@ -97,6 +99,14 @@ public class Realm implements SerializableToJson {
         if (getCreatedAt() != null) jsonObject.put("createdAt", getCreatedAt());
 
         return jsonObject;
+    }
+
+    public Boolean getUpdating() {
+        return updating;
+    }
+
+    public void setUpdating(Boolean updating) {
+        this.updating = updating;
     }
 
     public enum Region {
