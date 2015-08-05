@@ -3,7 +3,6 @@ package org.freekode.wowauction.services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.freekode.wowauction.dao.interfaces.BidDAO;
-import org.freekode.wowauction.dao.interfaces.ItemDAO;
 import org.freekode.wowauction.dao.interfaces.RealmDAO;
 import org.freekode.wowauction.dao.interfaces.SnapshotDAO;
 import org.freekode.wowauction.models.Bid;
@@ -13,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 @Component
@@ -33,10 +29,14 @@ public class SnapshotUpdater {
     private BidDAO bidDAO;
 
 
-    @Scheduled(cron = "0 */1 * * * ?")
+    @Scheduled(cron = "0 */10 * * * ?")
+    public void scheduleUpdate() {
+        updateAuction();
+    }
+
     public void updateAuction() {
         logger.info("update started");
-        for (Realm realm : realmDAO.getAll()) {
+        for (Realm realm : realmDAO.findAll()) {
             if (!realm.getUpdating()) {
                 continue;
             }
@@ -60,11 +60,21 @@ public class SnapshotUpdater {
 
                 Set<Bid> newBids = EntityConversion.convertToBids(auctionList);
                 for (Bid bid : newBids) {
-                    bid.setSnapshot(newSnapshot);
+                    bid.setSnapshots(new HashSet<>(Collections.singletonList(newSnapshot)));
                 }
 
-                List<Bid> currentBids = bidDAO.getAll();
+                Set<Bid> oldBids = new HashSet<>(bidDAO.findBySnapshot(lastSnapshot));
+                Set<Bid> oldBidsOriginal = new HashSet<>(oldBids);
 
+
+                oldBids.removeAll(newBids);
+                logger.info("old closed bids = " + oldBids.size());
+
+                oldBidsOriginal.retainAll(newBids);
+                logger.info("old closed bids = " + oldBidsOriginal.size());
+
+
+                bidDAO.createAll(newBids);
             }
         }
         logger.info("update ended");

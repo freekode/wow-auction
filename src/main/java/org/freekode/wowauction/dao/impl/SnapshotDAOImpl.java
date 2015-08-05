@@ -1,6 +1,7 @@
 package org.freekode.wowauction.dao.impl;
 
 import org.freekode.wowauction.dao.interfaces.SnapshotDAO;
+import org.freekode.wowauction.models.Bid;
 import org.freekode.wowauction.models.Realm;
 import org.freekode.wowauction.models.Snapshot;
 import org.springframework.stereotype.Repository;
@@ -31,7 +32,12 @@ public class SnapshotDAOImpl implements SnapshotDAO {
     @SuppressWarnings("unchecked")
     @Override
     public Snapshot getLast(Realm realm) {
-        Query query = entityManager.createQuery("from Snapshot where realm = :realm order by lastModified desc");
+        Query query = entityManager.createQuery(
+                "select snapshot " +
+                        "from Snapshot snapshot " +
+                        "where snapshot.realm = :realm " +
+                        "order by snapshot.lastModified desc");
+
         query.setParameter("realm", realm);
 
         List<Snapshot> snapshots = query.getResultList();
@@ -44,7 +50,16 @@ public class SnapshotDAOImpl implements SnapshotDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Snapshot> getAll() {
-        return entityManager.createQuery("from Snapshot").getResultList();
+    public List<Snapshot> findAll() {
+        return entityManager.createQuery("select snapshot from Snapshot snapshot").getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Snapshot> findByBid(Bid bid) {
+        Query query = entityManager.createQuery("select bid.snapshots from Bid bid where bid = :bid");
+        query.setParameter("bid", bid);
+
+        return query.getResultList();
     }
 }

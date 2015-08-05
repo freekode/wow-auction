@@ -4,6 +4,8 @@ package org.freekode.wowauction.models;
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "bids")
@@ -28,9 +30,11 @@ public class Bid {
     @JoinColumn(name = "playerId")
     private Player player;
 
-    @ManyToOne
-    @JoinColumn(name = "snapshotId")
-    private Snapshot snapshot;
+    @ManyToMany
+    @JoinTable(name = "snapshot_bid",
+            joinColumns = {@JoinColumn(name = "bidId")},
+            inverseJoinColumns = {@JoinColumn(name = "snapshotId")})
+    private Set<Snapshot> snapshots = new HashSet<>();
 
     private Boolean closed = false;
 
@@ -105,20 +109,36 @@ public class Bid {
         this.buyout = buyout;
     }
 
-    public Snapshot getSnapshot() {
-        return snapshot;
-    }
-
-    public void setSnapshot(Snapshot snapshot) {
-        this.snapshot = snapshot;
-    }
-
     public Boolean getClosed() {
         return closed;
     }
 
     public void setClosed(Boolean closed) {
         this.closed = closed;
+    }
+
+    public Set<Snapshot> getSnapshots() {
+        return snapshots;
+    }
+
+    public void setSnapshots(Set<Snapshot> snapshots) {
+        this.snapshots = snapshots;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Bid bid = (Bid) o;
+
+        return id.equals(bid.id);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 
     public enum TimeLeft {

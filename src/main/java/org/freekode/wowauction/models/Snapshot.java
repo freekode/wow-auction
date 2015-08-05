@@ -22,6 +22,9 @@ public class Snapshot {
     @JoinColumn(name = "realmId")
     private Realm realm;
 
+    @ManyToMany(mappedBy = "snapshots")
+    private Set<Bid> bids = new HashSet<>();
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
@@ -72,6 +75,14 @@ public class Snapshot {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Set<Bid> getBids() {
+        return bids;
+    }
+
+    public void setBids(Set<Bid> bids) {
+        this.bids = bids;
     }
 
     @Override

@@ -1,8 +1,7 @@
 package org.freekode.wowauction.dao.interfaces;
 
 import org.freekode.wowauction.models.Bid;
-import org.freekode.wowauction.models.Item;
-import org.freekode.wowauction.models.Realm;
+import org.freekode.wowauction.models.Snapshot;
 
 import java.util.List;
 import java.util.Set;
@@ -10,10 +9,11 @@ import java.util.Set;
 public interface BidDAO {
     void create(Bid bid);
 
-    Bid getById(Integer id);
+    void createAll(Set<Bid> bids);
 
-    List<Bid> getAll();
+    Bid getById(Long id);
 
-    List<Bid> getAllByRealm(Realm realm);
+    List<Bid> findAll();
 
+    List<Bid> findBySnapshot(Snapshot snapshot);
 }

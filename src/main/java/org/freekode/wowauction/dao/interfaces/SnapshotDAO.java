@@ -1,5 +1,6 @@
 package org.freekode.wowauction.dao.interfaces;
 
+import org.freekode.wowauction.models.Bid;
 import org.freekode.wowauction.models.Realm;
 import org.freekode.wowauction.models.Snapshot;
 
@@ -12,5 +13,7 @@ public interface SnapshotDAO {
 
     Snapshot getLast(Realm realm);
 
-    List<Snapshot> getAll();
+    List<Snapshot> findAll();
+
+    List<Snapshot> findByBid(Bid bid);
 }

@@ -12,5 +12,5 @@ public interface ItemDAO {
 
     Item getById(Integer id);
 
-    List<Item> getAll();
+    List<Item> findAll();
 }

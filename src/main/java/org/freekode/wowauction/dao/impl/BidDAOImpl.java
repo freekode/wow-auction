@@ -2,16 +2,14 @@ package org.freekode.wowauction.dao.impl;
 
 import org.freekode.wowauction.dao.interfaces.BidDAO;
 import org.freekode.wowauction.dao.interfaces.ItemDAO;
-import org.freekode.wowauction.models.Bid;
-import org.freekode.wowauction.models.Item;
-import org.freekode.wowauction.models.Realm;
-import org.freekode.wowauction.models.User;
+import org.freekode.wowauction.models.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -27,22 +25,33 @@ public class BidDAOImpl implements BidDAO {
         entityManager.persist(bid);
     }
 
+    @Transactional
     @Override
-    public Bid getById(Integer id) {
+    public void createAll(Set<Bid> bids) {
+//        entityManager.getTransaction().begin();
+        for (Bid bid : bids) {
+            entityManager.persist(bid);
+        }
+//        entityManager.getTransaction().commit();
+    }
+
+    @Transactional
+    @Override
+    public Bid getById(Long id) {
         return entityManager.find(Bid.class, id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Bid> getAll() {
-        return entityManager.createQuery("from Bid").getResultList();
+    public List<Bid> findAll() {
+        return entityManager.createQuery("select bid from Bid bid").getResultList();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Bid> getAllByRealm(Realm realm) {
-        Query query = entityManager.createQuery("from Bid where snapshot.realm = :realm");
-        query.setParameter("realm", realm);
+    public List<Bid> findBySnapshot(Snapshot snapshot) {
+        Query query = entityManager.createQuery("select snapshot.bids from Snapshot snapshot where snapshot = :snapshot");
+        query.setParameter("snapshot", snapshot);
 
         return query.getResultList();
     }

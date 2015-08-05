@@ -33,14 +33,17 @@ public class ItemDAOImpl implements ItemDAO {
         }
     }
 
+    @Transactional
     @Override
     public Item getById(Integer id) {
-        return entityManager.find(Item.class, id);
+        Item item = entityManager.find(Item.class, id);
+        item.getBids().size();
+        return item;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Item> getAll() {
-        return entityManager.createQuery("from Item").getResultList();
+    public List<Item> findAll() {
+        return entityManager.createQuery("select item from Item item").getResultList();
     }
 }
