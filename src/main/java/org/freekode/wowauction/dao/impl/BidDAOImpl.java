@@ -22,7 +22,7 @@ public class BidDAOImpl implements BidDAO {
     @Transactional
     @Override
     public void create(Bid bid) {
-        entityManager.persist(bid);
+        entityManager.merge(bid);
     }
 
     @Transactional
@@ -30,7 +30,7 @@ public class BidDAOImpl implements BidDAO {
     public void createAll(Set<Bid> bids) {
 //        entityManager.getTransaction().begin();
         for (Bid bid : bids) {
-            entityManager.persist(bid);
+            entityManager.merge(bid);
         }
 //        entityManager.getTransaction().commit();
     }

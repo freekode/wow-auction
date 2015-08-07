@@ -29,7 +29,7 @@ public class SnapshotUpdater {
     private BidDAO bidDAO;
 
 
-    @Scheduled(cron = "0 */10 * * * ?")
+    @Scheduled(cron = "0 */5 * * * ?")
     public void scheduleUpdate() {
         updateAuction();
     }
@@ -52,28 +52,50 @@ public class SnapshotUpdater {
             Snapshot lastSnapshot = snapshotDAO.getLast(realm);
 
             if (lastSnapshot == null || lastSnapshot.getLastModified().getTime() < newSnapshot.getLastModified().getTime()) {
-                logger.info("newSnapshot = " + newSnapshot);
-                snapshotDAO.create(newSnapshot);
-
                 List<Map<String, String>> auctionList = WorldOfWarcraftAPI.getAuctions(newSnapshot.getFile());
                 logger.info("auctionList size = " + auctionList.size());
 
-                Set<Bid> newBids = EntityConversion.convertToBids(auctionList);
-                for (Bid bid : newBids) {
-                    bid.setSnapshots(new HashSet<>(Collections.singletonList(newSnapshot)));
+                newSnapshot.setSize(auctionList.size());
+                snapshotDAO.create(newSnapshot);
+                logger.info("newSnapshot = " + newSnapshot);
+
+
+                Set<Bid> refreshedBids = EntityConversion.convertToBids(auctionList);
+                Set<Bid> persistedBids = new HashSet<>(bidDAO.findBySnapshot(lastSnapshot));
+
+
+                Set<Bid> closedBids = new HashSet<>(persistedBids);
+                closedBids.removeAll(refreshedBids);
+
+                for (Bid bid : closedBids)
+                    bid.setClosed(true);
+
+                logger.info("bids closed = " + closedBids.size());
+
+
+                Set<Bid> existingBids = new HashSet<>(persistedBids);
+                existingBids.retainAll(refreshedBids);
+
+                for (Bid bid : existingBids) {
+                    Set<Snapshot> snapshots = new HashSet<>(snapshotDAO.findByBid(bid));
+                    snapshots.add(newSnapshot);
+                    bid.setSnapshots(snapshots);
                 }
 
-                Set<Bid> oldBids = new HashSet<>(bidDAO.findBySnapshot(lastSnapshot));
-                Set<Bid> oldBidsOriginal = new HashSet<>(oldBids);
+                logger.info("bids already exist = " + existingBids.size());
 
 
-                oldBids.removeAll(newBids);
-                logger.info("old closed bids = " + oldBids.size());
+                Set<Bid> newBids = new HashSet<>(refreshedBids);
+                newBids.removeAll(persistedBids);
 
-                oldBidsOriginal.retainAll(newBids);
-                logger.info("old closed bids = " + oldBidsOriginal.size());
+                for (Bid bid : newBids)
+                    bid.setSnapshots(new HashSet<>(Collections.singletonList(newSnapshot)));
+
+                logger.info("bids new = " + newBids.size());
 
 
+                bidDAO.createAll(closedBids);
+                bidDAO.createAll(existingBids);
                 bidDAO.createAll(newBids);
             }
         }

@@ -28,6 +28,8 @@ public class Snapshot {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
+    private Integer size;
+
 
     public Snapshot() {
     }
@@ -83,6 +85,14 @@ public class Snapshot {
 
     public void setBids(Set<Bid> bids) {
         this.bids = bids;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
     }
 
     @Override
