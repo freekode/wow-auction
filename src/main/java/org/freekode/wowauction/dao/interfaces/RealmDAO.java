@@ -9,5 +9,5 @@ public interface RealmDAO {
 
     Realm getById(Integer id);
 
-    List<Realm> getAll();
+    List<Realm> findAll();
 }

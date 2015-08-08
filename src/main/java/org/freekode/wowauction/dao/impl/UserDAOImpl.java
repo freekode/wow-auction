@@ -24,7 +24,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User authenticate(User user) {
-        Query query = entityManager.createQuery("from User where login = :login and password = :password");
+        Query query = entityManager.createQuery("select user from User user where user.login = :login and user.password = :password");
         query.setParameter("login", user);
         query.setParameter("password", user);
 
@@ -38,7 +38,7 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<User> getAll() {
-        return entityManager.createQuery("from User").getResultList();
+    public List<User> findAll() {
+        return entityManager.createQuery("select user from User user").getResultList();
     }
 }

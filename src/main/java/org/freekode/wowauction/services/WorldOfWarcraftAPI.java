@@ -18,7 +18,7 @@ public class WorldOfWarcraftAPI {
 //        168497, "quantity":1, "timeLeft":"VERY_LONG", "rand":0, "seed":0, "context":0
 //    }
 
-    public static List<Map<String, String>> parse(String url) {
+    public static List<Map<String, String>> getAuctions(String url) {
         JSONArray bidsJson = (JSONArray) (
                 (JSONObject) (
                         (JSONObject) JSONValue.parse(HttpRequest.sendGet(url))

@@ -22,11 +22,13 @@ public class Snapshot {
     @JoinColumn(name = "realmId")
     private Realm realm;
 
-    @OneToMany(mappedBy = "snapshot")
-    private Set<Item> items = new HashSet<>();
+    @ManyToMany(mappedBy = "snapshots")
+    private Set<Bid> bids = new HashSet<>();
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
+    private Integer size;
 
 
     public Snapshot() {
@@ -77,12 +79,20 @@ public class Snapshot {
         this.createdAt = createdAt;
     }
 
-    public Set<Item> getItems() {
-        return items;
+    public Set<Bid> getBids() {
+        return bids;
     }
 
-    public void setItems(Set<Item> items) {
-        this.items = items;
+    public void setBids(Set<Bid> bids) {
+        this.bids = bids;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
     }
 
     @Override
