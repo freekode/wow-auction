@@ -1,0 +1,36 @@
+svg {
+    background-color: #dfdfdf;
+}
+
+.axis path, .axis line{
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.axis path {
+    stroke-width: 2;
+    stroke-opacity: 0.5;
+}
+
+.line{
+    stroke:  steelblue;
+    stroke-width: 3;
+    fill: none;
+}
+
+.tick text{
+    font-size: 10px;
+}
+
+.tick line, .grid {
+    stroke: grey;
+    stroke-width: 1;
+    opacity: 0.5;
+}
+
+.circle {
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: white;
+}

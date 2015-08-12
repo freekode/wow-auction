@@ -99,6 +99,7 @@ public class SnapshotUpdater {
                 bidDAO.createAll(newBids);
             }
         }
+
         logger.info("update ended");
     }
 }
