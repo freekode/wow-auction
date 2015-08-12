@@ -1,30 +1,26 @@
 package org.freekode.wowauction.controllers;
 
 
-import org.freekode.wowauction.dao.interfaces.RealmDAO;
-import org.freekode.wowauction.models.Bid;
-import org.freekode.wowauction.models.Realm;
+import org.freekode.wowauction.dao.interfaces.SnapshotDAO;
+import org.freekode.wowauction.models.Snapshot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class IndexController {
     @Autowired
-    private RealmDAO realmDAO;
+    private SnapshotDAO snapshotDAO;
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView testMethod() {
-        List<Realm> realms = realmDAO.findAll();
+        List<Snapshot> snapshots = snapshotDAO.findByToday();
 
-        return new ModelAndView("index", "realms", realms);
+        return new ModelAndView("index", "snapshots", snapshots);
     }
 }

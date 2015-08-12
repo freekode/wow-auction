@@ -7,10 +7,8 @@ import org.freekode.wowauction.models.Snapshot;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.util.List;
+import javax.persistence.*;
+import java.util.*;
 
 @Repository
 public class SnapshotDAOImpl implements SnapshotDAO {
@@ -61,5 +59,38 @@ public class SnapshotDAOImpl implements SnapshotDAO {
         query.setParameter("bid", bid);
 
         return query.getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Snapshot> findByToday() {
+	    Date todayStart, todayEnd;
+	    Calendar today = Calendar.getInstance();
+
+	    today.set(Calendar.HOUR_OF_DAY, 0);
+	    today.set(Calendar.MINUTE, 0);
+	    today.set(Calendar.SECOND, 0);
+	    today.set(Calendar.MILLISECOND, 0);
+
+	    todayStart = today.getTime();
+
+	    today.set(Calendar.HOUR_OF_DAY, 23);
+	    today.set(Calendar.MINUTE, 59);
+	    today.set(Calendar.SECOND, 59);
+	    today.set(Calendar.MILLISECOND, 1000);
+
+	    todayEnd = today.getTime();
+
+
+        Query query = entityManager.createQuery(
+			"select snapshot from Snapshot snapshot " +
+					"where snapshot.lastModified > :starttime " +
+					"and snapshot.lastModified < :endtime"
+        );
+
+	    query.setParameter("starttime", todayStart);
+	    query.setParameter("endtime", todayEnd);
+
+	    return query.getResultList();
     }
 }
