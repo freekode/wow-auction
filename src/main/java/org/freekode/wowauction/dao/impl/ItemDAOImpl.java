@@ -1,17 +1,13 @@
 package org.freekode.wowauction.dao.impl;
 
 import org.freekode.wowauction.dao.interfaces.ItemDAO;
-import org.freekode.wowauction.dao.interfaces.RealmDAO;
 import org.freekode.wowauction.models.Item;
-import org.freekode.wowauction.models.Realm;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public class ItemDAOImpl implements ItemDAO {
@@ -19,21 +15,22 @@ public class ItemDAOImpl implements ItemDAO {
     private EntityManager entityManager;
 
 
-    @Transactional
     @Override
-    public void create(Item item) {
-        entityManager.persist(item);
+    public Item create(Item item) {
+        return entityManager.merge(item);
     }
 
-    @Transactional
-    @Override
-    public void createAll(Set<Item> items) {
-        for (Item item : items) {
-            entityManager.persist(item);
-        }
-    }
+//    @Override
+//    public Set<Item> createAll(Set<Item> items) {
+//        Set<Item> addedItems = new HashSet<>();
+//        for (Item item : items) {
+//            Item addedItem = entityManager.merge(item);
+//            addedItems.add(addedItem);
+//        }
+//
+//        return addedItems;
+//    }
 
-    @Transactional
     @Override
     public Item getById(Integer id) {
         Item item = entityManager.find(Item.class, id);
@@ -45,5 +42,20 @@ public class ItemDAOImpl implements ItemDAO {
     @Override
     public List<Item> findAll() {
         return entityManager.createQuery("select item from Item item").getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Item isExistsByConstraint(Item item) {
+        Query query = entityManager.createQuery("select item from Item item where item.identifier = :identifier and item.uniqueId = :uniqueId");
+        query.setParameter("identifier", item.getIdentifier());
+        query.setParameter("uniqueId", item.getUniqueId());
+
+        List<Item> items = query.getResultList();
+        if (!items.isEmpty()) {
+            return items.get(0);
+        }
+
+        return null;
     }
 }

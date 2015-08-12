@@ -11,7 +11,11 @@ import java.util.Set;
 @Table(name = "bids")
 public class Bid {
     @Id
-    private Long id;
+    @Column(columnDefinition = "serial")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private String identifier;
 
     private BigInteger rate;
 
@@ -22,7 +26,7 @@ public class Bid {
     @Enumerated(EnumType.STRING)
     private TimeLeft timeLeft;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "itemId")
     private Item item;
 
@@ -45,11 +49,16 @@ public class Bid {
     public Bid() {
     }
 
-    public Long getId() {
+    @PrePersist
+    protected void onCreate() {
+        setCreatedAt(new Date());
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -125,6 +134,14 @@ public class Bid {
         this.snapshots = snapshots;
     }
 
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -132,13 +149,13 @@ public class Bid {
 
         Bid bid = (Bid) o;
 
-        return id.equals(bid.id);
+        return identifier.equals(bid.identifier);
 
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return identifier.hashCode();
     }
 
     public enum TimeLeft {

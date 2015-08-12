@@ -12,15 +12,15 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-public class IndexController {
+public class TestGraphController {
     @Autowired
     private RealmDAO realmDAO;
 
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/testgraph", method = RequestMethod.GET)
     public ModelAndView testMethod() {
         List<Realm> realms = realmDAO.findAll();
 
-        return new ModelAndView("index", "realms", realms);
+        return new ModelAndView("test-graph", "realms", realms);
     }
 }

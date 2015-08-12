@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Set;
 
 public interface BidDAO {
-    void create(Bid bid);
+    Bid update(Bid bid);
 
     void createAll(Set<Bid> bids);
 
-    Bid getById(Long id);
+    Bid getById(Integer id);
 
     List<Bid> findAll();
 

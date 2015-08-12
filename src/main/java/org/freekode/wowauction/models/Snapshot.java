@@ -97,6 +97,6 @@ public class Snapshot {
 
     @Override
     public String toString() {
-        return realm.getName() + "; " + lastModified;
+        return realm.getName() + "; " + lastModified + "; " + getSize();
     }
 }

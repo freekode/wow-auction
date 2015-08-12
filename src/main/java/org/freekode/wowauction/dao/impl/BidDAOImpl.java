@@ -1,15 +1,14 @@
 package org.freekode.wowauction.dao.impl;
 
 import org.freekode.wowauction.dao.interfaces.BidDAO;
-import org.freekode.wowauction.dao.interfaces.ItemDAO;
-import org.freekode.wowauction.models.*;
+import org.freekode.wowauction.models.Bid;
+import org.freekode.wowauction.models.Snapshot;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -21,23 +20,21 @@ public class BidDAOImpl implements BidDAO {
 
     @Transactional
     @Override
-    public void create(Bid bid) {
-        entityManager.merge(bid);
+    public Bid update(Bid bid) {
+        return entityManager.merge(bid);
     }
 
     @Transactional
     @Override
     public void createAll(Set<Bid> bids) {
-//        entityManager.getTransaction().begin();
         for (Bid bid : bids) {
             entityManager.merge(bid);
         }
-//        entityManager.getTransaction().commit();
     }
 
     @Transactional
     @Override
-    public Bid getById(Long id) {
+    public Bid getById(Integer id) {
         return entityManager.find(Bid.class, id);
     }
 
