@@ -115,6 +115,7 @@ public class SnapshotUpdater {
                 bidBean.saveAll(newBids);
             }
         }
+
         logger.info("update ended");
     }
 }

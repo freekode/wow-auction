@@ -3,7 +3,7 @@
 <%@attribute name="header" fragment="true" %>
 <%@attribute name="footer" fragment="true" %>
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,6 +11,8 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap-theme.min.css">
+    <script src="${pageContext.request.contextPath}/static/js/lib/angular.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/layout.js"></script>
 
     <script src="${pageContext.request.contextPath}/static/js/lib/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/lib/bootstrap.min.js"></script>
@@ -18,7 +20,7 @@
     <jsp:invoke fragment="head"/>
 
 </head>
-<body>
+<body ng-controller="MainCtrl">
 
 
 <nav class="navbar navbar-default">
