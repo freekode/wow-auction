@@ -1,8 +1,8 @@
 package org.freekode.wowauction.controllers;
 
 
-import org.freekode.wowauction.dao.interfaces.SnapshotDAO;
-import org.freekode.wowauction.models.Snapshot;
+import org.freekode.wowauction.dao.interfaces.RealmDAO;
+import org.freekode.wowauction.models.Realm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,15 +12,15 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-public class IndexController {
+public class TestGraphController {
     @Autowired
-    private SnapshotDAO snapshotDAO;
-    
+    private RealmDAO realmDAO;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/testgraph", method = RequestMethod.GET)
     public ModelAndView testMethod() {
-        List<Snapshot> snapshots = snapshotDAO.findByToday();
+        List<Realm> realms = realmDAO.findAll();
 
-        return new ModelAndView("index", "snapshots", snapshots);
+        return new ModelAndView("test-graph", "realms", realms);
     }
 }

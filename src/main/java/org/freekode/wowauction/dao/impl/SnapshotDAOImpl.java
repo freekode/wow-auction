@@ -16,14 +16,13 @@ public class SnapshotDAOImpl implements SnapshotDAO {
     private EntityManager entityManager;
 
 
-    @Transactional
     @Override
-    public void create(Snapshot snapshot) {
-        entityManager.persist(snapshot);
+    public Snapshot save(Snapshot snapshot) {
+        return entityManager.merge(snapshot);
     }
 
     @Override
-    public Snapshot getById(Integer id) {
+    public Snapshot getById(int id) {
         return entityManager.find(Snapshot.class, id);
     }
 

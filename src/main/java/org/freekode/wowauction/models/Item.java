@@ -1,14 +1,13 @@
 package org.freekode.wowauction.models;
 
 import javax.persistence.*;
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 
 @Entity
-@Table(name = "items")
+@Table(name = "items", indexes = {@Index(columnList = "identifier,uniqueId", name = "items_unique_identity", unique = true)})
 public class Item {
     @Id
     @Column(columnDefinition = "serial")
@@ -18,22 +17,22 @@ public class Item {
     /**
      * unique identifier of the item
      */
-    private Integer identifier;
+    private String identifier;
 
     /**
      * enchant identifier, can ber negative, in json represented as rand
      */
-    private Integer suffixId;
+    private String suffixId;
 
     /**
-     * unique id differentiate between two unique items with different enchantment, represented as seed
+     * unique id differentiate between two identical items with different enchantment, represented as seed
      */
-    private BigInteger uniqueId;
+    private String uniqueId;
 
     /**
      * i have no idea
      */
-    private Integer context;
+    private String context;
 
     @OneToMany(mappedBy = "item")
     private Set<Bid> bids = new HashSet<>();
@@ -45,6 +44,26 @@ public class Item {
     public Item() {
     }
 
+    @PrePersist
+    protected void onCreate() {
+        setCreatedAt(new Date());
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public String getUniqueId() {
+        return uniqueId;
+    }
+
+    public void setUniqueId(String uniqueId) {
+        this.uniqueId = uniqueId;
+    }
 
     public Integer getId() {
         return id;
@@ -52,14 +71,6 @@ public class Item {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(Integer identifier) {
-        this.identifier = identifier;
     }
 
     public Date getCreatedAt() {
@@ -78,27 +89,19 @@ public class Item {
         this.bids = bids;
     }
 
-    public Integer getSuffixId() {
+    public String getSuffixId() {
         return suffixId;
     }
 
-    public void setSuffixId(Integer suffixId) {
+    public void setSuffixId(String suffixId) {
         this.suffixId = suffixId;
     }
 
-    public BigInteger getUniqueId() {
-        return uniqueId;
-    }
-
-    public void setUniqueId(BigInteger uniqueId) {
-        this.uniqueId = uniqueId;
-    }
-
-    public Integer getContext() {
+    public String getContext() {
         return context;
     }
 
-    public void setContext(Integer context) {
+    public void setContext(String context) {
         this.context = context;
     }
 

@@ -18,6 +18,8 @@ public class Snapshot {
 
     private Date lastModified;
 
+    private Integer size;
+
     @ManyToOne
     @JoinColumn(name = "realmId")
     private Realm realm;
@@ -27,8 +29,6 @@ public class Snapshot {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
-
-    private Integer size;
 
 
     public Snapshot() {
@@ -97,6 +97,6 @@ public class Snapshot {
 
     @Override
     public String toString() {
-        return realm.getName() + "; " + lastModified;
+        return realm.getName() + "; " + lastModified + "; " + getSize();
     }
 }

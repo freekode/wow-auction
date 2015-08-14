@@ -14,6 +14,9 @@
     <script src="${pageContext.request.contextPath}/static/js/lib/angular.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/layout.js"></script>
 
+    <script src="${pageContext.request.contextPath}/static/js/lib/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/lib/bootstrap.min.js"></script>
+
     <jsp:invoke fragment="head"/>
 
 </head>
@@ -53,9 +56,6 @@
     <jsp:doBody/>
 </div>
 
-
-<script src="${pageContext.request.contextPath}/static/js/lib/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/lib/bootstrap.min.js"></script>
 
 </body>
 </html>

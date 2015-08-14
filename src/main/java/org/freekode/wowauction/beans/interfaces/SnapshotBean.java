@@ -1,23 +1,19 @@
-package org.freekode.wowauction.dao.interfaces;
+package org.freekode.wowauction.beans.interfaces;
 
 import org.freekode.wowauction.models.Bid;
 import org.freekode.wowauction.models.Realm;
 import org.freekode.wowauction.models.Snapshot;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-public interface SnapshotDAO {
+public interface SnapshotBean {
     Snapshot save(Snapshot snapshot);
 
     Snapshot getById(int id);
 
-    Snapshot getLast(Realm realm);
+    Snapshot getLastByRealm(Realm realm);
 
     List<Snapshot> findAll();
 
-    List<Snapshot> findByBid(Bid bid);
-
-    List<Snapshot> findByToday();
+    List<Snapshot> getByBid(Bid bid);
 }

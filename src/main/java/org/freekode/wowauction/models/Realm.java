@@ -1,7 +1,5 @@
 package org.freekode.wowauction.models;
 
-import org.json.simple.JSONObject;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -9,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "realms")
-public class Realm implements SerializableToJson {
+public class Realm {
     @Id
     @Column(columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -93,20 +91,6 @@ public class Realm implements SerializableToJson {
 
     public void setUpdating(Boolean updating) {
         this.updating = updating;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public JSONObject toJSON() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", getId());
-        jsonObject.put("region", getRegion().toString());
-        jsonObject.put("name", getName());
-        jsonObject.put("slug", getSlug());
-
-        if (getCreatedAt() != null) jsonObject.put("createdAt", getCreatedAt());
-
-        return jsonObject;
     }
 
     @Override
