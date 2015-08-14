@@ -18,7 +18,11 @@ public class Snapshot {
 
     private Date lastModified;
 
-    private Integer size;
+    private Integer closed;
+
+    private Integer existing;
+
+    private Integer newAmount;
 
     @ManyToOne
     @JoinColumn(name = "realmId")
@@ -37,6 +41,22 @@ public class Snapshot {
     @PrePersist
     protected void onCreate() {
         setCreatedAt(new Date());
+    }
+
+    public Integer getExisting() {
+        return existing;
+    }
+
+    public void setExisting(Integer existing) {
+        this.existing = existing;
+    }
+
+    public Integer getNewAmount() {
+        return newAmount;
+    }
+
+    public void setNewAmount(Integer newAmount) {
+        this.newAmount = newAmount;
     }
 
     public Integer getId() {
@@ -87,16 +107,16 @@ public class Snapshot {
         this.bids = bids;
     }
 
-    public Integer getSize() {
-        return size;
+    public Integer getClosed() {
+        return closed;
     }
 
-    public void setSize(Integer size) {
-        this.size = size;
+    public void setClosed(Integer closed) {
+        this.closed = closed;
     }
 
     @Override
     public String toString() {
-        return realm.getName() + "; " + lastModified + "; " + getSize();
+        return realm.getName() + "; " + lastModified;
     }
 }

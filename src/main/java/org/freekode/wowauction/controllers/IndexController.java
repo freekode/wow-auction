@@ -15,7 +15,7 @@ import java.util.List;
 public class IndexController {
     @Autowired
     private SnapshotDAO snapshotDAO;
-    
+
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView testMethod() {
