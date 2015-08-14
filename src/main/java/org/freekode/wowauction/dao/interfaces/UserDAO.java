@@ -5,7 +5,7 @@ import org.freekode.wowauction.models.User;
 import java.util.List;
 
 public interface UserDAO {
-    void create(User user);
+    void save(User user);
 
     User authenticate(User user);
 

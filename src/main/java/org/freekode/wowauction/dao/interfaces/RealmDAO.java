@@ -5,7 +5,7 @@ import org.freekode.wowauction.models.Realm;
 import java.util.List;
 
 public interface RealmDAO {
-    void create(Realm realm);
+    Realm save(Realm realm);
 
     Realm getById(Integer id);
 

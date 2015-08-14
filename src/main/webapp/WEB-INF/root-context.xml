@@ -32,7 +32,7 @@
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.format_sql">true</prop>
-                <prop key="hibernate.jdbc.batch_size">100</prop>
+                <!--<prop key="hibernate.jdbc.batch_size">100</prop>-->
             </props>
         </property>
     </bean>

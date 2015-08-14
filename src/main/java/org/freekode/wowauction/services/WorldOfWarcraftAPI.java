@@ -19,11 +19,8 @@ public class WorldOfWarcraftAPI {
 //    }
 
     public static List<Map<String, String>> getAuctions(String url) {
-        JSONArray bidsJson = (JSONArray) (
-                (JSONObject) (
-                        (JSONObject) JSONValue.parse(HttpRequest.sendGet(url))
-                ).get("auctions")
-        ).get("auctions");
+        JSONObject fullJson = (JSONObject) JSONValue.parse(HttpRequest.sendGet(url));
+        JSONArray bidsJson = (JSONArray) fullJson.get("auctions");
 
 
         List<Map<String, String>> auctions = new ArrayList<>();

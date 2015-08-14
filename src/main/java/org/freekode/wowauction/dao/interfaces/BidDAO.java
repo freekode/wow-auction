@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface BidDAO {
-    Bid update(Bid bid);
-
-    void createAll(Set<Bid> bids);
+    Bid save(Bid bid);
 
     Bid getById(Integer id);
 

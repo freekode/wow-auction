@@ -15,10 +15,9 @@ public class RealmDAOImpl implements RealmDAO {
     private EntityManager entityManager;
 
 
-    @Transactional
     @Override
-    public void create(Realm realm) {
-        entityManager.persist(realm);
+    public Realm save(Realm realm) {
+        return entityManager.merge(realm);
     }
 
     @Override

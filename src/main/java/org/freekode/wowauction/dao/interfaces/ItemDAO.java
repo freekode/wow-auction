@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface ItemDAO {
-    Item create(Item item);
+    Item save(Item item);
 
     Item getById(Integer id);
 

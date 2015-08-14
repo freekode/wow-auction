@@ -16,20 +16,9 @@ public class ItemDAOImpl implements ItemDAO {
 
 
     @Override
-    public Item create(Item item) {
+    public Item save(Item item) {
         return entityManager.merge(item);
     }
-
-//    @Override
-//    public Set<Item> createAll(Set<Item> items) {
-//        Set<Item> addedItems = new HashSet<>();
-//        for (Item item : items) {
-//            Item addedItem = entityManager.merge(item);
-//            addedItems.add(addedItem);
-//        }
-//
-//        return addedItems;
-//    }
 
     @Override
     public Item getById(Integer id) {

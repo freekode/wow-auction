@@ -4,10 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.freekode.wowauction.beans.interfaces.BidBean;
 import org.freekode.wowauction.beans.interfaces.ItemBean;
-import org.freekode.wowauction.dao.interfaces.BidDAO;
-import org.freekode.wowauction.dao.interfaces.ItemDAO;
+import org.freekode.wowauction.beans.interfaces.RealmBean;
+import org.freekode.wowauction.beans.interfaces.SnapshotBean;
 import org.freekode.wowauction.dao.interfaces.RealmDAO;
-import org.freekode.wowauction.dao.interfaces.SnapshotDAO;
 import org.freekode.wowauction.models.Bid;
 import org.freekode.wowauction.models.Item;
 import org.freekode.wowauction.models.Realm;
@@ -24,22 +23,16 @@ public class SnapshotUpdater {
     private static final Logger logger = LogManager.getLogger(SnapshotUpdater.class);
 
     @Autowired
-    private SnapshotDAO snapshotDAO;
-
-    @Autowired
-    private RealmDAO realmDAO;
-
-    @Autowired
-    private BidDAO bidDAO;
-
-    @Autowired
-    private ItemDAO itemDAO;
+    private RealmBean realmBean;
 
     @Autowired
     private ItemBean itemBean;
 
     @Autowired
     private BidBean bidBean;
+
+    @Autowired
+    private SnapshotBean snapshotBean;
 
 
     @Scheduled(cron = "0 */10 * * * ?")
@@ -49,7 +42,7 @@ public class SnapshotUpdater {
 
     public void updateAuction() {
         logger.info("update started");
-        for (Realm realm : realmDAO.findAll()) {
+        for (Realm realm : realmBean.findForUpdate()) {
             if (!realm.getUpdating()) {
                 continue;
             }
@@ -62,7 +55,7 @@ public class SnapshotUpdater {
             newSnapshot.setFile(newSnapshotMap.get("url"));
             newSnapshot.setLastModified(new Date(new Long(newSnapshotMap.get("lastModified"))));
 
-            Snapshot lastSnapshot = snapshotDAO.getLast(realm);
+            Snapshot lastSnapshot = snapshotBean.getLastByRealm(realm);
 
             if (lastSnapshot == null || lastSnapshot.getLastModified().getTime() < newSnapshot.getLastModified().getTime()) {
                 List<Map<String, String>> auctionList = WorldOfWarcraftAPI.getAuctions(newSnapshot.getFile());
@@ -73,7 +66,7 @@ public class SnapshotUpdater {
 
 
                 Set<Bid> refreshedBids = EntityConversion.convertToBids(auctionList);
-                Set<Bid> persistedBids = new HashSet<>(bidDAO.findBySnapshot(lastSnapshot));
+                Set<Bid> persistedBids = new HashSet<>(bidBean.findBySnapshot(lastSnapshot));
 
 
                 Set<Bid> closedBids = new HashSet<>(persistedBids);
@@ -90,15 +83,18 @@ public class SnapshotUpdater {
                 newBids.removeAll(persistedBids);
                 logger.info("bids new = " + newBids.size());
 
+                Set<Item> newItems = EntityConversion.getItemsWithoutBids(newBids);
+                logger.info("items = " + newItems.size());
 
-                snapshotDAO.create(newSnapshot);
+
+                newSnapshot = snapshotBean.save(newSnapshot);
 
 
                 for (Bid bid : closedBids)
                     bidBean.closeBid(bid);
 
                 for (Bid bid : existingBids) {
-                    Set<Snapshot> snapshots = new HashSet<>(snapshotDAO.findByBid(bid));
+                    Set<Snapshot> snapshots = new HashSet<>(snapshotBean.getByBid(bid));
                     snapshots.add(newSnapshot);
                     bid.setSnapshots(snapshots);
                 }
@@ -106,26 +102,21 @@ public class SnapshotUpdater {
                 for (Bid bid : newBids)
                     bid.setSnapshots(new HashSet<>(Collections.singletonList(newSnapshot)));
 
-                bidDAO.createAll(closedBids);
-                bidDAO.createAll(existingBids);
+                bidBean.saveAll(existingBids);
 
 
-                Set<Item> newItems = EntityConversion.getItemsWithoutBids(newBids);
                 Set<Item> addedItems = itemBean.updateOrCreateAll(newItems);
-//                for (Item newItem : newItems) {
-//                    itemBean.updateOrCreate(newItem);
+
+
+//                for (Bid bid : newBids) {
+//                    Item bidItem = bid.getItem();
+//                    for (Item dbItem : addedItems) {
+//                        if (dbItem.equals(bidItem)) {
+//                            bid.setItem(dbItem);
+//                        }
+//                    }
 //                }
-
-
-                for (Bid bid : newBids) {
-                    Item bidItem = bid.getItem();
-                    for (Item dbItem : addedItems) {
-                        if (dbItem.equals(bidItem)) {
-                            bid.setItem(dbItem);
-                        }
-                    }
-                }
-                bidDAO.createAll(newBids);
+                bidBean.saveAll(newBids);
             }
         }
         logger.info("update ended");

@@ -13,26 +13,17 @@ import java.util.List;
 import java.util.Set;
 
 @Repository
+@Transactional
 public class BidDAOImpl implements BidDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
 
-    @Transactional
     @Override
-    public Bid update(Bid bid) {
+    public Bid save(Bid bid) {
         return entityManager.merge(bid);
     }
 
-    @Transactional
-    @Override
-    public void createAll(Set<Bid> bids) {
-        for (Bid bid : bids) {
-            entityManager.merge(bid);
-        }
-    }
-
-    @Transactional
     @Override
     public Bid getById(Integer id) {
         return entityManager.find(Bid.class, id);

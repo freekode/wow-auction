@@ -8,15 +8,30 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Component
+@Transactional
 public class ItemBeanImpl implements ItemBean {
     @Autowired
     private ItemDAO itemDAO;
 
+    @Override
+    public Item save(Item item) {
+        return itemDAO.save(item);
+    }
 
-    @Transactional
+    @Override
+    public Item getById(Integer id) {
+        return itemDAO.getById(id);
+    }
+
+    @Override
+    public List<Item> findAll() {
+        return itemDAO.findAll();
+    }
+
     @Override
     public Set<Item> updateOrCreateAll(Set<Item> items) {
         Set<Item> addedItems = new HashSet<>();
@@ -25,10 +40,10 @@ public class ItemBeanImpl implements ItemBean {
 
             Item existingItem = itemDAO.isExistsByConstraint(item);
             if (existingItem == null) {
-                addedItem = itemDAO.create(item);
+                addedItem = itemDAO.save(item);
             } else {
                 existingItem.setBids(item.getBids());
-                addedItem = itemDAO.create(existingItem);
+                addedItem = itemDAO.save(existingItem);
             }
 
             addedItems.add(addedItem);
