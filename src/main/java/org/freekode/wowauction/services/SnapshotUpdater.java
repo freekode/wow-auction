@@ -43,10 +43,6 @@ public class SnapshotUpdater {
     public void updateAuction() {
         logger.info("update started");
         for (Realm realm : realmBean.findForUpdate()) {
-            if (!realm.getUpdating()) {
-                continue;
-            }
-
             logger.info("realm = " + realm);
 
             Map<String, String> newSnapshotMap = WorldOfWarcraftAPI.getSnapshot(realm.getRegion().toString(), realm.getSlug());
@@ -108,14 +104,14 @@ public class SnapshotUpdater {
                 Set<Item> addedItems = itemBean.updateOrCreateAll(newItems);
 
 
-//                for (Bid bid : newBids) {
-//                    Item bidItem = bid.getItem();
-//                    for (Item dbItem : addedItems) {
-//                        if (dbItem.equals(bidItem)) {
-//                            bid.setItem(dbItem);
-//                        }
-//                    }
-//                }
+                for (Bid bid : newBids) {
+                    Item bidItem = bid.getItem();
+                    for (Item dbItem : addedItems) {
+                        if (dbItem.equals(bidItem)) {
+                            bid.setItem(dbItem);
+                        }
+                    }
+                }
                 bidBean.saveAll(newBids);
             }
         }
