@@ -1,6 +1,6 @@
 package org.freekode.wowauction.controllers;
 
-import org.freekode.wowauction.dao.interfaces.SnapshotDAO;
+import org.freekode.wowauction.beans.interfaces.SnapshotBean;
 import org.freekode.wowauction.models.Snapshot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,20 +18,27 @@ import java.util.List;
 @RequestMapping("/models")
 public class JSONController {
     @Autowired
-    private SnapshotDAO snapshotDAO;
+    private SnapshotBean snapshotBean;
 
-    @RequestMapping(value="/snapshots/{id}", method= RequestMethod.GET)
-    public @ResponseBody Snapshot getSnapshotByIdInJSON(@PathVariable Integer id) {
-        return snapshotDAO.getById(id);
+
+    @RequestMapping(value = "/snapshots/{id}", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    Snapshot getSnapshotByIdInJSON(@PathVariable Integer id) {
+        return snapshotBean.getById(id);
     }
 
-    @RequestMapping(value="/snapshots", method=RequestMethod.GET)
-    public @ResponseBody List<Snapshot> getSnapshotsListInJSON() {
-        return snapshotDAO.findAll();
+    @RequestMapping(value = "/snapshots", method = RequestMethod.GET)
+    public
+    @ResponseBody
+    List<Snapshot> getSnapshotsListInJSON() {
+        return snapshotBean.findAll();
     }
 
-    @RequestMapping(value="/snapshots/today")
-    public @ResponseBody List<Snapshot> getSnapshotsTodayInJSON() {
-        return snapshotDAO.findByToday();
+    @RequestMapping(value = "/snapshots/today")
+    public
+    @ResponseBody
+    List<Snapshot> getSnapshotsTodayInJSON() {
+        return snapshotBean.findByToday();
     }
 }

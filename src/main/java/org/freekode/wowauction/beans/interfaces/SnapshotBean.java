@@ -15,5 +15,7 @@ public interface SnapshotBean {
 
     List<Snapshot> findAll();
 
+    List<Snapshot> findByToday();
+
     List<Snapshot> getByBid(Bid bid);
 }
