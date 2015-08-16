@@ -1,25 +1,24 @@
 svg {
-    background-color: #dfdfdf;
+    background-color: #ffffff;
 }
 
-.axis path, .axis line{
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
+path {
+    fill: none
+}
+
+.line {
+    stroke-width: 2;
 }
 
 .axis path {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
     stroke-width: 2;
     stroke-opacity: 0.5;
 }
 
-.line{
-    stroke:  steelblue;
-    stroke-width: 3;
-    fill: none;
-}
-
-.tick text{
+.tick text {
     font-size: 10px;
 }
 
@@ -34,3 +33,4 @@ svg {
     stroke-width: 2;
     fill: white;
 }
+

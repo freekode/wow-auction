@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,5 +42,20 @@ public class JSONController {
     @ResponseBody
     List<Snapshot> getSnapshotsTodayInJSON() {
         return snapshotBean.findByToday();
+    }
+
+    @RequestMapping(value = "/snapshots/24h")
+    public
+    @ResponseBody
+    List<Snapshot> getSnapshots24h() {
+        Date todayStart, todayEnd;
+        Calendar today = Calendar.getInstance();
+
+        todayEnd = today.getTime();
+
+        today.add(Calendar.DAY_OF_MONTH, -1);
+        todayStart = today.getTime();
+
+        return snapshotBean.findBetweenDates(todayStart, todayEnd);
     }
 }

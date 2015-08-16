@@ -16,8 +16,6 @@
 
     <jsp:body>
         <div ng-controller="IndexCtrl">
-            <p>${snapshots.size()} snapshots</p>
-
             <div id="graph"></div>
         </div>
     </jsp:body>

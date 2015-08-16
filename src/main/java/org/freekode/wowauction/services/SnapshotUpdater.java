@@ -54,10 +54,11 @@ public class SnapshotUpdater {
             Snapshot lastSnapshot = snapshotBean.getLastByRealm(realm);
 
             if (lastSnapshot == null || lastSnapshot.getLastModified().getTime() < newSnapshot.getLastModified().getTime()) {
+                logger.info("newSnapshot = " + newSnapshot);
+
+
                 List<Map<String, String>> auctionList = WorldOfWarcraftAPI.getAuctions(newSnapshot.getFile());
                 logger.info("auctionList size = " + auctionList.size());
-
-                logger.info("newSnapshot = " + newSnapshot);
 
 
                 Set<Bid> refreshedBids = EntityConversion.convertToBids(auctionList);

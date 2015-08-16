@@ -20,6 +20,11 @@ public class SnapshotBeanImpl implements SnapshotBean {
     private SnapshotDAO snapshotDAO;
 
     @Override
+    public List<Snapshot> findBetweenDates(Date startTime, Date endTime) {
+        return snapshotDAO.findBetweenDates(startTime, endTime);
+    }
+
+    @Override
     public List<Snapshot> findByToday() {
         Date todayStart, todayEnd;
         Calendar today = Calendar.getInstance();
@@ -39,7 +44,7 @@ public class SnapshotBeanImpl implements SnapshotBean {
         todayEnd = today.getTime();
 
 
-        return snapshotDAO.findBetweenDates(todayStart, todayEnd);
+        return findBetweenDates(todayStart, todayEnd);
     }
 
     @Override

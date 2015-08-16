@@ -1,7 +1,7 @@
 package org.freekode.wowauction.controllers;
 
 
-import org.freekode.wowauction.dao.interfaces.SnapshotDAO;
+import org.freekode.wowauction.beans.interfaces.SnapshotBean;
 import org.freekode.wowauction.models.Snapshot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +14,12 @@ import java.util.List;
 @Controller
 public class IndexController {
     @Autowired
-    private SnapshotDAO snapshotDAO;
+    private SnapshotBean snapshotBean;
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView testMethod() {
-        List<Snapshot> snapshots = snapshotDAO.findByToday();
+        List<Snapshot> snapshots = snapshotBean.findByToday();
 
         return new ModelAndView("index", "snapshots", snapshots);
     }
