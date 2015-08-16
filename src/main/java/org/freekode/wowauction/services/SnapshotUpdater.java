@@ -54,11 +54,11 @@ public class SnapshotUpdater {
             Snapshot lastSnapshot = snapshotBean.getLastByRealm(realm);
 
             if (lastSnapshot == null || lastSnapshot.getLastModified().getTime() < newSnapshot.getLastModified().getTime()) {
+                logger.info("newSnapshot = " + newSnapshot);
+
+
                 List<Map<String, String>> auctionList = WorldOfWarcraftAPI.getAuctions(newSnapshot.getFile());
                 logger.info("auctionList size = " + auctionList.size());
-
-                newSnapshot.setSize(auctionList.size());
-                logger.info("newSnapshot = " + newSnapshot);
 
 
                 Set<Bid> refreshedBids = EntityConversion.convertToBids(auctionList);
@@ -67,16 +67,19 @@ public class SnapshotUpdater {
 
                 Set<Bid> closedBids = new HashSet<>(persistedBids);
                 closedBids.removeAll(refreshedBids);
+                newSnapshot.setClosed(closedBids.size());
                 logger.info("bids closed = " + closedBids.size());
 
 
                 Set<Bid> existingBids = new HashSet<>(persistedBids);
                 existingBids.retainAll(refreshedBids);
+                newSnapshot.setExisting(existingBids.size());
                 logger.info("bids already exist = " + existingBids.size());
 
 
                 Set<Bid> newBids = new HashSet<>(refreshedBids);
                 newBids.removeAll(persistedBids);
+                newSnapshot.setNewAmount(newBids.size());
                 logger.info("bids new = " + newBids.size());
 
                 Set<Item> newItems = EntityConversion.getItemsWithoutBids(newBids);

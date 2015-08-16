@@ -19,5 +19,5 @@ public interface SnapshotDAO {
 
     List<Snapshot> findByBid(Bid bid);
 
-    List<Snapshot> findByToday();
+    List<Snapshot> findBetweenDates(Date startTime, Date endTime);
 }

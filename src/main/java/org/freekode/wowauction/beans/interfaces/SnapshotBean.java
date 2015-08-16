@@ -4,6 +4,7 @@ import org.freekode.wowauction.models.Bid;
 import org.freekode.wowauction.models.Realm;
 import org.freekode.wowauction.models.Snapshot;
 
+import java.util.Date;
 import java.util.List;
 
 public interface SnapshotBean {
@@ -14,6 +15,10 @@ public interface SnapshotBean {
     Snapshot getLastByRealm(Realm realm);
 
     List<Snapshot> findAll();
+
+    List<Snapshot> findBetweenDates(Date startTime, Date endTime);
+
+    List<Snapshot> findByToday();
 
     List<Snapshot> getByBid(Bid bid);
 }

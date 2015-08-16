@@ -62,33 +62,15 @@ public class SnapshotDAOImpl implements SnapshotDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Snapshot> findByToday() {
-	    Date todayStart, todayEnd;
-	    Calendar today = Calendar.getInstance();
-
-	    today.set(Calendar.HOUR_OF_DAY, 0);
-	    today.set(Calendar.MINUTE, 0);
-	    today.set(Calendar.SECOND, 0);
-	    today.set(Calendar.MILLISECOND, 0);
-
-	    todayStart = today.getTime();
-
-	    today.set(Calendar.HOUR_OF_DAY, 23);
-	    today.set(Calendar.MINUTE, 59);
-	    today.set(Calendar.SECOND, 59);
-	    today.set(Calendar.MILLISECOND, 1000);
-
-	    todayEnd = today.getTime();
-
-
+    public List<Snapshot> findBetweenDates(Date startTime, Date endTime) {
         Query query = entityManager.createQuery(
 			"select snapshot from Snapshot snapshot " +
 					"where snapshot.lastModified > :starttime " +
 					"and snapshot.lastModified < :endtime"
         );
 
-	    query.setParameter("starttime", todayStart);
-	    query.setParameter("endtime", todayEnd);
+	    query.setParameter("starttime", startTime);
+	    query.setParameter("endtime", endTime);
 
 	    return query.getResultList();
     }
