@@ -7,10 +7,11 @@ app.controller("IndexCtrl", function ($scope, $http) {
         resp.data.map(function (elem) {
             data.push({
                 date: new Date(elem.lastModified),
+                existing: elem.existing,
+                overall: elem.closed + elem.existing + elem.newAmount,
+
                 closed: elem.closed,
-                existing: elem.existing
-                //newAmount: elem.newAmount
-                //overall: elem.closed + elem.existing + elem.newAmount
+                newAmount: elem.newAmount
             });
         });
 
@@ -43,19 +44,19 @@ function graph(data) {
 
 
     var xScale = d3.time.scale().range([0, innerWidth]);
-    var yScale0 = d3.scale.linear().range([innerHeight, 0]);
-    var yScale1 = d3.scale.linear().range([innerHeight, 0]);
+    var yScaleLeft = d3.scale.linear().range([innerHeight, 0]);
+    var yScaleRight = d3.scale.linear().range([innerHeight, 0]);
 
 
     var xAxis = d3.svg.axis().scale(xScale)
         .orient("bottom")
-        .ticks(d3.time.hour, 30)
+        .ticks(d3.time.hours, 1)
         .innerTickSize(-innerHeight)
         .outerTickSize(0)
         .tickPadding(10)
         .tickFormat(d3.time.format("%H:%M"));
 
-    var yAxisLeft = d3.svg.axis().scale(yScale0)
+    var yAxisLeft = d3.svg.axis().scale(yScaleLeft)
         .orient("left")
         .ticks(10)
         .tickFormat(d3.format("s"))
@@ -63,7 +64,7 @@ function graph(data) {
         .outerTickSize(0)
         .tickPadding(10);
 
-    var yAxisRight = d3.svg.axis().scale(yScale1)
+    var yAxisRight = d3.svg.axis().scale(yScaleRight)
         .orient("right")
         .ticks(10)
         .tickFormat(d3.format("s"))
@@ -72,26 +73,45 @@ function graph(data) {
         .outerTickSize(0);
 
 
-    var line0 = d3.svg.line()
+    // left
+    var lineClosed = d3.svg.line()
         .x(function (d) {
             return xScale(d.date);
         })
         .y(function (d) {
-            return yScale0(d.closed);
+            return yScaleLeft(d.closed);
         });
 
-    var line1 = d3.svg.line()
+    var lineNewAmount = d3.svg.line()
         .x(function (d) {
             return xScale(d.date);
         })
         .y(function (d) {
-            return yScale1(d.existing);
+            return yScaleLeft(d.newAmount);
+        });
+
+    // right
+    var lineExisting = d3.svg.line()
+        .x(function (d) {
+            return xScale(d.date);
+        })
+        .y(function (d) {
+            return yScaleRight(d.existing);
+        });
+
+    var lineOverall = d3.svg.line()
+        .x(function (d) {
+            return xScale(d.date);
+        })
+        .y(function (d) {
+            return yScaleRight(d.overall);
         });
 
 
     var svg = d3.select("#graph").append("svg")
         .attr("width", outerWidth)
         .attr("height", outerHeight)
+        .attr("style", "border: 1px solid;")
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -103,28 +123,41 @@ function graph(data) {
     xScale.domain(d3.extent(data, function (d) {
         return d.date;
     }));
-    yScale0.domain([d3.min(data, function (d) {
-        return d.closed;
+
+    // small
+    yScaleLeft.domain([d3.min(data, function (d) {
+        return d.closed < d.newAmount ? d.closed : d.newAmount
     }), d3.max(data, function (d) {
-        return d.closed;
+        return d.closed > d.newAmount ? d.closed : d.newAmount
     })]);
-    yScale1.domain([d3.min(data, function (d) {
-        return d.existing;
+    // big
+    yScaleRight.domain([d3.min(data, function (d) {
+        return d.existing < d.overall ? d.existing : d.overall
     }), d3.max(data, function (d) {
-        return d.existing;
+        return d.existing > d.overall ? d.existing : d.overall
     })]);
 
 
     // lines
     svg.append("path")
-        .attr("d", line0(data))
+        .attr("d", lineClosed(data))
         .attr("class", "line")
         .attr("stroke", color('closed'));
 
     svg.append("path")
-        .attr("d", line1(data))
+        .attr("d", lineNewAmount(data))
+        .attr("class", "line")
+        .attr("stroke", color('newAmount'));
+
+    svg.append("path")
+        .attr("d", lineExisting(data))
         .attr("class", "line")
         .attr("stroke", color('existing'));
+
+    svg.append("path")
+        .attr("d", lineOverall(data))
+        .attr("class", "line")
+        .attr("stroke", color('overall'));
 
 
     // axis
@@ -159,201 +192,15 @@ function graph(data) {
         .attr("dy", "-1em")
         .style("text-anchor", "middle")
         .text("Snapshot size");
-}
-
-
-function graphZz(data) {
-    var margin = {top: 60, right: 120, bottom: 60, left: 70},
-        outerWidth = 1300,
-        outerHeight = 700;
-
-    var innerWidth = outerWidth - margin.left - margin.right,
-        innerHeight = outerHeight - margin.top - margin.bottom;
-
-    var svg = d3.select("#graph").append("svg")
-        .attr("width", outerWidth)
-        .attr("height", outerHeight)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-    var color = d3.scale.category20b();
-
-    // min max values
-    var minTotal = d3.min(dataFirst, function (d) {
-        return d.value;
-    });
-
-    var maxTotal = d3.max(
-        dataFirst, function (d) {
-            return d.value;
-        });
-
-    var minDate = d3.min(
-        dataFirst, function (d) {
-            return d.date;
-        });
-
-    var maxDate = d3.max(
-        dataFirst, function (d) {
-            return d.date;
-        });
-
-    // axis scaling
-    var xScale = d3.time.scale()
-        .domain([minDate, maxDate])
-        .range([0, innerWidth]);
-
-    var yScale = d3.scale.linear()
-        .domain([0, 15000])
-        .range([innerHeight, 0]);
-
-    var yArea = d3.scale.linear()
-        .domain([100, 60000])
-        .range([innerHeight, 0]);
-
-    // axis
-    var xAxis = d3.svg.axis()
-        .scale(xScale)
-        .orient("bottom")
-        .ticks(d3.time.hour, 30)
-        .innerTickSize(-innerHeight)
-        .outerTickSize(0)
-        .tickPadding(10)
-        .tickFormat(d3.time.format("%H:%M"));
-
-    // axis
-    var yAxis = d3.svg.axis()
-        .scale(yScale)
-        .orient("left")
-        .ticks(10)
-        .tickFormat(d3.format("s"))
-        .innerTickSize(-innerWidth)
-        .outerTickSize(0)
-        .tickPadding(10);
-
-    // grid
-    var yGrid = d3.svg.axis()
-        .scale(yScale)
-        .orient("left")
-        .ticks(15)
-        .tickSize(-innerWidth, 0, 0)
-        .tickFormat("");
-
-    var xGrid = d3.svg.axis()
-        .scale(xScale)
-        .orient("bottom")
-        .ticks(d3.time.minute, 15)
-        .tickSize(-innerHeight, 0, 0)
-        .tickFormat("");
-
-    // rendering line and area
-    var line = d3.svg.line()
-        .x(function (d) {
-            return xScale(d.date);
-        })
-        .y(function (d) {
-            return yScale(d.value);
-        });
-
-    var area = d3.svg.area()
-        .x(function (d) {
-            return xScale(d.date);
-        })
-        .y0(innerHeight)
-        .y1(function (d) {
-            return yScale(d.value);
-        });
-
-    color.domain(d3.keys(dataFirst[0]).filter(function (key) {
-        return key !== "date";
-    }));
-
-    // text
-    svg.append("text")
-        .attr("x", innerWidth / 2)
-        .attr("y", innerHeight + (margin.bottom / 2) + 10)
-        .style("text-anchor", "middle")
-        .text("Date");
-
-    svg.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("x", -innerHeight / 2)
-        .attr("y", -margin.left / 2 - 5)
-        .attr("dy", "-1em")
-        .style("text-anchor", "middle")
-        .text("Snapshot size");
-
-
-    // axis
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + innerHeight + ")")
-        .call(xAxis);
-
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis);
-
-
-    // grid
-    svg.append("g")
-        .attr("class", "grid")
-        .call(yGrid);
-
-    svg.append("g")
-        .attr("class", "grid")
-        .attr("transform", "translate(0," + innerHeight + ")")
-        .call(xGrid);
-
-
-    // lines
-    //svg.append("svg:path")
-    //    .datum(dataFourthArea)
-    //    .attr("class", "area-overall")
-    //    .attr("d", area);
-    //
-    //svg.append("svg:path")
-    //    .datum(dataSecond)
-    //    .attr("class", "line-existing")
-    //    .attr("d", line);
-
-    svg.append("svg:path")
-        .datum(dataFirst)
-        //.attr("class", "line-closed")
-        .attr("d", line);
-
-    svg.append("svg:path")
-        .datum(dataThird)
-        //.attr("class", "line-newAmount")
-        .attr("d", line)
-        .attr('fill', function (d, i) {
-            return color(d.data.label);
-        });
-
-
-    var points = svg.selectAll(".point")
-        .data(dataFirst)
-        .enter().append("svg:circle")
-        .attr("class", "circle")
-        .attr("cx", function (d, i) {
-            return xScale(d.date)
-        })
-        .attr("cy", function (d, i) {
-            return yScale(d.value)
-        })
-        .attr("r", 2)
-        .append("svg:title")
-        .text(function (d) {
-            return d.date.getHours() + ":" + d.date.getMinutes() + " - " + d.value;
-        });
 
 
     var legendRectSize = 18;
     var legendSpacing = 4;
 
+
     var legend = svg.selectAll('.legend')
-        .data(dataFourthArea)
+        .append('div')
+        .data(color.domain())
         .enter()
         .append('g')
         .attr('class', 'legend')
@@ -369,7 +216,7 @@ function graphZz(data) {
         .attr('width', legendRectSize)
         .attr('height', legendRectSize)
         .style('fill', color)
-        .style('stroke', color);
+        .style('stroke', color)
 
     legend.append('text')
         .attr('x', legendRectSize + legendSpacing)
