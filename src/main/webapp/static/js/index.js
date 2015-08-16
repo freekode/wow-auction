@@ -59,7 +59,7 @@ function graph(data) {
         .orient("left")
         .ticks(10)
         .tickFormat(d3.format("s"))
-        .innerTickSize(-innerWidth)
+        .innerTickSize(10)
         .outerTickSize(0)
         .tickPadding(10);
 
@@ -68,7 +68,7 @@ function graph(data) {
         .ticks(10)
         .tickFormat(d3.format("s"))
         .tickPadding(10)
-        .innerTickSize(-innerWidth)
+        .innerTickSize(10)
         .outerTickSize(0);
 
 
@@ -77,7 +77,7 @@ function graph(data) {
             return xScale(d.date);
         })
         .y(function (d) {
-            return yScale0(d.value);
+            return yScale0(d.closed);
         });
 
     var line1 = d3.svg.line()
@@ -85,7 +85,7 @@ function graph(data) {
             return xScale(d.date);
         })
         .y(function (d) {
-            return yScale1(d.newAmount);
+            return yScale1(d.existing);
         });
 
 
@@ -100,44 +100,31 @@ function graph(data) {
         return key !== "date";
     }));
 
-    var lineValues = color.domain().map(function (name) {
-        return {
-            name: name,
-            values: data.map(function (d) {
-                return {date: d.date, value: +d[name]};
-            })
-        };
-    });
-
-
     xScale.domain(d3.extent(data, function (d) {
         return d.date;
     }));
-    yScale0.domain([0, d3.max(lineValues, function (d) {
-        return d3.max(d.values, function (v) {
-            return v.value;
-        });
+    yScale0.domain([d3.min(data, function (d) {
+        return d.closed;
+    }), d3.max(data, function (d) {
+        return d.closed;
     })]);
-    yScale1.domain([0, d3.max(lineValues, function (d) {
-        return d3.max(d.values, function (v) {
-            return v.value;
-        });
+    yScale1.domain([d3.min(data, function (d) {
+        return d.existing;
+    }), d3.max(data, function (d) {
+        return d.existing;
     })]);
 
-
-    var domain = svg.selectAll(".line")
-        .data(lineValues)
-        .enter().append("g")
-        .attr("class", "line");
 
     // lines
-    domain.append("path")
-        .attr("d", function (d) {
-            return line0(d.values);
-        })
-        .attr("stroke", function (d) {
-            return color(d.name);
-        });
+    svg.append("path")
+        .attr("d", line0(data))
+        .attr("class", "line")
+        .attr("stroke", color('closed'));
+
+    svg.append("path")
+        .attr("d", line1(data))
+        .attr("class", "line")
+        .attr("stroke", color('existing'));
 
 
     // axis
@@ -148,13 +135,13 @@ function graph(data) {
 
     svg.append("g")
         .attr("class", "y axis")
-        .style("fill", "steelblue")
+        .style("fill", color('closed'))
         .call(yAxisLeft);
 
     svg.append("g")
         .attr("class", "y axis")
         .attr("transform", "translate(" + innerWidth + " ,0)")
-        .style("fill", "red")
+        .style("fill", color('existing'))
         .call(yAxisRight);
 
 

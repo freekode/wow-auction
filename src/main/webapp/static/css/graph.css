@@ -18,10 +18,6 @@ path {
     stroke-opacity: 0.5;
 }
 
-.tick text {
-    font-size: 10px;
-}
-
 .tick line, .grid {
     stroke: grey;
     stroke-width: 1;
