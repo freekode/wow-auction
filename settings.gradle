@@ -1,2 +1,6 @@
 rootProject.name = 'wowauction'
 
+include 'persistence'
+include 'updater'
+include 'engine'
+

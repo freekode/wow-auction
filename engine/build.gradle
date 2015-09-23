@@ -1,0 +1,41 @@
+group 'org.freekode'
+version '0.1'
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+
+ext {
+    springVersion = '4.1.6.RELEASE'
+    hibernateVersion = '4.3.8.Final'
+    postgresVersion = '9.4-1201-jdbc41'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(":persistence")
+
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+
+    compile 'org.springframework:spring-context:' + springVersion
+    compile 'org.springframework:spring-tx:' + springVersion
+    compile 'org.springframework:spring-orm:' + springVersion
+    compile 'org.springframework:spring-webmvc:' + springVersion
+
+    compile 'org.hibernate:hibernate-core:' + hibernateVersion
+    compile 'org.hibernate:hibernate-entitymanager:' + hibernateVersion
+    providedCompile 'org.postgresql:postgresql:' + postgresVersion
+
+    compile 'org.flywaydb:flyway-maven-plugin:3.2.1'
+
+    compile 'org.apache.logging.log4j:log4j-core:2.3'
+    compile 'org.apache.logging.log4j:log4j-api:2.3'
+
+    compile 'javax.servlet:jstl:1.2'
+
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.6.0'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate4:2.6.0'
+}

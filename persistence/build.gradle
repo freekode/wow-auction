@@ -2,13 +2,11 @@ group 'org.freekode'
 version '0.1'
 
 apply plugin: 'java'
-apply plugin: 'war'
-
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-
+    testCompile group: 'junit', name: 'junit', version: '4.11'
 }
