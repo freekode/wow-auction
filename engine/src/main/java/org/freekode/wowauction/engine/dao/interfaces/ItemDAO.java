@@ -1,8 +1,7 @@
 package org.freekode.wowauction.engine.dao.interfaces;
 
-import org.freekode.wowauction.models.Item;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+
+import org.freekode.wowauction.persistence.models.Item;
 
 import java.util.List;
 

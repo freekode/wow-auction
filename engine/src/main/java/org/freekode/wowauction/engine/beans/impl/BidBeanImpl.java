@@ -2,18 +2,16 @@ package org.freekode.wowauction.engine.beans.impl;
 
 import org.freekode.wowauction.engine.beans.interfaces.BidBean;
 import org.freekode.wowauction.engine.dao.interfaces.BidDAO;
-import org.freekode.wowauction.models.Bid;
-import org.freekode.wowauction.models.Snapshot;
+import org.freekode.wowauction.persistence.models.Bid;
+import org.freekode.wowauction.persistence.models.Snapshot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Component
-@Transactional
 public class BidBeanImpl implements BidBean {
     @Autowired
     private BidDAO bidDAO;

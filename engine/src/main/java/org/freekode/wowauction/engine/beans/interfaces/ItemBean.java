@@ -1,6 +1,7 @@
 package org.freekode.wowauction.engine.beans.interfaces;
 
-import org.freekode.wowauction.models.Item;
+
+import org.freekode.wowauction.persistence.models.Item;
 
 import java.util.List;
 import java.util.Set;

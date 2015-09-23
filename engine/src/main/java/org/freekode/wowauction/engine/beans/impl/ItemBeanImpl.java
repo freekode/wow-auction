@@ -2,17 +2,15 @@ package org.freekode.wowauction.engine.beans.impl;
 
 import org.freekode.wowauction.engine.beans.interfaces.ItemBean;
 import org.freekode.wowauction.engine.dao.interfaces.ItemDAO;
-import org.freekode.wowauction.models.Item;
+import org.freekode.wowauction.persistence.models.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Component
-@Transactional
 public class ItemBeanImpl implements ItemBean {
     @Autowired
     private ItemDAO itemDAO;

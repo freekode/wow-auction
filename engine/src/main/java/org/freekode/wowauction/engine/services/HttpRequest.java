@@ -6,9 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by freekode on 03/02/15.
- */
 public class HttpRequest {
     public static String sendGet(String url) {
         BufferedReader in = null;

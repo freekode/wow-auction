@@ -1,9 +1,9 @@
 package org.freekode.wowauction.engine.dao.impl;
 
 import org.freekode.wowauction.engine.dao.interfaces.SnapshotDAO;
-import org.freekode.wowauction.models.Bid;
-import org.freekode.wowauction.models.Realm;
-import org.freekode.wowauction.models.Snapshot;
+import org.freekode.wowauction.persistence.models.Bid;
+import org.freekode.wowauction.persistence.models.Realm;
+import org.freekode.wowauction.persistence.models.Snapshot;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Repository
+@Transactional
 public class SnapshotDAOImpl implements SnapshotDAO {
     @PersistenceContext
     private EntityManager entityManager;

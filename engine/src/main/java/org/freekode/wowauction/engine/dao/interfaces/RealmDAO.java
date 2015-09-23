@@ -1,6 +1,7 @@
 package org.freekode.wowauction.engine.dao.interfaces;
 
-import org.freekode.wowauction.models.Realm;
+
+import org.freekode.wowauction.persistence.models.Realm;
 
 import java.util.List;
 

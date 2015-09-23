@@ -2,7 +2,7 @@ package org.freekode.wowauction.engine.controllers;
 
 
 import org.freekode.wowauction.engine.beans.interfaces.SnapshotBean;
-import org.freekode.wowauction.models.Snapshot;
+import org.freekode.wowauction.persistence.models.Snapshot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

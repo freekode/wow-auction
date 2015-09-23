@@ -2,18 +2,14 @@ package org.freekode.wowauction.engine.beans.impl;
 
 import org.freekode.wowauction.engine.beans.interfaces.RealmBean;
 import org.freekode.wowauction.engine.dao.interfaces.RealmDAO;
-import org.freekode.wowauction.models.Bid;
-import org.freekode.wowauction.models.Realm;
-import org.freekode.wowauction.models.Snapshot;
+import org.freekode.wowauction.persistence.models.Realm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@Transactional
 public class RealmBeanImpl implements RealmBean {
     @Autowired
     private RealmDAO realmDAO;

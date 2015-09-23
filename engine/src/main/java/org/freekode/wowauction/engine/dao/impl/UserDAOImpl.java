@@ -1,7 +1,7 @@
 package org.freekode.wowauction.engine.dao.impl;
 
 import org.freekode.wowauction.engine.dao.interfaces.UserDAO;
-import org.freekode.wowauction.models.User;
+import org.freekode.wowauction.persistence.models.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
+@Transactional
 public class UserDAOImpl implements UserDAO {
     @PersistenceContext
     private EntityManager entityManager;

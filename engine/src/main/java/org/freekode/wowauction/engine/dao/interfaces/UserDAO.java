@@ -1,6 +1,7 @@
 package org.freekode.wowauction.engine.dao.interfaces;
 
-import org.freekode.wowauction.models.User;
+
+import org.freekode.wowauction.persistence.models.User;
 
 import java.util.List;
 

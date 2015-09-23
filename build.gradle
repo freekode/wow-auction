@@ -5,10 +5,57 @@ apply plugin: 'java'
 apply plugin: 'war'
 
 
+ext.libraries = [
+        spring_context: 'org.springframework:spring-context:4.1.6.RELEASE',
+        spring_tx: 'org.springframework:spring-tx:4.1.6.RELEASE',
+        spring_orm: 'org.springframework:spring-orm:4.1.6.RELEASE',
+        spring_webmvc: 'org.springframework:spring-webmvc:4.1.6.RELEASE',
+
+        hibernate_core: 'org.hibernate:hibernate-core:4.3.8.Final',
+        hibernate_entitymanager: 'org.hibernate:hibernate-entitymanager:4.3.8.Final',
+
+        postgres: 'org.postgresql:postgresql:9.4-1201-jdbc41',
+
+        flyway_plugin: 'org.flywaydb:flyway-maven-plugin:3.2.1',
+
+        log4j_core: 'org.apache.logging.log4j:log4j-core:2.3',
+        log4j_api: 'org.apache.logging.log4j:log4j-api:2.3',
+
+        servlet: 'javax.servlet:jstl:1.2',
+
+        jackson_databind: 'com.fasterxml.jackson.core:jackson-databind:2.6.0',
+        jackson_datatype: 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate4:2.6.0',
+
+        gson: 'com.googlecode.json-simple:json-simple:1.1.1',
+        junit: "junit:junit:4.10"
+]
+
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-
 }
+
+
+//compile 'com.googlecode.json-simple:json-simple:1.1.1'
+//
+//compile 'org.springframework:spring-context:' + springVersion
+//compile 'org.springframework:spring-tx:' + springVersion
+//compile 'org.springframework:spring-orm:' + springVersion
+//compile 'org.springframework:spring-webmvc:' + springVersion
+//
+//compile 'org.hibernate:hibernate-core:' + hibernateVersion
+//compile 'org.hibernate:hibernate-entitymanager:' + hibernateVersion
+//providedCompile 'org.postgresql:postgresql:' + postgresVersion
+//
+//compile 'org.flywaydb:flyway-maven-plugin:3.2.1'
+//
+//compile 'org.apache.logging.log4j:log4j-core:2.3'
+//compile 'org.apache.logging.log4j:log4j-api:2.3'
+//
+//compile 'javax.servlet:jstl:1.2'
+//
+//compile 'com.fasterxml.jackson.core:jackson-databind:2.6.0'
+//compile 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate4:2.6.0'

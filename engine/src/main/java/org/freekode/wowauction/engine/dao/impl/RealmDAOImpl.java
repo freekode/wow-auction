@@ -1,7 +1,7 @@
 package org.freekode.wowauction.engine.dao.impl;
 
 import org.freekode.wowauction.engine.dao.interfaces.RealmDAO;
-import org.freekode.wowauction.models.Realm;
+import org.freekode.wowauction.persistence.models.Realm;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
+@Transactional
 public class RealmDAOImpl implements RealmDAO {
     @PersistenceContext
     private EntityManager entityManager;

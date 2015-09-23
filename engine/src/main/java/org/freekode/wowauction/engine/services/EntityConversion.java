@@ -1,7 +1,8 @@
 package org.freekode.wowauction.engine.services;
 
-import org.freekode.wowauction.models.Bid;
-import org.freekode.wowauction.models.Item;
+
+import org.freekode.wowauction.persistence.models.Bid;
+import org.freekode.wowauction.persistence.models.Item;
 
 import java.math.BigInteger;
 import java.util.*;

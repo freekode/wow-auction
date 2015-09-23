@@ -2,19 +2,17 @@ package org.freekode.wowauction.engine.beans.impl;
 
 import org.freekode.wowauction.engine.beans.interfaces.SnapshotBean;
 import org.freekode.wowauction.engine.dao.interfaces.SnapshotDAO;
-import org.freekode.wowauction.models.Bid;
-import org.freekode.wowauction.models.Realm;
-import org.freekode.wowauction.models.Snapshot;
+import org.freekode.wowauction.persistence.models.Bid;
+import org.freekode.wowauction.persistence.models.Realm;
+import org.freekode.wowauction.persistence.models.Snapshot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 @Component
-@Transactional
 public class SnapshotBeanImpl implements SnapshotBean {
     @Autowired
     private SnapshotDAO snapshotDAO;

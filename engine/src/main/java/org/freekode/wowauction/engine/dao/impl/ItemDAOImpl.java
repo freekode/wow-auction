@@ -1,8 +1,9 @@
 package org.freekode.wowauction.engine.dao.impl;
 
 import org.freekode.wowauction.engine.dao.interfaces.ItemDAO;
-import org.freekode.wowauction.models.Item;
+import org.freekode.wowauction.persistence.models.Item;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,6 +11,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 @Repository
+@Transactional
 public class ItemDAOImpl implements ItemDAO {
     @PersistenceContext
     private EntityManager entityManager;
