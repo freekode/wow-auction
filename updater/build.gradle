@@ -11,4 +11,10 @@ repositories {
 
 dependencies {
     compile project(":persistence")
+
+    compile libraries.spring_context
+    compile libraries.spring_tx
+    compile libraries.spring_orm
+
+    compile libraries.flyway_plugin
 }

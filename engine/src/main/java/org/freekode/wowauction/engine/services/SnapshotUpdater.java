@@ -34,7 +34,7 @@ public class SnapshotUpdater {
     private SnapshotBean snapshotBean;
 
 
-    @Scheduled(cron = "0 */10 * * * ?")
+//    @Scheduled(cron = "0 */10 * * * ?")
     public void scheduleUpdate() {
         updateAuction();
     }
