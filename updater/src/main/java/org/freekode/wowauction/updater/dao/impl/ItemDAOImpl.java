@@ -22,19 +22,6 @@ public class ItemDAOImpl implements ItemDAO {
         return entityManager.merge(item);
     }
 
-    @Override
-    public Item getById(Integer id) {
-        Item item = entityManager.find(Item.class, id);
-        item.getBids().size();
-        return item;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Item> findAll() {
-        return entityManager.createQuery("select item from Item item").getResultList();
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public Item isExistsByConstraint(Item item) {

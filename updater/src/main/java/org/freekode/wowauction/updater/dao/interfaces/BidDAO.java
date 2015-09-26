@@ -10,7 +10,5 @@ public interface BidDAO {
 
     Bid getById(Integer id);
 
-    List<Bid> findAll();
-
     List<Bid> findBySnapshot(Snapshot snapshot);
 }

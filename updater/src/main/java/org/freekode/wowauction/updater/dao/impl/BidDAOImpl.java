@@ -30,12 +30,6 @@ public class BidDAOImpl implements BidDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Bid> findAll() {
-        return entityManager.createQuery("select bid from Bid bid").getResultList();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
     public List<Bid> findBySnapshot(Snapshot snapshot) {
         Query query = entityManager.createQuery("select snapshot.bids from Snapshot snapshot where snapshot = :snapshot");
         query.setParameter("snapshot", snapshot);

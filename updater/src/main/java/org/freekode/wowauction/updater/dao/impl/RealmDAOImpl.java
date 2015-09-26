@@ -16,16 +16,6 @@ public class RealmDAOImpl implements RealmDAO {
     private EntityManager entityManager;
 
 
-    @Override
-    public Realm save(Realm realm) {
-        return entityManager.merge(realm);
-    }
-
-    @Override
-    public Realm getById(Integer id) {
-        return entityManager.find(Realm.class, id);
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public List<Realm> findAll() {

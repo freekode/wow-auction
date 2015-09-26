@@ -16,11 +16,6 @@ public class RealmBeanImpl implements RealmBean {
 
 
     @Override
-    public Realm save(Realm realm) {
-        return realmDAO.save(realm);
-    }
-
-    @Override
     public List<Realm> findForUpdate() {
         List<Realm> realms = new ArrayList<>();
         for (Realm realm : realmDAO.findAll()) {
@@ -30,15 +25,5 @@ public class RealmBeanImpl implements RealmBean {
         }
 
         return realms;
-    }
-
-    @Override
-    public Realm getById(int id) {
-        return realmDAO.getById(id);
-    }
-
-    @Override
-    public List<Realm> findAll() {
-        return realmDAO.findAll();
     }
 }

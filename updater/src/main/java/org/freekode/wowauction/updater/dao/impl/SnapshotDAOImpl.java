@@ -22,11 +22,6 @@ public class SnapshotDAOImpl implements SnapshotDAO {
         return entityManager.merge(snapshot);
     }
 
-    @Override
-    public Snapshot getById(int id) {
-        return entityManager.find(Snapshot.class, id);
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public Snapshot getLast(Realm realm) {
@@ -48,31 +43,10 @@ public class SnapshotDAOImpl implements SnapshotDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Snapshot> findAll() {
-        return entityManager.createQuery("select snapshot from Snapshot snapshot").getResultList();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
     public List<Snapshot> findByBid(Bid bid) {
         Query query = entityManager.createQuery("select bid.snapshots from Bid bid where bid = :bid");
         query.setParameter("bid", bid);
 
         return query.getResultList();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Snapshot> findBetweenDates(Date startTime, Date endTime) {
-        Query query = entityManager.createQuery(
-			"select snapshot from Snapshot snapshot " +
-					"where snapshot.lastModified > :starttime " +
-					"and snapshot.lastModified < :endtime"
-        );
-
-	    query.setParameter("starttime", startTime);
-	    query.setParameter("endtime", endTime);
-
-	    return query.getResultList();
     }
 }

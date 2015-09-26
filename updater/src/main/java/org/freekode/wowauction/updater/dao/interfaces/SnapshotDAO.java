@@ -11,13 +11,7 @@ import java.util.List;
 public interface SnapshotDAO {
     Snapshot save(Snapshot snapshot);
 
-    Snapshot getById(int id);
-
     Snapshot getLast(Realm realm);
 
-    List<Snapshot> findAll();
-
     List<Snapshot> findByBid(Bid bid);
-
-    List<Snapshot> findBetweenDates(Date startTime, Date endTime);
 }

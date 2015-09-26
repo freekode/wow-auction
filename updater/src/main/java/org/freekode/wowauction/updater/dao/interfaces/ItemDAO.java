@@ -8,9 +8,5 @@ import java.util.List;
 public interface ItemDAO {
     Item save(Item item);
 
-    Item getById(Integer id);
-
-    List<Item> findAll();
-
     Item isExistsByConstraint(Item item);
 }
