@@ -28,4 +28,6 @@ dependencies {
     compile libraries.log4j_api
 
     compile libraries.gson
+
+    compile libraries.servlet_jstl
 }

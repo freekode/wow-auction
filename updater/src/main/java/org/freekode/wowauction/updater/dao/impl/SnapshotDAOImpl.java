@@ -43,6 +43,12 @@ public class SnapshotDAOImpl implements SnapshotDAO {
 
     @SuppressWarnings("unchecked")
     @Override
+    public List<Snapshot> findAll() {
+        return entityManager.createQuery("select snapshot from Snapshot snapshot").getResultList();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
     public List<Snapshot> findByBid(Bid bid) {
         Query query = entityManager.createQuery("select bid.snapshots from Bid bid where bid = :bid");
         query.setParameter("bid", bid);

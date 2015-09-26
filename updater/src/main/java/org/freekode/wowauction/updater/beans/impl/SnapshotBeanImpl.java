@@ -24,6 +24,11 @@ public class SnapshotBeanImpl implements SnapshotBean {
     }
 
     @Override
+    public List<Snapshot> findAll() {
+        return snapshotDAO.findAll();
+    }
+
+    @Override
     public Snapshot getLastByRealm(Realm realm) {
         return snapshotDAO.getLast(realm);
     }

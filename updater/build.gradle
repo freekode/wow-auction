@@ -22,4 +22,7 @@ dependencies {
     compile libraries.flyway_plugin
 
     compile libraries.gson
+
+    providedCompile libraries.servlet_jstl
+    providedCompile libraries.servlet_api
 }

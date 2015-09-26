@@ -11,6 +11,8 @@ import java.util.List;
 public interface SnapshotBean {
     Snapshot save(Snapshot snapshot);
 
+    List<Snapshot> findAll();
+
     Snapshot getLastByRealm(Realm realm);
 
     List<Snapshot> getByBid(Bid bid);

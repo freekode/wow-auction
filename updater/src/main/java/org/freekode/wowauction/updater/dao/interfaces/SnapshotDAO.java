@@ -13,5 +13,7 @@ public interface SnapshotDAO {
 
     Snapshot getLast(Realm realm);
 
+    List<Snapshot> findAll();
+
     List<Snapshot> findByBid(Bid bid);
 }
