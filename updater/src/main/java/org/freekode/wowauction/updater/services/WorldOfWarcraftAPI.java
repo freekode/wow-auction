@@ -1,4 +1,4 @@
-package org.freekode.wowauction.engine.services;
+package org.freekode.wowauction.updater.services;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

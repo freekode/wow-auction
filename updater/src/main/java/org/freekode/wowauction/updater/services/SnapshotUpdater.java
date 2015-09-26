@@ -1,17 +1,16 @@
-package org.freekode.wowauction.engine.services;
+package org.freekode.wowauction.updater.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.freekode.wowauction.engine.beans.interfaces.BidBean;
-import org.freekode.wowauction.engine.beans.interfaces.ItemBean;
-import org.freekode.wowauction.engine.beans.interfaces.RealmBean;
-import org.freekode.wowauction.engine.beans.interfaces.SnapshotBean;
+import org.freekode.wowauction.updater.beans.interfaces.BidBean;
+import org.freekode.wowauction.updater.beans.interfaces.ItemBean;
+import org.freekode.wowauction.updater.beans.interfaces.RealmBean;
+import org.freekode.wowauction.updater.beans.interfaces.SnapshotBean;
 import org.freekode.wowauction.persistence.models.Bid;
 import org.freekode.wowauction.persistence.models.Item;
 import org.freekode.wowauction.persistence.models.Realm;
 import org.freekode.wowauction.persistence.models.Snapshot;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -34,7 +33,6 @@ public class SnapshotUpdater {
     private SnapshotBean snapshotBean;
 
 
-//    @Scheduled(cron = "0 */10 * * * ?")
     public void scheduleUpdate() {
         updateAuction();
     }

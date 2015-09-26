@@ -8,7 +8,10 @@
     <context:annotation-config/>
     <context:component-scan base-package="org.freekode.wowauction.updater"/>
 
-    <task:annotation-driven/>
+    <task:scheduler id="scheduler"/>
+    <task:scheduled-tasks scheduler="scheduler">
+        <task:scheduled ref="snapshotUpdater" method="scheduleUpdate" cron="0 */10 * * * ?"/>
+    </task:scheduled-tasks>
 
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="java:comp/env/jdbc/WoWAuctionDB"/>

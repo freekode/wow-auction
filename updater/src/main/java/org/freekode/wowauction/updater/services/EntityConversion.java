@@ -1,4 +1,4 @@
-package org.freekode.wowauction.engine.services;
+package org.freekode.wowauction.updater.services;
 
 
 import org.freekode.wowauction.persistence.models.Bid;

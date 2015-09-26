@@ -16,5 +16,10 @@ dependencies {
     compile libraries.spring_tx
     compile libraries.spring_orm
 
+    compile libraries.log4j_core
+    compile libraries.log4j_api
+
     compile libraries.flyway_plugin
+
+    compile libraries.gson
 }
