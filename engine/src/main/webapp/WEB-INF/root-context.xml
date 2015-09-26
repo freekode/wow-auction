@@ -29,7 +29,7 @@
                 <property name="databasePlatform" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
             </bean>
         </property>
-        <property name="packagesToScan" value="org.freekode.wowauction"/>
+        <property name="packagesToScan" value="org.freekode.wowauction.persistence"/>
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.format_sql">true</prop>

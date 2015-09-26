@@ -9,8 +9,6 @@ repositories {
     mavenCentral()
 }
 
-
-
 dependencies {
     compile project(":persistence")
 

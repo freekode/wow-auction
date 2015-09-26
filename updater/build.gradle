@@ -23,6 +23,6 @@ dependencies {
 
     compile libraries.gson
 
-    providedCompile libraries.servlet_jstl
+    compile libraries.servlet_jstl
     providedCompile libraries.servlet_api
 }
