@@ -1,6 +1,8 @@
 package org.freekode.wowauction.engine.dao.impl;
 
 import org.freekode.wowauction.engine.dao.interfaces.SnapshotDAO;
+import org.freekode.wowauction.engine.services.Utils;
+import org.freekode.wowauction.engine.transfer.Snapshot;
 import org.freekode.wowauction.persistence.models.BidEntity;
 import org.freekode.wowauction.persistence.models.RealmEntity;
 import org.freekode.wowauction.persistence.models.SnapshotEntity;
@@ -23,13 +25,24 @@ public class SnapshotDAOImpl implements SnapshotDAO {
     }
 
     @Override
-    public SnapshotEntity getById(int id) {
+    public SnapshotEntity getEntity(int id) {
         return entityManager.find(SnapshotEntity.class, id);
+    }
+
+    @Override
+    public Snapshot getSnapshot(int id, Set options) {
+        SnapshotEntity entity = getEntity(id);
+        if (entity != null) {
+            Snapshot snapshot = new Snapshot(entity);
+            snapshot.init(options);
+            return snapshot;
+        }
+        return null;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public SnapshotEntity getLast(RealmEntity realm) {
+    public Snapshot getLast(RealmEntity realm, Set options) {
         Query query = entityManager.createQuery(
                 "select snapshot " +
                         "from SnapshotEntity snapshot " +
@@ -40,7 +53,9 @@ public class SnapshotDAOImpl implements SnapshotDAO {
 
         List<SnapshotEntity> snapshots = query.getResultList();
         if (!snapshots.isEmpty()) {
-            return snapshots.get(0);
+            Snapshot snapshot = new Snapshot(snapshots.get(0));
+            snapshot.init(options);
+            return snapshot;
         }
 
         return null;
@@ -48,22 +63,40 @@ public class SnapshotDAOImpl implements SnapshotDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<SnapshotEntity> findAll() {
-        return entityManager.createQuery("select snapshot from SnapshotEntity snapshot").getResultList();
+    public List<Snapshot> findAll(Set options) {
+        Query query = entityManager.createQuery("select snapshot from SnapshotEntity snapshot");
+
+        List<SnapshotEntity> entities = query.getResultList();
+
+        List<Snapshot> list = new ArrayList<>();
+        for (SnapshotEntity entity : entities) {
+            list.add(new Snapshot(entity));
+        }
+        Utils.initCollection(list, options);
+
+        return list;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<SnapshotEntity> findByBid(BidEntity bid) {
+    public List<Snapshot> findByBid(BidEntity bid, Set options) {
         Query query = entityManager.createQuery("select bid.snapshots from BidEntity bid where bid = :bid");
         query.setParameter("bid", bid);
 
-        return query.getResultList();
+        List<SnapshotEntity> entities = query.getResultList();
+
+        List<Snapshot> list = new ArrayList<>();
+        for (SnapshotEntity entity : entities) {
+            list.add(new Snapshot(entity));
+        }
+        Utils.initCollection(list, options);
+
+        return list;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<SnapshotEntity> findBetweenDates(Date startTime, Date endTime) {
+    public List<Snapshot> findBetweenDates(Date startTime, Date endTime, Set options) {
         Query query = entityManager.createQuery(
 			"select snapshot from SnapshotEntity snapshot " +
 					"where snapshot.lastModified > :starttime " +
@@ -73,6 +106,15 @@ public class SnapshotDAOImpl implements SnapshotDAO {
 	    query.setParameter("starttime", startTime);
 	    query.setParameter("endtime", endTime);
 
-	    return query.getResultList();
+
+        List<SnapshotEntity> entities = query.getResultList();
+
+        List<Snapshot> list = new ArrayList<>();
+        for (SnapshotEntity entity : entities) {
+            list.add(new Snapshot(entity));
+        }
+        Utils.initCollection(list, options);
+
+	    return list;
     }
 }

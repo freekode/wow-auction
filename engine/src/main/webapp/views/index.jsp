@@ -1,6 +1,7 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 
 <t:layout>
     <jsp:attribute name="head">
@@ -11,10 +12,16 @@
 
         <link href="${graphCss}" rel="stylesheet"/>
         <script src="${d3Js}"></script>
+        <script src="${graphJs}"></script>
         <script src="${indexJs}"></script>
+        <script>
+
+        </script>
     </jsp:attribute>
 
     <jsp:body>
+
+        ${snapshots}
         <div ng-controller="IndexCtrl">
             <div id="graph"></div>
         </div>

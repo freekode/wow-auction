@@ -2,6 +2,7 @@ package org.freekode.wowauction.engine.beans.impl;
 
 import org.freekode.wowauction.engine.beans.interfaces.SnapshotBean;
 import org.freekode.wowauction.engine.dao.interfaces.SnapshotDAO;
+import org.freekode.wowauction.engine.transfer.Snapshot;
 import org.freekode.wowauction.persistence.models.BidEntity;
 import org.freekode.wowauction.persistence.models.RealmEntity;
 import org.freekode.wowauction.persistence.models.SnapshotEntity;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class SnapshotBeanImpl implements SnapshotBean {
@@ -18,12 +20,12 @@ public class SnapshotBeanImpl implements SnapshotBean {
     private SnapshotDAO snapshotDAO;
 
     @Override
-    public List<SnapshotEntity> findBetweenDates(Date startTime, Date endTime) {
-        return snapshotDAO.findBetweenDates(startTime, endTime);
+    public List<Snapshot> findBetweenDates(Date startTime, Date endTime, Set options) {
+        return snapshotDAO.findBetweenDates(startTime, endTime, options);
     }
 
     @Override
-    public List<SnapshotEntity> findByToday() {
+    public List<Snapshot> findByToday(Set options) {
         Date todayStart, todayEnd;
         Calendar today = Calendar.getInstance();
 
@@ -42,7 +44,7 @@ public class SnapshotBeanImpl implements SnapshotBean {
         todayEnd = today.getTime();
 
 
-        return findBetweenDates(todayStart, todayEnd);
+        return findBetweenDates(todayStart, todayEnd, options);
     }
 
     @Override
@@ -51,22 +53,27 @@ public class SnapshotBeanImpl implements SnapshotBean {
     }
 
     @Override
-    public List<SnapshotEntity> findAll() {
-        return snapshotDAO.findAll();
+    public List<Snapshot> findAll(Set options) {
+        return snapshotDAO.findAll(options);
     }
 
     @Override
-    public SnapshotEntity getById(int id) {
-        return snapshotDAO.getById(id);
+    public SnapshotEntity getEntity(int id) {
+        return snapshotDAO.getEntity(id);
     }
 
     @Override
-    public SnapshotEntity getLastByRealm(RealmEntity realm) {
-        return snapshotDAO.getLast(realm);
+    public Snapshot getSnapshot(int id, Set options) {
+        return snapshotDAO.getSnapshot(id, options);
     }
 
     @Override
-    public List<SnapshotEntity> getByBid(BidEntity bid) {
-        return snapshotDAO.findByBid(bid);
+    public Snapshot getLastByRealm(RealmEntity realm, Set options) {
+        return snapshotDAO.getLast(realm, options);
+    }
+
+    @Override
+    public List<Snapshot> getByBid(BidEntity bid, Set options) {
+        return snapshotDAO.findByBid(bid, options);
     }
 }

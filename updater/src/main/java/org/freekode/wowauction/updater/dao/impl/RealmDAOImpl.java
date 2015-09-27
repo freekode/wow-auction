@@ -19,6 +19,6 @@ public class RealmDAOImpl implements RealmDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<RealmEntity> findAll() {
-        return entityManager.createQuery("select realm from Realm realm").getResultList();
+        return entityManager.createQuery("select realm from RealmEntity realm").getResultList();
     }
 }

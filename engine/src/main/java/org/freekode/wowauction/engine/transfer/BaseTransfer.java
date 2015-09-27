@@ -1,7 +1,5 @@
 package org.freekode.wowauction.engine.transfer;
 
-import java.util.Set;
-
 public abstract class BaseTransfer<E> {
     protected E entity;
 
@@ -17,8 +15,6 @@ public abstract class BaseTransfer<E> {
     public E getEntity() {
         return entity;
     }
-
-    public abstract void init(Set options);
 
     @Override
     public boolean equals(Object obj) {

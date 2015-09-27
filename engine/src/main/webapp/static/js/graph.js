@@ -1,119 +1,194 @@
-var margin = {top: 60, right: 60, bottom: 60, left: 60},
-	outerWidth = 750,
-	outerHeight = 350;
+var graph = function (data, id) {
+	var margin = {top: 60, right: 120, bottom: 60, left: 70},
+			outerWidth = 1300,
+			outerHeight = 700;
 
-var innerWidth = outerWidth - margin.left - margin.right,
-	innerHeight = outerHeight - margin.top - margin.bottom;
+	var innerWidth = outerWidth - margin.left - margin.right,
+			innerHeight = outerHeight - margin.top - margin.bottom;
 
-// example data
-var data = [
-	{lastModified:"2012-03-20", size:"43"},
-	{lastModified:"2012-03-21", size:"89"},
-	{lastModified:"2012-03-22", size:"82"},
-	{lastModified:"2012-03-23", size:"70"},
-	{lastModified:"2012-03-24", size:"36"},
-	{lastModified:"2012-03-25", size:"20"},
-	{lastModified:"2012-03-26", size:"42"}
-];
 
-var minTotal = d3.min(
-	data, function(d) {
-		return d.size;
-	});
+	var color = d3.scale.category10();
 
-var maxTotal = d3.max(
-	data, function(d) {
-		return d.size;
-	});
 
-var minDate = d3.min(
-	data, function(d) {
-		return d.lastModified;
-	});
+	var xScale = d3.time.scale().range([0, innerWidth]);
+	var yScaleLeft = d3.scale.linear().range([innerHeight, 0]);
+	var yScaleRight = d3.scale.linear().range([innerHeight, 0]);
 
-var maxDate = d3.max(
-	data, function(d) {
-		return d.lastModified;
-	});
 
-var x = d3.time.scale()
-	.domain([
-		new Date(minDate),
-		new Date(maxDate)
-	])
-	.range([0, innerWidth]);
+	var xAxis = d3.svg.axis().scale(xScale)
+			.orient("bottom")
+			.ticks(d3.time.hours, 1)
+			.innerTickSize(-innerHeight)
+			.outerTickSize(0)
+			.tickPadding(10)
+			.tickFormat(d3.time.format("%H:%M"));
 
-var y = d3.scale.linear()
-	.domain([0, maxTotal])
-	.range([innerHeight, 0]);
+	var yAxisLeft = d3.svg.axis().scale(yScaleLeft)
+			.orient("left")
+			.ticks(10)
+			.tickFormat(d3.format("s"))
+			.innerTickSize(10)
+			.outerTickSize(0)
+			.tickPadding(10);
 
-var xAxis = d3.svg.axis()
-	.scale(x)
-	.orient("bottom")
-	.ticks(d3.time.days)
-	.innerTickSize(-innerHeight)
-	.outerTickSize(0)
-	.tickPadding(10)
-	.tickFormat(d3.time.format("%d %b"));
+	var yAxisRight = d3.svg.axis().scale(yScaleRight)
+			.orient("right")
+			.ticks(10)
+			.tickFormat(d3.format("s"))
+			.tickPadding(10)
+			.innerTickSize(10)
+			.outerTickSize(0);
 
-var yAxis = d3.svg.axis()
-	.scale(y)
-	.orient("left")
-	.tickValues([0, maxTotal / 4, maxTotal / 2, maxTotal])
-	.innerTickSize(-innerWidth)
-	.outerTickSize(0)
-	.tickPadding(10);
 
-var svg = d3.select("#graph").append("svg")
-	.attr("width", outerWidth)
-	.attr("height", outerHeight)
-	.append("g")
-	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	// left
+	var lineClosed = d3.svg.line()
+			.x(function (d) {
+				return xScale(d.date);
+			})
+			.y(function (d) {
+				return yScaleLeft(d.closed);
+			});
 
-svg.append("g")
-	.attr("class", "x axis")
-	.attr("transform", "translate(0," + innerHeight + ")")
-	.call(xAxis);
+	var lineNewAmount = d3.svg.line()
+			.x(function (d) {
+				return xScale(d.date);
+			})
+			.y(function (d) {
+				return yScaleLeft(d.newAmount);
+			});
 
-svg.append("g")
-	.attr("class", "y axis")
-	.call(yAxis);
+	// right
+	var lineExisting = d3.svg.line()
+			.x(function (d) {
+				return xScale(d.date);
+			})
+			.y(function (d) {
+				return yScaleRight(d.existing);
+			});
 
-var yGrid = d3.svg.axis()
-	.scale(y)
-	.orient("left")
-	.ticks(20)
-	.tickSize(-innerWidth, 0, 0)
-	.tickFormat("");
+	var lineOverall = d3.svg.line()
+			.x(function (d) {
+				return xScale(d.date);
+			})
+			.y(function (d) {
+				return yScaleRight(d.overall);
+			});
 
-svg.append("g")
-	.attr("class", "grid")
-	.call(yGrid);
 
-// uncomment to put y-lines on the grid
-//
-// var xGrid = d3.svg.axis()
-//     .scale(x)
-//     .orient("bottom")
-//     .ticks(20)
-//     .tickSize(-innerHeight, 0, 0)
-//     .tickFormat("");
-//
-// svg.append("g")
-//     .attr("class", "grid")
-//     .attr("transform", "translate(0," + innerHeight + ")")
-//     .call(xGrid);
+	var svg = d3.select("#" + id).append("svg")
+			.attr("width", outerWidth)
+			.attr("height", outerHeight)
+			.attr("style", "border: 1px solid;")
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var line = d3.svg.line()
-	.x(function(d) {
-		return x(new Date(d.lastModified));
-	})
-	.y(function(d) {
-		return y(d.size);
-	})
-	.interpolate("basis");
 
-svg.append("svg:path")
-	.datum(data)
-	.attr("class", "line")
-	.attr("d", line);
+	color.domain(d3.keys(data[0]).filter(function (key) {
+		return key !== "date";
+	}));
+
+	xScale.domain(d3.extent(data, function (d) {
+		return d.date;
+	}));
+
+	// small
+	yScaleLeft.domain([d3.min(data, function (d) {
+		return d.closed < d.newAmount ? d.closed : d.newAmount
+	}), d3.max(data, function (d) {
+		return d.closed > d.newAmount ? d.closed : d.newAmount
+	})]);
+	// big
+	yScaleRight.domain([d3.min(data, function (d) {
+		return d.existing < d.overall ? d.existing : d.overall
+	}), d3.max(data, function (d) {
+		return d.existing > d.overall ? d.existing : d.overall
+	})]);
+
+
+	// lines
+	svg.append("path")
+			.attr("d", lineClosed(data))
+			.attr("class", "line")
+			.attr("stroke", color('closed'));
+
+	svg.append("path")
+			.attr("d", lineNewAmount(data))
+			.attr("class", "line")
+			.attr("stroke", color('newAmount'));
+
+	svg.append("path")
+			.attr("d", lineExisting(data))
+			.attr("class", "line")
+			.attr("stroke", color('existing'));
+
+	svg.append("path")
+			.attr("d", lineOverall(data))
+			.attr("class", "line")
+			.attr("stroke", color('overall'));
+
+
+	// axis
+	svg.append("g")
+			.attr("class", "x axis")
+			.attr("transform", "translate(0," + innerHeight + ")")
+			.call(xAxis);
+
+	svg.append("g")
+			.attr("class", "y axis")
+			.style("fill", color('closed'))
+			.call(yAxisLeft);
+
+	svg.append("g")
+			.attr("class", "y axis")
+			.attr("transform", "translate(" + innerWidth + " ,0)")
+			.style("fill", color('existing'))
+			.call(yAxisRight);
+
+
+	// text
+	svg.append("text")
+			.attr("x", innerWidth / 2)
+			.attr("y", innerHeight + (margin.bottom / 2) + 10)
+			.style("text-anchor", "middle")
+			.text("Date");
+
+	svg.append("text")
+			.attr("transform", "rotate(-90)")
+			.attr("x", -innerHeight / 2)
+			.attr("y", -margin.left / 2 - 5)
+			.attr("dy", "-1em")
+			.style("text-anchor", "middle")
+			.text("Snapshot size");
+
+
+	var legendRectSize = 18;
+	var legendSpacing = 4;
+
+
+	var legend = svg.selectAll('.legend')
+			.append('div')
+			.data(color.domain())
+			.enter()
+			.append('g')
+			.attr('class', 'legend')
+			.attr('transform', function (d, i) {
+				var height = legendRectSize + legendSpacing;
+				var offset = height * color.domain().length / 2;
+				var horz = -2 * legendRectSize;
+				var vert = i * height - offset;
+				return 'translate(' + horz + ',' + vert + ')';
+			});
+
+	legend.append('rect')
+			.attr('width', legendRectSize)
+			.attr('height', legendRectSize)
+			.style('fill', color)
+			.style('stroke', color)
+
+	legend.append('text')
+			.attr('x', legendRectSize + legendSpacing)
+			.attr('y', legendRectSize - legendSpacing)
+			.text(function (d) {
+				return d;
+			});
+};

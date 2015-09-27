@@ -25,7 +25,7 @@ public class ItemDAOImpl implements ItemDAO {
     @SuppressWarnings("unchecked")
     @Override
     public ItemEntity isExistsByConstraint(ItemEntity item) {
-        Query query = entityManager.createQuery("select item from Item item where item.identifier = :identifier and item.uniqueId = :uniqueId");
+        Query query = entityManager.createQuery("select item from ItemEntity item where item.identifier = :identifier and item.uniqueId = :uniqueId");
         query.setParameter("identifier", item.getIdentifier());
         query.setParameter("uniqueId", item.getUniqueId());
 

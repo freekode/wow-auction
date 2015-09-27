@@ -13,9 +13,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by anna on 10/08/15.
- */
 @Controller
 @RequestMapping("/models")
 public class JSONController {
@@ -23,39 +20,39 @@ public class JSONController {
     private SnapshotBean snapshotBean;
 
 
-    @RequestMapping(value = "/snapshots/{id}", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    SnapshotEntity getSnapshotByIdInJSON(@PathVariable Integer id) {
-        return snapshotBean.getById(id);
-    }
-
-    @RequestMapping(value = "/snapshots", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    List<SnapshotEntity> getSnapshotsListInJSON() {
-        return snapshotBean.findAll();
-    }
-
-    @RequestMapping(value = "/snapshots/today")
-    public
-    @ResponseBody
-    List<SnapshotEntity> getSnapshotsTodayInJSON() {
-        return snapshotBean.findByToday();
-    }
-
-    @RequestMapping(value = "/snapshots/24h")
-    public
-    @ResponseBody
-    List<SnapshotEntity> getSnapshots24h() {
-        Date todayStart, todayEnd;
-        Calendar today = Calendar.getInstance();
-
-        todayEnd = today.getTime();
-
-        today.add(Calendar.DAY_OF_MONTH, -1);
-        todayStart = today.getTime();
-
-        return snapshotBean.findBetweenDates(todayStart, todayEnd);
-    }
+//    @RequestMapping(value = "/snapshots/{id}", method = RequestMethod.GET)
+//    public
+//    @ResponseBody
+//    SnapshotEntity getSnapshotByIdInJSON(@PathVariable Integer id) {
+//        return snapshotBean.getEntity(id);
+//    }
+//
+//    @RequestMapping(value = "/snapshots", method = RequestMethod.GET)
+//    public
+//    @ResponseBody
+//    List<SnapshotEntity> getSnapshotsListInJSON() {
+//        return snapshotBean.findAll();
+//    }
+//
+//    @RequestMapping(value = "/snapshots/today")
+//    public
+//    @ResponseBody
+//    List<SnapshotEntity> getSnapshotsTodayInJSON() {
+//        return snapshotBean.findByToday(null);
+//    }
+//
+//    @RequestMapping(value = "/snapshots/24h")
+//    public
+//    @ResponseBody
+//    List<SnapshotEntity> getSnapshots24h() {
+//        Date todayStart, todayEnd;
+//        Calendar today = Calendar.getInstance();
+//
+//        todayEnd = today.getTime();
+//
+//        today.add(Calendar.DAY_OF_MONTH, -1);
+//        todayStart = today.getTime();
+//
+//        return snapshotBean.findBetweenDates(todayStart, todayEnd, null);
+//    }
 }

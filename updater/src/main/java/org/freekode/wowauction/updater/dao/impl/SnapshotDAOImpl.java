@@ -27,7 +27,7 @@ public class SnapshotDAOImpl implements SnapshotDAO {
     public SnapshotEntity getLast(RealmEntity realm) {
         Query query = entityManager.createQuery(
                 "select snapshot " +
-                        "from Snapshot snapshot " +
+                        "from SnapshotEntity snapshot " +
                         "where snapshot.realm = :realm " +
                         "order by snapshot.lastModified desc");
 
@@ -44,13 +44,13 @@ public class SnapshotDAOImpl implements SnapshotDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<SnapshotEntity> findAll() {
-        return entityManager.createQuery("select snapshot from Snapshot snapshot").getResultList();
+        return entityManager.createQuery("select snapshot from SnapshotEntity snapshot").getResultList();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public List<SnapshotEntity> findByBid(BidEntity bid) {
-        Query query = entityManager.createQuery("select bid.snapshots from Bid bid where bid = :bid");
+        Query query = entityManager.createQuery("select bid.snapshots from BidEntity bid where bid = :bid");
         query.setParameter("bid", bid);
 
         return query.getResultList();

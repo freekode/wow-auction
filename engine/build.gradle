@@ -28,4 +28,5 @@ dependencies {
     compile libraries.gson
 
     compile libraries.servlet_jstl
+    providedCompile libraries.servlet_api
 }

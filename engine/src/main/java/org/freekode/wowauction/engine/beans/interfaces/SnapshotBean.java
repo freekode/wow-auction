@@ -1,25 +1,29 @@
 package org.freekode.wowauction.engine.beans.interfaces;
 
 
+import org.freekode.wowauction.engine.transfer.Snapshot;
 import org.freekode.wowauction.persistence.models.BidEntity;
 import org.freekode.wowauction.persistence.models.RealmEntity;
 import org.freekode.wowauction.persistence.models.SnapshotEntity;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public interface SnapshotBean {
     SnapshotEntity save(SnapshotEntity snapshot);
 
-    SnapshotEntity getById(int id);
+    SnapshotEntity getEntity(int id);
 
-    SnapshotEntity getLastByRealm(RealmEntity realm);
+    Snapshot getSnapshot(int id, Set options);
 
-    List<SnapshotEntity> findAll();
+    Snapshot getLastByRealm(RealmEntity realm, Set options);
 
-    List<SnapshotEntity> findBetweenDates(Date startTime, Date endTime);
+    List<Snapshot> findAll(Set options);
 
-    List<SnapshotEntity> findByToday();
+    List<Snapshot> findBetweenDates(Date startTime, Date endTime, Set options);
 
-    List<SnapshotEntity> getByBid(BidEntity bid);
+    List<Snapshot> findByToday(Set options);
+
+    List<Snapshot> getByBid(BidEntity bid, Set options);
 }

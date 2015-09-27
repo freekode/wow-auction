@@ -39,6 +39,8 @@ public class SnapshotUpdater {
     }
 
     public void updateAuction() {
+        logger.info("auction update started");
+
         for (RealmEntity realm : realmBean.findForUpdate()) {
             logger.info("realm = " + realm);
 
@@ -116,6 +118,6 @@ public class SnapshotUpdater {
             }
         }
 
-        logger.info("update ended");
+        logger.info("auction update ended");
     }
 }

@@ -1,23 +1,27 @@
 package org.freekode.wowauction.engine.dao.interfaces;
 
 
+import org.freekode.wowauction.engine.transfer.Snapshot;
 import org.freekode.wowauction.persistence.models.BidEntity;
 import org.freekode.wowauction.persistence.models.RealmEntity;
 import org.freekode.wowauction.persistence.models.SnapshotEntity;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public interface SnapshotDAO {
     SnapshotEntity save(SnapshotEntity snapshot);
 
-    SnapshotEntity getById(int id);
+    SnapshotEntity getEntity(int id);
 
-    SnapshotEntity getLast(RealmEntity realm);
+    Snapshot getSnapshot(int id, Set options);
 
-    List<SnapshotEntity> findAll();
+    Snapshot getLast(RealmEntity realm, Set options);
 
-    List<SnapshotEntity> findByBid(BidEntity bid);
+    List<Snapshot> findAll(Set options);
 
-    List<SnapshotEntity> findBetweenDates(Date startTime, Date endTime);
+    List<Snapshot> findByBid(BidEntity bid, Set options);
+
+    List<Snapshot> findBetweenDates(Date startTime, Date endTime, Set options);
 }
