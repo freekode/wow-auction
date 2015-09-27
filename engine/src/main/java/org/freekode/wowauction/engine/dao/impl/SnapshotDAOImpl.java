@@ -9,8 +9,13 @@ import org.freekode.wowauction.persistence.models.SnapshotEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional
@@ -96,15 +101,17 @@ public class SnapshotDAOImpl implements SnapshotDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Snapshot> findBetweenDates(Date startTime, Date endTime, Set options) {
+    public List<Snapshot> findBetweenDates(int realmId, Date startTime, Date endTime, Set options) {
         Query query = entityManager.createQuery(
-			"select snapshot from SnapshotEntity snapshot " +
-					"where snapshot.lastModified > :starttime " +
-					"and snapshot.lastModified < :endtime"
+                "select snapshot from SnapshotEntity snapshot " +
+                        "where snapshot.lastModified > :starttime " +
+                        "and snapshot.lastModified < :endtime " +
+                        "and snapshot.realm.id = :realmId"
         );
 
-	    query.setParameter("starttime", startTime);
-	    query.setParameter("endtime", endTime);
+        query.setParameter("starttime", startTime);
+        query.setParameter("endtime", endTime);
+        query.setParameter("realmId", realmId);
 
 
         List<SnapshotEntity> entities = query.getResultList();
@@ -115,6 +122,6 @@ public class SnapshotDAOImpl implements SnapshotDAO {
         }
         Utils.initCollection(list, options);
 
-	    return list;
+        return list;
     }
 }

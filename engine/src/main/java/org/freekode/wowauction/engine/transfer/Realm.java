@@ -1,25 +1,24 @@
 package org.freekode.wowauction.engine.transfer;
 
 import org.freekode.wowauction.engine.services.Utils;
-import org.freekode.wowauction.persistence.models.BidEntity;
+import org.freekode.wowauction.persistence.models.RealmEntity;
 import org.freekode.wowauction.persistence.models.SnapshotEntity;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-public class Bid extends BaseTransfer<BidEntity> implements Initializable {
+public class Realm extends BaseTransfer<RealmEntity> implements Initializable {
     private List<Snapshot> snapshots = new ArrayList<>();
 
 
-    public Bid() {
+    public Realm() {
         super();
-        entity = new BidEntity();
+        entity = new RealmEntity();
     }
 
-    public Bid(BidEntity entity) {
+    public Realm(RealmEntity entity) {
         super(entity);
     }
 
@@ -47,28 +46,20 @@ public class Bid extends BaseTransfer<BidEntity> implements Initializable {
         return entity.getId();
     }
 
-    public String getIdentifier() {
-        return entity.getIdentifier();
+    public RealmEntity.Region getRegion() {
+        return entity.getRegion();
     }
 
-    public BigInteger getRate() {
-        return entity.getRate();
+    public String getName() {
+        return entity.getName();
     }
 
-    public BigInteger getBuyout() {
-        return entity.getBuyout();
+    public String getSlug() {
+        return entity.getSlug();
     }
 
-    public Integer getQuantity() {
-        return entity.getQuantity();
-    }
-
-    public BidEntity.TimeLeft getTimeLeft() {
-        return entity.getTimeLeft();
-    }
-
-    public Boolean getClosed() {
-        return entity.getClosed();
+    public Boolean getUpdating() {
+        return entity.getUpdating();
     }
 
     public Date getCreatedAt() {

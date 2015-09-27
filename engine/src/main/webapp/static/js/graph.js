@@ -1,4 +1,4 @@
-var graph = function (data, id) {
+var indexGraph = function (data, id) {
 	var margin = {top: 60, right: 120, bottom: 60, left: 70},
 			outerWidth = 1300,
 			outerHeight = 700;

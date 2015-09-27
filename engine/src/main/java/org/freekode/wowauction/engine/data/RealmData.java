@@ -1,5 +1,8 @@
 package org.freekode.wowauction.engine.data;
 
+import org.freekode.wowauction.engine.transfer.Realm;
+import org.freekode.wowauction.engine.transfer.Snapshot;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,12 +15,24 @@ public class RealmData {
 
     private String slug;
 
-    private Boolean updating = false;
+    private Boolean updating;
 
     private Set<SnapshotData> snapshots = new HashSet<>();
 
 
     public RealmData() {
+    }
+
+    public RealmData(Realm realm) {
+        this.id = realm.getId();
+        this.region = realm.getRegion().toString();
+        this.name = realm.getName();
+        this.slug = realm.getSlug();
+        this.updating = realm.getUpdating();
+
+        for (Snapshot snapshot : realm.getSnapshots()) {
+            snapshots.add(new SnapshotData(snapshot));
+        }
     }
 
     public Integer getId() {

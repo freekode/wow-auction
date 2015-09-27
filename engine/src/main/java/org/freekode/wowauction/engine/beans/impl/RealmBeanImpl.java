@@ -2,12 +2,13 @@ package org.freekode.wowauction.engine.beans.impl;
 
 import org.freekode.wowauction.engine.beans.interfaces.RealmBean;
 import org.freekode.wowauction.engine.dao.interfaces.RealmDAO;
+import org.freekode.wowauction.engine.transfer.Realm;
 import org.freekode.wowauction.persistence.models.RealmEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class RealmBeanImpl implements RealmBean {
@@ -21,24 +22,17 @@ public class RealmBeanImpl implements RealmBean {
     }
 
     @Override
-    public List<RealmEntity> findForUpdate() {
-        List<RealmEntity> realms = new ArrayList<>();
-        for (RealmEntity realm : realmDAO.findAll()) {
-            if (realm.getUpdating()) {
-                realms.add(realm);
-            }
-        }
-
-        return realms;
+    public RealmEntity getEntity(int id) {
+        return realmDAO.getEntity(id);
     }
 
     @Override
-    public RealmEntity getById(int id) {
-        return realmDAO.getById(id);
+    public Realm getRealm(int id, Set options) {
+        return realmDAO.getRealm(id, options);
     }
 
     @Override
-    public List<RealmEntity> findAll() {
-        return realmDAO.findAll();
+    public List<Realm> findAll(Set options) {
+        return realmDAO.findAll(options);
     }
 }

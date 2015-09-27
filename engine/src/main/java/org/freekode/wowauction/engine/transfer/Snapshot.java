@@ -32,7 +32,6 @@ public class Snapshot extends BaseTransfer<SnapshotEntity> implements Initializa
                 bids.add(bid);
             }
         }
-
     }
 
     public List<Bid> getBids() {

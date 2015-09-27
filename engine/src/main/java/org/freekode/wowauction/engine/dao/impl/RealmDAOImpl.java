@@ -1,13 +1,18 @@
 package org.freekode.wowauction.engine.dao.impl;
 
 import org.freekode.wowauction.engine.dao.interfaces.RealmDAO;
+import org.freekode.wowauction.engine.services.Utils;
+import org.freekode.wowauction.engine.transfer.Realm;
 import org.freekode.wowauction.persistence.models.RealmEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional
@@ -22,13 +27,34 @@ public class RealmDAOImpl implements RealmDAO {
     }
 
     @Override
-    public RealmEntity getById(Integer id) {
+    public RealmEntity getEntity(int id) {
         return entityManager.find(RealmEntity.class, id);
+    }
+
+    @Override
+    public Realm getRealm(int id, Set options) {
+        RealmEntity entity = getEntity(id);
+        if (entity != null) {
+            Realm realm = new Realm(entity);
+            realm.init(options);
+            return realm;
+        }
+        return null;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<RealmEntity> findAll() {
-        return entityManager.createQuery("select realm from RealmEntity realm").getResultList();
+    public List<Realm> findAll(Set options) {
+        Query query = entityManager.createQuery("select realm from RealmEntity realm");
+
+        List<RealmEntity> entities = query.getResultList();
+
+        List<Realm> list = new ArrayList<>();
+        for (RealmEntity entity : entities) {
+            list.add(new Realm(entity));
+        }
+        Utils.initCollection(list, options);
+
+        return list;
     }
 }
