@@ -1,16 +1,16 @@
 package org.freekode.wowauction.updater.beans.interfaces;
 
 
-import org.freekode.wowauction.persistence.models.Bid;
-import org.freekode.wowauction.persistence.models.Snapshot;
+import org.freekode.wowauction.persistence.models.BidEntity;
+import org.freekode.wowauction.persistence.models.SnapshotEntity;
 
 import java.util.List;
 import java.util.Set;
 
 public interface BidBean {
-    Set<Bid> saveAll(Set<Bid> bids);
+    Set<BidEntity> saveAll(Set<BidEntity> bids);
 
-    Bid closeBid(Bid bid);
+    BidEntity closeBid(BidEntity bid);
 
-    List<Bid> findBySnapshot(Snapshot snapshot);
+    List<BidEntity> findBySnapshot(SnapshotEntity snapshot);
 }

@@ -1,16 +1,16 @@
 package org.freekode.wowauction.engine.dao.interfaces;
 
 
-import org.freekode.wowauction.persistence.models.User;
+import org.freekode.wowauction.persistence.models.UserEntity;
 
 import java.util.List;
 
 public interface UserDAO {
-    void save(User user);
+    void save(UserEntity user);
 
-    User authenticate(User user);
+    UserEntity authenticate(UserEntity user);
 
-    User getById(Integer id);
+    UserEntity getById(Integer id);
 
-    List<User> findAll();
+    List<UserEntity> findAll();
 }

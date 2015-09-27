@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "snapshots")
-public class Snapshot {
+public class SnapshotEntity {
     @Id
     @Column(columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,16 +26,16 @@ public class Snapshot {
 
     @ManyToOne
     @JoinColumn(name = "realmId")
-    private Realm realm;
+    private RealmEntity realm;
 
     @ManyToMany(mappedBy = "snapshots")
-    private Set<Bid> bids = new HashSet<>();
+    private Set<BidEntity> bids = new HashSet<>();
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
 
-    public Snapshot() {
+    public SnapshotEntity() {
     }
 
     @PrePersist
@@ -83,11 +83,11 @@ public class Snapshot {
         this.lastModified = lastModified;
     }
 
-    public Realm getRealm() {
+    public RealmEntity getRealm() {
         return realm;
     }
 
-    public void setRealm(Realm realm) {
+    public void setRealm(RealmEntity realm) {
         this.realm = realm;
     }
 
@@ -99,11 +99,11 @@ public class Snapshot {
         this.createdAt = createdAt;
     }
 
-    public Set<Bid> getBids() {
+    public Set<BidEntity> getBids() {
         return bids;
     }
 
-    public void setBids(Set<Bid> bids) {
+    public void setBids(Set<BidEntity> bids) {
         this.bids = bids;
     }
 

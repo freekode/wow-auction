@@ -1,7 +1,7 @@
 package org.freekode.wowauction.engine.dao.impl;
 
 import org.freekode.wowauction.engine.dao.interfaces.ItemDAO;
-import org.freekode.wowauction.persistence.models.Item;
+import org.freekode.wowauction.persistence.models.ItemEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,31 +18,31 @@ public class ItemDAOImpl implements ItemDAO {
 
 
     @Override
-    public Item save(Item item) {
+    public ItemEntity save(ItemEntity item) {
         return entityManager.merge(item);
     }
 
     @Override
-    public Item getById(Integer id) {
-        Item item = entityManager.find(Item.class, id);
+    public ItemEntity getById(Integer id) {
+        ItemEntity item = entityManager.find(ItemEntity.class, id);
         item.getBids().size();
         return item;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Item> findAll() {
-        return entityManager.createQuery("select item from Item item").getResultList();
+    public List<ItemEntity> findAll() {
+        return entityManager.createQuery("select item from ItemEntity item").getResultList();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Item isExistsByConstraint(Item item) {
-        Query query = entityManager.createQuery("select item from Item item where item.identifier = :identifier and item.uniqueId = :uniqueId");
+    public ItemEntity isExistsByConstraint(ItemEntity item) {
+        Query query = entityManager.createQuery("select item from ItemEntity item where item.identifier = :identifier and item.uniqueId = :uniqueId");
         query.setParameter("identifier", item.getIdentifier());
         query.setParameter("uniqueId", item.getUniqueId());
 
-        List<Item> items = query.getResultList();
+        List<ItemEntity> items = query.getResultList();
         if (!items.isEmpty()) {
             return items.get(0);
         }

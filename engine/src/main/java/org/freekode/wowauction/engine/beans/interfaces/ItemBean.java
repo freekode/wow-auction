@@ -1,17 +1,17 @@
 package org.freekode.wowauction.engine.beans.interfaces;
 
 
-import org.freekode.wowauction.persistence.models.Item;
+import org.freekode.wowauction.persistence.models.ItemEntity;
 
 import java.util.List;
 import java.util.Set;
 
 public interface ItemBean {
-    Item save(Item item);
+    ItemEntity save(ItemEntity item);
 
-    Item getById(Integer id);
+    ItemEntity getById(Integer id);
 
-    List<Item> findAll();
+    List<ItemEntity> findAll();
 
-    Set<Item> updateOrCreateAll(Set<Item> items);
+    Set<ItemEntity> updateOrCreateAll(Set<ItemEntity> items);
 }

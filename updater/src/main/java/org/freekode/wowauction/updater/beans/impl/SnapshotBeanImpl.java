@@ -2,14 +2,12 @@ package org.freekode.wowauction.updater.beans.impl;
 
 import org.freekode.wowauction.updater.beans.interfaces.SnapshotBean;
 import org.freekode.wowauction.updater.dao.interfaces.SnapshotDAO;
-import org.freekode.wowauction.persistence.models.Bid;
-import org.freekode.wowauction.persistence.models.Realm;
-import org.freekode.wowauction.persistence.models.Snapshot;
+import org.freekode.wowauction.persistence.models.BidEntity;
+import org.freekode.wowauction.persistence.models.RealmEntity;
+import org.freekode.wowauction.persistence.models.SnapshotEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -19,22 +17,22 @@ public class SnapshotBeanImpl implements SnapshotBean {
 
 
     @Override
-    public Snapshot save(Snapshot snapshot) {
+    public SnapshotEntity save(SnapshotEntity snapshot) {
         return snapshotDAO.save(snapshot);
     }
 
     @Override
-    public List<Snapshot> findAll() {
+    public List<SnapshotEntity> findAll() {
         return snapshotDAO.findAll();
     }
 
     @Override
-    public Snapshot getLastByRealm(Realm realm) {
+    public SnapshotEntity getLastByRealm(RealmEntity realm) {
         return snapshotDAO.getLast(realm);
     }
 
     @Override
-    public List<Snapshot> getByBid(Bid bid) {
+    public List<SnapshotEntity> getByBid(BidEntity bid) {
         return snapshotDAO.findByBid(bid);
     }
 }

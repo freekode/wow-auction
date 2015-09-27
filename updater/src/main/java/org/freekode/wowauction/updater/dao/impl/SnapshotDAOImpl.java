@@ -1,9 +1,9 @@
 package org.freekode.wowauction.updater.dao.impl;
 
 import org.freekode.wowauction.updater.dao.interfaces.SnapshotDAO;
-import org.freekode.wowauction.persistence.models.Bid;
-import org.freekode.wowauction.persistence.models.Realm;
-import org.freekode.wowauction.persistence.models.Snapshot;
+import org.freekode.wowauction.persistence.models.BidEntity;
+import org.freekode.wowauction.persistence.models.RealmEntity;
+import org.freekode.wowauction.persistence.models.SnapshotEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,13 +18,13 @@ public class SnapshotDAOImpl implements SnapshotDAO {
 
 
     @Override
-    public Snapshot save(Snapshot snapshot) {
+    public SnapshotEntity save(SnapshotEntity snapshot) {
         return entityManager.merge(snapshot);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Snapshot getLast(Realm realm) {
+    public SnapshotEntity getLast(RealmEntity realm) {
         Query query = entityManager.createQuery(
                 "select snapshot " +
                         "from Snapshot snapshot " +
@@ -33,7 +33,7 @@ public class SnapshotDAOImpl implements SnapshotDAO {
 
         query.setParameter("realm", realm);
 
-        List<Snapshot> snapshots = query.getResultList();
+        List<SnapshotEntity> snapshots = query.getResultList();
         if (!snapshots.isEmpty()) {
             return snapshots.get(0);
         }
@@ -43,13 +43,13 @@ public class SnapshotDAOImpl implements SnapshotDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Snapshot> findAll() {
+    public List<SnapshotEntity> findAll() {
         return entityManager.createQuery("select snapshot from Snapshot snapshot").getResultList();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Snapshot> findByBid(Bid bid) {
+    public List<SnapshotEntity> findByBid(BidEntity bid) {
         Query query = entityManager.createQuery("select bid.snapshots from Bid bid where bid = :bid");
         query.setParameter("bid", bid);
 

@@ -2,7 +2,7 @@ package org.freekode.wowauction.updater.beans.impl;
 
 import org.freekode.wowauction.updater.beans.interfaces.RealmBean;
 import org.freekode.wowauction.updater.dao.interfaces.RealmDAO;
-import org.freekode.wowauction.persistence.models.Realm;
+import org.freekode.wowauction.persistence.models.RealmEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,9 +16,9 @@ public class RealmBeanImpl implements RealmBean {
 
 
     @Override
-    public List<Realm> findForUpdate() {
-        List<Realm> realms = new ArrayList<>();
-        for (Realm realm : realmDAO.findAll()) {
+    public List<RealmEntity> findForUpdate() {
+        List<RealmEntity> realms = new ArrayList<>();
+        for (RealmEntity realm : realmDAO.findAll()) {
             if (realm.getUpdating()) {
                 realms.add(realm);
             }

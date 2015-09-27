@@ -2,12 +2,11 @@ package org.freekode.wowauction.updater.beans.impl;
 
 import org.freekode.wowauction.updater.beans.interfaces.ItemBean;
 import org.freekode.wowauction.updater.dao.interfaces.ItemDAO;
-import org.freekode.wowauction.persistence.models.Item;
+import org.freekode.wowauction.persistence.models.ItemEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Component
@@ -17,12 +16,12 @@ public class ItemBeanImpl implements ItemBean {
 
 
     @Override
-    public Set<Item> updateOrCreateAll(Set<Item> items) {
-        Set<Item> addedItems = new HashSet<>();
-        for (Item item : items) {
-            Item addedItem;
+    public Set<ItemEntity> updateOrCreateAll(Set<ItemEntity> items) {
+        Set<ItemEntity> addedItems = new HashSet<>();
+        for (ItemEntity item : items) {
+            ItemEntity addedItem;
 
-            Item existingItem = itemDAO.isExistsByConstraint(item);
+            ItemEntity existingItem = itemDAO.isExistsByConstraint(item);
             if (existingItem == null) {
                 addedItem = itemDAO.save(item);
             } else {

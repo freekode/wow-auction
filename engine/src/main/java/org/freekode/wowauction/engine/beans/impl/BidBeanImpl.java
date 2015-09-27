@@ -2,8 +2,8 @@ package org.freekode.wowauction.engine.beans.impl;
 
 import org.freekode.wowauction.engine.beans.interfaces.BidBean;
 import org.freekode.wowauction.engine.dao.interfaces.BidDAO;
-import org.freekode.wowauction.persistence.models.Bid;
-import org.freekode.wowauction.persistence.models.Snapshot;
+import org.freekode.wowauction.persistence.models.BidEntity;
+import org.freekode.wowauction.persistence.models.SnapshotEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,10 +18,10 @@ public class BidBeanImpl implements BidBean {
 
 
     @Override
-    public Set<Bid> saveAll(Set<Bid> bids) {
-        Set<Bid> addedBids = new HashSet<>();
-        for (Bid bid : bids) {
-            Bid addedItem = bidDAO.save(bid);
+    public Set<BidEntity> saveAll(Set<BidEntity> bids) {
+        Set<BidEntity> addedBids = new HashSet<>();
+        for (BidEntity bid : bids) {
+            BidEntity addedItem = bidDAO.save(bid);
             addedBids.add(addedItem);
         }
 
@@ -29,25 +29,25 @@ public class BidBeanImpl implements BidBean {
     }
 
     @Override
-    public Bid getById(Integer id) {
+    public BidEntity getById(Integer id) {
         return bidDAO.getById(id);
     }
 
     @Override
-    public List<Bid> findAll() {
+    public List<BidEntity> findAll() {
         return bidDAO.findAll();
     }
 
     @Override
-    public Bid closeBid(Bid closedBid) {
-        Bid bid = bidDAO.getById(closedBid.getId());
+    public BidEntity closeBid(BidEntity closedBid) {
+        BidEntity bid = bidDAO.getById(closedBid.getId());
 
         bid.setClosed(true);
         return bidDAO.save(bid);
     }
 
     @Override
-    public List<Bid> findBySnapshot(Snapshot snapshot) {
+    public List<BidEntity> findBySnapshot(SnapshotEntity snapshot) {
         return bidDAO.findBySnapshot(snapshot);
     }
 }

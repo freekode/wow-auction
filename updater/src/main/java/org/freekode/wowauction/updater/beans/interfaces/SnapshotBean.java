@@ -1,19 +1,18 @@
 package org.freekode.wowauction.updater.beans.interfaces;
 
 
-import org.freekode.wowauction.persistence.models.Bid;
-import org.freekode.wowauction.persistence.models.Realm;
-import org.freekode.wowauction.persistence.models.Snapshot;
+import org.freekode.wowauction.persistence.models.BidEntity;
+import org.freekode.wowauction.persistence.models.RealmEntity;
+import org.freekode.wowauction.persistence.models.SnapshotEntity;
 
-import java.util.Date;
 import java.util.List;
 
 public interface SnapshotBean {
-    Snapshot save(Snapshot snapshot);
+    SnapshotEntity save(SnapshotEntity snapshot);
 
-    List<Snapshot> findAll();
+    List<SnapshotEntity> findAll();
 
-    Snapshot getLastByRealm(Realm realm);
+    SnapshotEntity getLastByRealm(RealmEntity realm);
 
-    List<Snapshot> getByBid(Bid bid);
+    List<SnapshotEntity> getByBid(BidEntity bid);
 }

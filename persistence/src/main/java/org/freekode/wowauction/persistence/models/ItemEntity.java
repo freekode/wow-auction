@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "items", indexes = {@Index(columnList = "identifier,uniqueId", name = "items_unique_identity", unique = true)})
-public class Item {
+public class ItemEntity {
     @Id
     @Column(columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,13 +35,13 @@ public class Item {
     private String context;
 
     @OneToMany(mappedBy = "item")
-    private Set<Bid> bids = new HashSet<>();
+    private Set<BidEntity> bids = new HashSet<>();
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
 
-    public Item() {
+    public ItemEntity() {
     }
 
     @PrePersist
@@ -81,11 +81,11 @@ public class Item {
         this.createdAt = createdAt;
     }
 
-    public Set<Bid> getBids() {
+    public Set<BidEntity> getBids() {
         return bids;
     }
 
-    public void setBids(Set<Bid> bids) {
+    public void setBids(Set<BidEntity> bids) {
         this.bids = bids;
     }
 
@@ -110,7 +110,7 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Item item = (Item) o;
+        ItemEntity item = (ItemEntity) o;
 
         if (!identifier.equals(item.identifier)) return false;
         return uniqueId.equals(item.uniqueId);

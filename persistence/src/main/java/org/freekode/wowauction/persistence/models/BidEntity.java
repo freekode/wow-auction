@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "bids")
-public class Bid {
+public class BidEntity {
     @Id
     @Column(columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,17 +28,17 @@ public class Bid {
 
     @ManyToOne
     @JoinColumn(name = "itemId")
-    private Item item;
+    private ItemEntity item;
 
     @ManyToOne
     @JoinColumn(name = "playerId")
-    private Player player;
+    private PlayerEntity player;
 
     @ManyToMany
     @JoinTable(name = "snapshot_bid",
             joinColumns = {@JoinColumn(name = "bidId")},
             inverseJoinColumns = {@JoinColumn(name = "snapshotId")})
-    private Set<Snapshot> snapshots = new HashSet<>();
+    private Set<SnapshotEntity> snapshots = new HashSet<>();
 
     private Boolean closed = false;
 
@@ -46,7 +46,7 @@ public class Bid {
     private Date createdAt;
 
 
-    public Bid() {
+    public BidEntity() {
     }
 
     @PrePersist
@@ -62,19 +62,19 @@ public class Bid {
         this.id = id;
     }
 
-    public Item getItem() {
+    public ItemEntity getItem() {
         return item;
     }
 
-    public void setItem(Item item) {
+    public void setItem(ItemEntity item) {
         this.item = item;
     }
 
-    public Player getPlayer() {
+    public PlayerEntity getPlayer() {
         return player;
     }
 
-    public void setPlayer(Player player) {
+    public void setPlayer(PlayerEntity player) {
         this.player = player;
     }
 
@@ -126,11 +126,11 @@ public class Bid {
         this.closed = closed;
     }
 
-    public Set<Snapshot> getSnapshots() {
+    public Set<SnapshotEntity> getSnapshots() {
         return snapshots;
     }
 
-    public void setSnapshots(Set<Snapshot> snapshots) {
+    public void setSnapshots(Set<SnapshotEntity> snapshots) {
         this.snapshots = snapshots;
     }
 
@@ -147,7 +147,7 @@ public class Bid {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Bid bid = (Bid) o;
+        BidEntity bid = (BidEntity) o;
 
         return identifier.equals(bid.identifier);
 

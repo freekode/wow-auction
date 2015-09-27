@@ -1,16 +1,16 @@
 package org.freekode.wowauction.engine.beans.interfaces;
 
 
-import org.freekode.wowauction.persistence.models.Realm;
+import org.freekode.wowauction.persistence.models.RealmEntity;
 
 import java.util.List;
 
 public interface RealmBean {
-    Realm save(Realm realm);
+    RealmEntity save(RealmEntity realm);
 
-    Realm getById(int id);
+    RealmEntity getById(int id);
 
-    List<Realm> findForUpdate();
+    List<RealmEntity> findForUpdate();
 
-    List<Realm> findAll();
+    List<RealmEntity> findAll();
 }

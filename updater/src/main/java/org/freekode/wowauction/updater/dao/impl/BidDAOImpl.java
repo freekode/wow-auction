@@ -1,8 +1,8 @@
 package org.freekode.wowauction.updater.dao.impl;
 
 import org.freekode.wowauction.updater.dao.interfaces.BidDAO;
-import org.freekode.wowauction.persistence.models.Bid;
-import org.freekode.wowauction.persistence.models.Snapshot;
+import org.freekode.wowauction.persistence.models.BidEntity;
+import org.freekode.wowauction.persistence.models.SnapshotEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,18 +19,18 @@ public class BidDAOImpl implements BidDAO {
 
 
     @Override
-    public Bid save(Bid bid) {
+    public BidEntity save(BidEntity bid) {
         return entityManager.merge(bid);
     }
 
     @Override
-    public Bid getById(Integer id) {
-        return entityManager.find(Bid.class, id);
+    public BidEntity getById(Integer id) {
+        return entityManager.find(BidEntity.class, id);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Bid> findBySnapshot(Snapshot snapshot) {
+    public List<BidEntity> findBySnapshot(SnapshotEntity snapshot) {
         Query query = entityManager.createQuery("select snapshot.bids from Snapshot snapshot where snapshot = :snapshot");
         query.setParameter("snapshot", snapshot);
 

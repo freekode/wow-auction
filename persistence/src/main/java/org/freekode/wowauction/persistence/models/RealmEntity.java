@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "realms")
-public class Realm {
+public class RealmEntity {
     @Id
     @Column(columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,13 +23,13 @@ public class Realm {
     private Boolean updating = false;
 
     @OneToMany(mappedBy = "realm")
-    private Set<Snapshot> snapshots = new HashSet<>();
+    private Set<SnapshotEntity> snapshots = new HashSet<>();
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
 
-    public Realm() {
+    public RealmEntity() {
     }
 
     @PrePersist
@@ -61,11 +61,11 @@ public class Realm {
         this.name = title;
     }
 
-    public Set<Snapshot> getSnapshots() {
+    public Set<SnapshotEntity> getSnapshots() {
         return snapshots;
     }
 
-    public void setSnapshots(Set<Snapshot> snapshots) {
+    public void setSnapshots(Set<SnapshotEntity> snapshots) {
         this.snapshots = snapshots;
     }
 

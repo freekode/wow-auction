@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "players")
-public class Player {
+public class PlayerEntity {
     @Id
     @Column(columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,10 +15,10 @@ public class Player {
     private String name;
 
     @OneToMany(mappedBy = "player")
-    private Set<Bid> bids = new HashSet<>();
+    private Set<BidEntity> bids = new HashSet<>();
 
 
-    public Player() {
+    public PlayerEntity() {
     }
 
 
@@ -38,11 +38,11 @@ public class Player {
         this.name = name;
     }
 
-    public Set<Bid> getBids() {
+    public Set<BidEntity> getBids() {
         return bids;
     }
 
-    public void setBids(Set<Bid> bids) {
+    public void setBids(Set<BidEntity> bids) {
         this.bids = bids;
     }
 }

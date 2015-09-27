@@ -1,12 +1,10 @@
 package org.freekode.wowauction.updater.dao.interfaces;
 
 
-import org.freekode.wowauction.persistence.models.Item;
-
-import java.util.List;
+import org.freekode.wowauction.persistence.models.ItemEntity;
 
 public interface ItemDAO {
-    Item save(Item item);
+    ItemEntity save(ItemEntity item);
 
-    Item isExistsByConstraint(Item item);
+    ItemEntity isExistsByConstraint(ItemEntity item);
 }

@@ -2,7 +2,7 @@ package org.freekode.wowauction.engine.beans.impl;
 
 import org.freekode.wowauction.engine.beans.interfaces.ItemBean;
 import org.freekode.wowauction.engine.dao.interfaces.ItemDAO;
-import org.freekode.wowauction.persistence.models.Item;
+import org.freekode.wowauction.persistence.models.ItemEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,27 +16,27 @@ public class ItemBeanImpl implements ItemBean {
     private ItemDAO itemDAO;
 
     @Override
-    public Item save(Item item) {
+    public ItemEntity save(ItemEntity item) {
         return itemDAO.save(item);
     }
 
     @Override
-    public Item getById(Integer id) {
+    public ItemEntity getById(Integer id) {
         return itemDAO.getById(id);
     }
 
     @Override
-    public List<Item> findAll() {
+    public List<ItemEntity> findAll() {
         return itemDAO.findAll();
     }
 
     @Override
-    public Set<Item> updateOrCreateAll(Set<Item> items) {
-        Set<Item> addedItems = new HashSet<>();
-        for (Item item : items) {
-            Item addedItem;
+    public Set<ItemEntity> updateOrCreateAll(Set<ItemEntity> items) {
+        Set<ItemEntity> addedItems = new HashSet<>();
+        for (ItemEntity item : items) {
+            ItemEntity addedItem;
 
-            Item existingItem = itemDAO.isExistsByConstraint(item);
+            ItemEntity existingItem = itemDAO.isExistsByConstraint(item);
             if (existingItem == null) {
                 addedItem = itemDAO.save(item);
             } else {

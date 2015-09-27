@@ -1,29 +1,29 @@
 package org.freekode.wowauction.updater.services;
 
 
-import org.freekode.wowauction.persistence.models.Bid;
-import org.freekode.wowauction.persistence.models.Item;
+import org.freekode.wowauction.persistence.models.BidEntity;
+import org.freekode.wowauction.persistence.models.ItemEntity;
 
 import java.math.BigInteger;
 import java.util.*;
 
 public class EntityConversion {
-    public static Set<Bid> convertToBids(List<Map<String, String>> auctionList) {
-        Set<Bid> bids = new HashSet<>();
+    public static Set<BidEntity> convertToBids(List<Map<String, String>> auctionList) {
+        Set<BidEntity> bids = new HashSet<>();
 
         for (Map<String, String> auctionMap : auctionList) {
-            Item item = new Item();
+            ItemEntity item = new ItemEntity();
             item.setIdentifier(auctionMap.get("item"));
             item.setUniqueId(auctionMap.get("seed"));
             item.setSuffixId(auctionMap.get("rand"));
             item.setContext(auctionMap.get("context"));
 
-            Bid bid = new Bid();
+            BidEntity bid = new BidEntity();
             bid.setIdentifier(auctionMap.get("auc"));
             bid.setRate(new BigInteger(auctionMap.get("bid")));
             bid.setBuyout(new BigInteger(auctionMap.get("buyout")));
             bid.setQuantity(new Integer(auctionMap.get("quantity")));
-            bid.setTimeLeft(Bid.TimeLeft.valueOf(auctionMap.get("timeLeft")));
+            bid.setTimeLeft(BidEntity.TimeLeft.valueOf(auctionMap.get("timeLeft")));
             bid.setItem(item);
 
             bids.add(bid);
@@ -33,15 +33,15 @@ public class EntityConversion {
     }
 
     // TODO try to use that method
-    public static Set<Item> inverseBidsToItems(Set<Bid> bids) {
-        Set<Item> items = new HashSet<>();
-        for (Bid bid : bids) {
-            Item item = bid.getItem();
+    public static Set<ItemEntity> inverseBidsToItems(Set<BidEntity> bids) {
+        Set<ItemEntity> items = new HashSet<>();
+        for (BidEntity bid : bids) {
+            ItemEntity item = bid.getItem();
 
             if (items.contains(item)) {
-                for (Item existedItem : items) {
+                for (ItemEntity existedItem : items) {
                     if (existedItem.equals(item)) {
-                        Set<Bid> itemBids = existedItem.getBids();
+                        Set<BidEntity> itemBids = existedItem.getBids();
                         itemBids.add(bid);
                         existedItem.setBids(itemBids);
                     }
@@ -55,10 +55,10 @@ public class EntityConversion {
         return items;
     }
 
-    public static Set<Item> getItemsWithoutBids(Set<Bid> bids) {
-        Set<Item> items = new HashSet<>();
-        for (Bid bid : bids) {
-            Item item = bid.getItem();
+    public static Set<ItemEntity> getItemsWithoutBids(Set<BidEntity> bids) {
+        Set<ItemEntity> items = new HashSet<>();
+        for (BidEntity bid : bids) {
+            ItemEntity item = bid.getItem();
 
             items.add(item);
         }

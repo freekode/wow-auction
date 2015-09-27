@@ -15,6 +15,7 @@ dependencies {
     compile libraries.spring_context
     compile libraries.spring_tx
     compile libraries.spring_orm
+    compile libraries.spring_webmvc
 
     compile libraries.log4j_core
     compile libraries.log4j_api

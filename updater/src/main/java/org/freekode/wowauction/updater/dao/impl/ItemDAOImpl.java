@@ -1,7 +1,7 @@
 package org.freekode.wowauction.updater.dao.impl;
 
 import org.freekode.wowauction.updater.dao.interfaces.ItemDAO;
-import org.freekode.wowauction.persistence.models.Item;
+import org.freekode.wowauction.persistence.models.ItemEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,18 +18,18 @@ public class ItemDAOImpl implements ItemDAO {
 
 
     @Override
-    public Item save(Item item) {
+    public ItemEntity save(ItemEntity item) {
         return entityManager.merge(item);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Item isExistsByConstraint(Item item) {
+    public ItemEntity isExistsByConstraint(ItemEntity item) {
         Query query = entityManager.createQuery("select item from Item item where item.identifier = :identifier and item.uniqueId = :uniqueId");
         query.setParameter("identifier", item.getIdentifier());
         query.setParameter("uniqueId", item.getUniqueId());
 
-        List<Item> items = query.getResultList();
+        List<ItemEntity> items = query.getResultList();
         if (!items.isEmpty()) {
             return items.get(0);
         }

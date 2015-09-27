@@ -1,7 +1,7 @@
 package org.freekode.wowauction.updater.dao.impl;
 
 import org.freekode.wowauction.updater.dao.interfaces.RealmDAO;
-import org.freekode.wowauction.persistence.models.Realm;
+import org.freekode.wowauction.persistence.models.RealmEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +18,7 @@ public class RealmDAOImpl implements RealmDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Realm> findAll() {
+    public List<RealmEntity> findAll() {
         return entityManager.createQuery("select realm from Realm realm").getResultList();
     }
 }

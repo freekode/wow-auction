@@ -1,16 +1,16 @@
 package org.freekode.wowauction.engine.dao.interfaces;
 
-import org.freekode.wowauction.persistence.models.Bid;
-import org.freekode.wowauction.persistence.models.Snapshot;
+import org.freekode.wowauction.persistence.models.BidEntity;
+import org.freekode.wowauction.persistence.models.SnapshotEntity;
 
 import java.util.List;
 
 public interface BidDAO {
-    Bid save(Bid bid);
+    BidEntity save(BidEntity bid);
 
-    Bid getById(Integer id);
+    BidEntity getById(Integer id);
 
-    List<Bid> findAll();
+    List<BidEntity> findAll();
 
-    List<Bid> findBySnapshot(Snapshot snapshot);
+    List<BidEntity> findBySnapshot(SnapshotEntity snapshot);
 }

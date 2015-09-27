@@ -1,14 +1,14 @@
 package org.freekode.wowauction.engine.dao.interfaces;
 
 
-import org.freekode.wowauction.persistence.models.Realm;
+import org.freekode.wowauction.persistence.models.RealmEntity;
 
 import java.util.List;
 
 public interface RealmDAO {
-    Realm save(Realm realm);
+    RealmEntity save(RealmEntity realm);
 
-    Realm getById(Integer id);
+    RealmEntity getById(Integer id);
 
-    List<Realm> findAll();
+    List<RealmEntity> findAll();
 }

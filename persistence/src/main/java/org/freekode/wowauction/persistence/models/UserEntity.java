@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class UserEntity {
     @Id
     @Column(columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    public User() {
+    public UserEntity() {
     }
 
 

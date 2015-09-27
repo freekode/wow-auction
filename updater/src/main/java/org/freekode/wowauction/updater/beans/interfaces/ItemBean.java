@@ -1,11 +1,10 @@
 package org.freekode.wowauction.updater.beans.interfaces;
 
 
-import org.freekode.wowauction.persistence.models.Item;
+import org.freekode.wowauction.persistence.models.ItemEntity;
 
-import java.util.List;
 import java.util.Set;
 
 public interface ItemBean {
-    Set<Item> updateOrCreateAll(Set<Item> items);
+    Set<ItemEntity> updateOrCreateAll(Set<ItemEntity> items);
 }

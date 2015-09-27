@@ -1,7 +1,7 @@
 package org.freekode.wowauction.engine.controllers;
 
 import org.freekode.wowauction.engine.beans.interfaces.SnapshotBean;
-import org.freekode.wowauction.persistence.models.Snapshot;
+import org.freekode.wowauction.persistence.models.SnapshotEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,28 +26,28 @@ public class JSONController {
     @RequestMapping(value = "/snapshots/{id}", method = RequestMethod.GET)
     public
     @ResponseBody
-    Snapshot getSnapshotByIdInJSON(@PathVariable Integer id) {
+    SnapshotEntity getSnapshotByIdInJSON(@PathVariable Integer id) {
         return snapshotBean.getById(id);
     }
 
     @RequestMapping(value = "/snapshots", method = RequestMethod.GET)
     public
     @ResponseBody
-    List<Snapshot> getSnapshotsListInJSON() {
+    List<SnapshotEntity> getSnapshotsListInJSON() {
         return snapshotBean.findAll();
     }
 
     @RequestMapping(value = "/snapshots/today")
     public
     @ResponseBody
-    List<Snapshot> getSnapshotsTodayInJSON() {
+    List<SnapshotEntity> getSnapshotsTodayInJSON() {
         return snapshotBean.findByToday();
     }
 
     @RequestMapping(value = "/snapshots/24h")
     public
     @ResponseBody
-    List<Snapshot> getSnapshots24h() {
+    List<SnapshotEntity> getSnapshots24h() {
         Date todayStart, todayEnd;
         Calendar today = Calendar.getInstance();
 
