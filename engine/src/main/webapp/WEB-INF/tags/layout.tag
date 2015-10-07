@@ -11,11 +11,15 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap-theme.min.css">
-    <script src="${pageContext.request.contextPath}/static/js/lib/angular.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/js/layout.js"></script>
 
     <script src="${pageContext.request.contextPath}/static/js/lib/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/lib/bootstrap.min.js"></script>
+
+    <script src="${pageContext.request.contextPath}/static/js/api.js"></script>
+
+    <script src="${pageContext.request.contextPath}/static/js/lib/angular.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/layout.js"></script>
+
 
     <jsp:invoke fragment="head"/>
 
@@ -31,9 +35,10 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Link</a></li>
+                <li ng-class="{active : page == 'items'}"><a href="${pageContext.request.contextPath}/items">Items</a></li>
+                <li ng-class="{active : page == 'auctions'}"><a href="#">Auctions</a></li>
             </ul>
+
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Link</a></li>
                 <li class="dropdown">

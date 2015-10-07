@@ -3,8 +3,8 @@ package org.freekode.wowauction.engine.controllers.pages;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.freekode.wowauction.engine.beans.interfaces.RealmBean;
-import org.freekode.wowauction.engine.data.RealmData;
 import org.freekode.wowauction.engine.transfer.Realm;
+import org.freekode.wowauction.engine.controllers.data.RealmData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,5 +32,10 @@ public class IndexController {
         modelAndView.addObject("realms", realmData);
 
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/items", method = RequestMethod.GET)
+    public ModelAndView itemsPage() throws JsonProcessingException {
+        return new ModelAndView("items");
     }
 }

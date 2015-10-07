@@ -1,7 +1,11 @@
 var app = angular.module("app", ["layout"]);
 var api = new API();
 
+
 app.controller("IndexCtrl", function ($scope, $http) {
+    $scope.page = 'index';
+
+
     $scope.changeRealm = function () {
         api.getSnapshots24h({realmId: $scope.realmId}).done(function(data) {
 

@@ -40,6 +40,9 @@ public class ItemEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
+    @OneToOne
+    private ItemInfoEntity itemInfo;
+
 
     public ItemEntity() {
     }
@@ -122,5 +125,13 @@ public class ItemEntity {
         int result = identifier.hashCode();
         result = 31 * result + uniqueId.hashCode();
         return result;
+    }
+
+    public ItemInfoEntity getItemInfo() {
+        return itemInfo;
+    }
+
+    public void setItemInfo(ItemInfoEntity itemInfo) {
+        this.itemInfo = itemInfo;
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Bid extends BaseTransfer<BidEntity> implements Initializable {
-    private List<Snapshot> snapshots = new ArrayList<>();
+    private List<Snapshot> snapshots;
 
 
     public Bid() {
@@ -25,7 +25,9 @@ public class Bid extends BaseTransfer<BidEntity> implements Initializable {
 
     @Override
     public void init(Set options) {
-        if (options != null && options.contains(Options.INIT_SNAPSHOTS)) {
+        if (options != null && options.contains(Options.INIT_BID_SNAPSHOTS)) {
+            snapshots = new ArrayList<>();
+
             Utils.initCollection(entity.getSnapshots(), options);
             for (SnapshotEntity snapshotEntity : entity.getSnapshots()) {
                 Snapshot snapshot = new Snapshot(snapshotEntity);
@@ -76,6 +78,6 @@ public class Bid extends BaseTransfer<BidEntity> implements Initializable {
     }
 
     public enum Options {
-        INIT_SNAPSHOTS
+        INIT_BID_SNAPSHOTS
     }
 }

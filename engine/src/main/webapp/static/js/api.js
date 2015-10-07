@@ -10,6 +10,10 @@ var API = function () {
         snapshots24h: {
             url: '/api/snapshot/24h/{realmId}',
             type: 'get'
+        },
+        getItemList: {
+            url: '/api/item/list/{page}/{amount}',
+            type: 'get'
         }
     };
 
@@ -93,10 +97,18 @@ var API = function () {
 
 
     /**
-     * Возвращает снепшоты за 24 для реалма
+     * Возвращает снепшоты за 24 часа для реалма
      * @param param объект с id реалма
      */
     this.getSnapshots24h = function (param) {
-        return _send(_makeUrl(urls.lastCreditRequest, param));
+        return _send(_makeUrl(urls.snapshots24h, param));
+    };
+
+    /**
+     * Возвращает список айтемов
+     * @param param страница и количество айтемов на странице
+     */
+    this.getItemList = function (param) {
+        return _send(_makeUrl(urls.getItemList, param));
     }
 };

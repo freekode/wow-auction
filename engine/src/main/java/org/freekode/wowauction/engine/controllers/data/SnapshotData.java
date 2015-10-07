@@ -1,4 +1,4 @@
-package org.freekode.wowauction.engine.data;
+package org.freekode.wowauction.engine.controllers.data;
 
 import org.freekode.wowauction.engine.transfer.Snapshot;
 
@@ -6,17 +6,11 @@ import java.util.Date;
 
 public class SnapshotData {
     private String file;
-
     private Date lastModified;
-
     private Integer closed;
-
     private Integer existing;
-
     private Integer newAmount;
-
     private Date createdAt;
-
     private RealmData realm;
 
 

@@ -2,29 +2,29 @@ package org.freekode.wowauction.engine.transfer;
 
 import org.freekode.wowauction.engine.services.Utils;
 import org.freekode.wowauction.persistence.models.BidEntity;
-import org.freekode.wowauction.persistence.models.SnapshotEntity;
+import org.freekode.wowauction.persistence.models.ItemEntity;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-public class Snapshot extends BaseTransfer<SnapshotEntity> implements Initializable {
+public class Item extends BaseTransfer<ItemEntity> implements Initializable {
     private List<Bid> bids;
 
 
-    public Snapshot() {
+    public Item() {
         super();
-        entity = new SnapshotEntity();
+        entity = new ItemEntity();
     }
 
-    public Snapshot(SnapshotEntity entity) {
+    public Item(ItemEntity entity) {
         super(entity);
     }
 
     @Override
     public void init(Set options) {
-        if (options != null && options.contains(Options.INIT_SNAPSHOT_BIDS)) {
+        if (options != null && options.contains(Options.INIT_ITEM_BIDS)) {
             bids = new ArrayList<>();
 
             Utils.initCollection(entity.getBids(), options);
@@ -36,39 +36,35 @@ public class Snapshot extends BaseTransfer<SnapshotEntity> implements Initializa
         }
     }
 
-    public List<Bid> getBids() {
-        return bids;
-    }
-
     public Integer getId() {
         return entity.getId();
     }
 
-    public String getFile() {
-        return entity.getFile();
+    public String getIdentifier() {
+        return entity.getIdentifier();
     }
 
-    public Date getLastModified() {
-        return entity.getLastModified();
+    public String getSuffixId() {
+        return entity.getSuffixId();
     }
 
-    public Integer getClosed() {
-        return entity.getClosed();
+    public String getUniqueId() {
+        return entity.getUniqueId();
     }
 
-    public Integer getExisting() {
-        return entity.getExisting();
-    }
-
-    public Integer getNewAmount() {
-        return entity.getNewAmount();
+    public String getContext() {
+        return entity.getContext();
     }
 
     public Date getCreatedAt() {
         return entity.getCreatedAt();
     }
 
+    public List<Bid> getBids() {
+        return bids;
+    }
+
     public enum Options {
-        INIT_SNAPSHOT_BIDS
+        INIT_ITEM_BIDS
     }
 }

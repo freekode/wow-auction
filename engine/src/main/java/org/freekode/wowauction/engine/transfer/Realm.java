@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Realm extends BaseTransfer<RealmEntity> implements Initializable {
-    private List<Snapshot> snapshots = new ArrayList<>();
+    private List<Snapshot> snapshots;
 
 
     public Realm() {
@@ -24,7 +24,9 @@ public class Realm extends BaseTransfer<RealmEntity> implements Initializable {
 
     @Override
     public void init(Set options) {
-        if (options != null && options.contains(Options.INIT_SNAPSHOTS)) {
+        if (options != null && options.contains(Options.INIT_REALM_SNAPSHOTS)) {
+            snapshots = new ArrayList<>();
+
             Utils.initCollection(entity.getSnapshots(), options);
             for (SnapshotEntity snapshotEntity : entity.getSnapshots()) {
                 Snapshot snapshot = new Snapshot(snapshotEntity);
@@ -67,6 +69,6 @@ public class Realm extends BaseTransfer<RealmEntity> implements Initializable {
     }
 
     public enum Options {
-        INIT_SNAPSHOTS
+        INIT_REALM_SNAPSHOTS
     }
 }

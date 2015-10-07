@@ -42,6 +42,7 @@ public class SnapshotDAOImpl implements SnapshotDAO {
             snapshot.init(options);
             return snapshot;
         }
+
         return null;
     }
 
