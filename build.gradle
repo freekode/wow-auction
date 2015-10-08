@@ -8,8 +8,8 @@ ext.libraries = [
         spring_orm: 'org.springframework:spring-orm:4.1.6.RELEASE',
         spring_webmvc: 'org.springframework:spring-webmvc:4.1.6.RELEASE',
 
-        hibernate_core: 'org.hibernate:hibernate-core:4.3.8.Final',
-        hibernate_entitymanager: 'org.hibernate:hibernate-entitymanager:4.3.8.Final',
+        hibernate_core: 'org.hibernate:hibernate-core:4.2.20.Final',
+        hibernate_entitymanager: 'org.hibernate:hibernate-entitymanager:4.2.20.Final',
 
         postgres: 'org.postgresql:postgresql:9.4-1201-jdbc41',
 

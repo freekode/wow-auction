@@ -1,5 +1,7 @@
 package org.freekode.wowauction.persistence.models;
 
+import org.hibernate.annotations.Index;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -7,7 +9,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "items", indexes = {@Index(columnList = "identifier,uniqueId", name = "items_unique_identity", unique = true)})
+@Table(name = "items")
 public class ItemEntity {
     @Id
     @Column(columnDefinition = "serial")
