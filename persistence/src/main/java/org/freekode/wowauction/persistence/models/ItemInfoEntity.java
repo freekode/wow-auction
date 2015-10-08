@@ -4,17 +4,33 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "items_info", indexes = {@Index(columnList = "identifier,uniqueId", name = "items_unique_identity", unique = true)})
+@Table(name = "items_info")
 public class ItemInfoEntity {
     @Id
     private Integer id;
 
-    private String title;
+    private String name;
 
-    @MapsId
-    @OneToOne
-    @JoinColumn(name = "id")
-    private ItemEntity item;
+    @ManyToOne
+    @JoinColumn(name = "qualityId")
+    private CatalogEntity quality;
+
+    @ManyToOne
+    @JoinColumn(name = "itemClassId")
+    private CatalogEntity itemClass;
+
+    @ManyToOne
+    @JoinColumn(name = "itemSubclassId")
+    private CatalogEntity itemSubclass;
+
+    @ManyToOne
+    @JoinColumn(name = "inventorySlotId")
+    private CatalogEntity inventorySlot;
+
+//    @MapsId
+//    @OneToOne
+//    @JoinColumn(name = "id")
+//    private ItemEntity item;
 
 
     public ItemInfoEntity() {
@@ -28,19 +44,51 @@ public class ItemInfoEntity {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String title) {
+        this.name = title;
     }
 
-    public ItemEntity getItem() {
-        return item;
+//    public ItemEntity getItem() {
+//        return item;
+//    }
+//
+//    public void setItem(ItemEntity item) {
+//        this.item = item;
+//    }
+//
+    public CatalogEntity getQuality() {
+        return quality;
     }
 
-    public void setItem(ItemEntity item) {
-        this.item = item;
+    public void setQuality(CatalogEntity quality) {
+        this.quality = quality;
+    }
+
+    public CatalogEntity getItemClass() {
+        return itemClass;
+    }
+
+    public void setItemClass(CatalogEntity itemClass) {
+        this.itemClass = itemClass;
+    }
+
+    public CatalogEntity getItemSubclass() {
+        return itemSubclass;
+    }
+
+    public void setItemSubclass(CatalogEntity itemSubclass) {
+        this.itemSubclass = itemSubclass;
+    }
+
+    public CatalogEntity getInventorySlot() {
+        return inventorySlot;
+    }
+
+    public void setInventorySlot(CatalogEntity inventorySlot) {
+        this.inventorySlot = inventorySlot;
     }
 }
