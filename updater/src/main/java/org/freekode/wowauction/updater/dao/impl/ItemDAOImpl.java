@@ -1,7 +1,7 @@
 package org.freekode.wowauction.updater.dao.impl;
 
-import org.freekode.wowauction.updater.dao.interfaces.ItemDAO;
 import org.freekode.wowauction.persistence.models.ItemEntity;
+import org.freekode.wowauction.updater.dao.interfaces.ItemDAO;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,9 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 @Transactional
@@ -21,13 +19,24 @@ public class ItemDAOImpl implements ItemDAO {
 
 
     @Override
-    public List<ItemEntity> updateAll(List<ItemEntity> entitySet) {
-        List<ItemEntity> updated = new ArrayList<>();
-        for (ItemEntity entity : entitySet) {
-            updated.add(entityManager.merge(entity));
+    public List<ItemEntity> saveAll(List<ItemEntity> items) {
+        List<ItemEntity> updateItems = new ArrayList<>();
+        for (ItemEntity item : items) {
+            ItemEntity updateItem;
+
+            ItemEntity existingItem = isExistsByConstraint(item);
+            if (existingItem == null) {
+                updateItem = item;
+            } else {
+                existingItem.setBids(item.getBids());
+                updateItem = existingItem;
+            }
+
+            updateItems.add(entityManager.merge(updateItem));
         }
 
-        return updated;
+
+        return updateItems;
     }
 
     @SuppressWarnings("unchecked")

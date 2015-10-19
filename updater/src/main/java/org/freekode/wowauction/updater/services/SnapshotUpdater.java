@@ -6,10 +6,10 @@ import org.freekode.wowauction.persistence.models.BidEntity;
 import org.freekode.wowauction.persistence.models.ItemEntity;
 import org.freekode.wowauction.persistence.models.RealmEntity;
 import org.freekode.wowauction.persistence.models.SnapshotEntity;
-import org.freekode.wowauction.updater.beans.interfaces.BidBean;
-import org.freekode.wowauction.updater.beans.interfaces.ItemBean;
-import org.freekode.wowauction.updater.beans.interfaces.RealmBean;
-import org.freekode.wowauction.updater.beans.interfaces.SnapshotBean;
+import org.freekode.wowauction.updater.dao.interfaces.BidDAO;
+import org.freekode.wowauction.updater.dao.interfaces.ItemDAO;
+import org.freekode.wowauction.updater.dao.interfaces.RealmDAO;
+import org.freekode.wowauction.updater.dao.interfaces.SnapshotDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,16 +21,16 @@ public class SnapshotUpdater {
     private static final Logger logger = LogManager.getLogger(SnapshotUpdater.class);
 
     @Autowired
-    private RealmBean realmBean;
+    private SnapshotDAO snapshotDAO;
 
     @Autowired
-    private ItemBean itemBean;
+    private BidDAO bidDAO;
 
     @Autowired
-    private BidBean bidBean;
+    private ItemDAO itemDAO;
 
     @Autowired
-    private SnapshotBean snapshotBean;
+    private RealmDAO realmDAO;
 
 
     public void scheduleUpdate() {
@@ -40,7 +40,7 @@ public class SnapshotUpdater {
     public void updateAuction() {
         logger.info("auction update started");
 
-        for (RealmEntity realm : realmBean.findForUpdate()) {
+        for (RealmEntity realm : realmDAO.findForUpdate()) {
             logger.info("realm = " + realm);
 
             Map<String, String> newSnapshotMap = WorldOfWarcraftAPI.getSnapshot(realm.getRegion().toString(), realm.getSlug());
@@ -49,7 +49,7 @@ public class SnapshotUpdater {
             newSnapshot.setFile(newSnapshotMap.get("url"));
             newSnapshot.setLastModified(new Date(new Long(newSnapshotMap.get("lastModified"))));
 
-            SnapshotEntity lastSnapshot = snapshotBean.getLastByRealm(realm);
+            SnapshotEntity lastSnapshot = snapshotDAO.getLast(realm);
 
             if (lastSnapshot == null || lastSnapshot.getLastModified().getTime() < newSnapshot.getLastModified().getTime()) {
                 logger.info("newSnapshot = " + newSnapshot);
@@ -62,7 +62,7 @@ public class SnapshotUpdater {
                 logger.info("conversion to entities");
                 Set<BidEntity> refreshedBids = new HashSet<>(EntityConversion.convertToBids(auctionList));
 
-                Set<BidEntity> persistedBids = new HashSet<>(bidBean.findBySnapshot(lastSnapshot));
+                Set<BidEntity> persistedBids = new HashSet<>(bidDAO.findBySnapshot(lastSnapshot));
                 logger.info("loaded from db = " + persistedBids.size());
 
 
@@ -83,7 +83,7 @@ public class SnapshotUpdater {
                 newSnapshot.setClosed(closedBids.size());
                 newSnapshot.setExisting(existingBids.size());
                 newSnapshot.setNewAmount(newBids.size());
-                newSnapshot = snapshotBean.save(newSnapshot);
+                newSnapshot = snapshotDAO.save(newSnapshot);
                 logger.info("save snapshot = " + newSnapshot);
 
 
@@ -92,13 +92,12 @@ public class SnapshotUpdater {
 
 
                 logger.info("close the bids");
-                for (BidEntity bid : closedBids) {
-                    bidBean.closeBid(bid);
-                }
+                bidDAO.closeAll(closedBids);
+
 
                 // add for still existing bids new snapshot
                 for (BidEntity bid : existingBids) {
-                    Set<SnapshotEntity> snapshots = new HashSet<>(snapshotBean.getByBid(bid));
+                    Set<SnapshotEntity> snapshots = new HashSet<>(snapshotDAO.findByBid(bid));
                     snapshots.add(newSnapshot);
                     bid.setSnapshots(snapshots);
                 }
@@ -110,11 +109,11 @@ public class SnapshotUpdater {
 
                 // update existing bids and their snapshots
                 logger.info("save existing bids");
-                bidBean.saveAll(existingBids);
+                bidDAO.saveAll(existingBids);
 
 
                 logger.info("update or create items");
-                List<ItemEntity> updatedItems = itemBean.saveAll(newItems);
+                List<ItemEntity> updatedItems = itemDAO.saveAll(newItems);
 
 
                 // make a relationship between new bid and item
@@ -132,7 +131,7 @@ public class SnapshotUpdater {
 
                 // save new bids with connection
                 logger.info("save new bids");
-                bidBean.saveAll(newBids);
+                bidDAO.saveAll(newBids);
 
 
                 // ok, now retrieve additional info about items

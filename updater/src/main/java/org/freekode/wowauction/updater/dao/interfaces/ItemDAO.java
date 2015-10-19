@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface ItemDAO {
-    List<ItemEntity> updateAll(List<ItemEntity> entitySet);
+    List<ItemEntity> saveAll(List<ItemEntity> items);
 
     ItemEntity isExistsByConstraint(ItemEntity item);
 }

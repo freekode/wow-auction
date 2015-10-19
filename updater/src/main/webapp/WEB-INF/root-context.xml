@@ -10,7 +10,7 @@
 
     <task:scheduler id="scheduler"/>
     <task:scheduled-tasks scheduler="scheduler">
-        <task:scheduled ref="snapshotUpdater" method="scheduleUpdate" cron="0 */10 * * * ?"/>
+        <task:scheduled ref="snapshotUpdater" method="scheduleUpdate" cron="0 */20 * * * ?"/>
     </task:scheduled-tasks>
 
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">

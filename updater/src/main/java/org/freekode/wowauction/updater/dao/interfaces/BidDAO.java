@@ -6,6 +6,10 @@ import org.freekode.wowauction.persistence.models.SnapshotEntity;
 import java.util.List;
 
 public interface BidDAO {
+    List<BidEntity> saveAll(List<BidEntity> bids);
+
+    List<BidEntity> closeAll(List<BidEntity> bids);
+
     BidEntity save(BidEntity bid);
 
     BidEntity getById(Integer id);

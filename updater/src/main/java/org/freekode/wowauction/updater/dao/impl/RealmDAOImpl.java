@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -18,7 +19,16 @@ public class RealmDAOImpl implements RealmDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<RealmEntity> findAll() {
-        return entityManager.createQuery("select realm from RealmEntity realm").getResultList();
+    public List<RealmEntity> findForUpdate() {
+        List<RealmEntity> entities =  entityManager.createQuery("select realm from RealmEntity realm").getResultList();
+
+        List<RealmEntity> realms = new ArrayList<>();
+        for (RealmEntity realm : entities) {
+            if (realm.getUpdating()) {
+                realms.add(realm);
+            }
+        }
+
+        return realms;
     }
 }

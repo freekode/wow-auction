@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -17,6 +18,25 @@ public class BidDAOImpl implements BidDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Override
+    public List<BidEntity> saveAll(List<BidEntity> bids) {
+        List<BidEntity> addedBids = new ArrayList<>();
+        for (BidEntity bid : bids) {
+            BidEntity addedItem = entityManager.merge(bid);
+            addedBids.add(addedItem);
+        }
+
+        return addedBids;
+    }
+
+    @Override
+    public List<BidEntity> closeAll(List<BidEntity> bids) {
+        for (BidEntity bid : bids) {
+            bid.setClosed(true);
+        }
+
+        return saveAll(bids);
+    }
 
     @Override
     public BidEntity save(BidEntity bid) {
