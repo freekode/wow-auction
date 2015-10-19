@@ -20,8 +20,8 @@ public class EntityConversion {
 
             BidEntity bid = new BidEntity();
             bid.setIdentifier(auctionMap.get("auc"));
-            bid.setRate(new BigInteger(auctionMap.get("bid")));
-            bid.setBuyout(new BigInteger(auctionMap.get("buyout")));
+            bid.setRate(new Long(auctionMap.get("bid")));
+            bid.setBuyout(new Long(auctionMap.get("buyout")));
             bid.setQuantity(new Integer(auctionMap.get("quantity")));
             bid.setTimeLeft(BidEntity.TimeLeft.valueOf(auctionMap.get("timeLeft")));
             bid.setItem(item);

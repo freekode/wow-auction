@@ -11,21 +11,27 @@ public class ItemInfoEntity {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "qualityId")
-    private CatalogEntity quality;
+    private String level;
 
-    @ManyToOne
-    @JoinColumn(name = "itemClassId")
-    private CatalogEntity itemClass;
+    private String url;
 
-    @ManyToOne
-    @JoinColumn(name = "itemSubclassId")
-    private CatalogEntity itemSubclass;
+    private String icon;
 
-    @ManyToOne
-    @JoinColumn(name = "inventorySlotId")
-    private CatalogEntity inventorySlot;
+//    @ManyToOne
+//    @JoinColumn(name = "qualityId")
+//    private CatalogEntity quality;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "itemClassId")
+//    private CatalogEntity itemClass;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "itemSubclassId")
+//    private CatalogEntity itemSubclass;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "inventorySlotId")
+//    private CatalogEntity inventorySlot;
 
     @MapsId
     @OneToOne
@@ -60,40 +66,64 @@ public class ItemInfoEntity {
         this.item = item;
     }
 
-    public CatalogEntity getQuality() {
-        return quality;
-    }
-
-    public void setQuality(CatalogEntity quality) {
-        this.quality = quality;
-    }
-
-    public CatalogEntity getItemClass() {
-        return itemClass;
-    }
-
-    public void setItemClass(CatalogEntity itemClass) {
-        this.itemClass = itemClass;
-    }
-
-    public CatalogEntity getItemSubclass() {
-        return itemSubclass;
-    }
-
-    public void setItemSubclass(CatalogEntity itemSubclass) {
-        this.itemSubclass = itemSubclass;
-    }
-
-    public CatalogEntity getInventorySlot() {
-        return inventorySlot;
-    }
-
-    public void setInventorySlot(CatalogEntity inventorySlot) {
-        this.inventorySlot = inventorySlot;
-    }
+//    public CatalogEntity getQuality() {
+//        return quality;
+//    }
+//
+//    public void setQuality(CatalogEntity quality) {
+//        this.quality = quality;
+//    }
+//
+//    public CatalogEntity getItemClass() {
+//        return itemClass;
+//    }
+//
+//    public void setItemClass(CatalogEntity itemClass) {
+//        this.itemClass = itemClass;
+//    }
+//
+//    public CatalogEntity getItemSubclass() {
+//        return itemSubclass;
+//    }
+//
+//    public void setItemSubclass(CatalogEntity itemSubclass) {
+//        this.itemSubclass = itemSubclass;
+//    }
+//
+//    public CatalogEntity getInventorySlot() {
+//        return inventorySlot;
+//    }
+//
+//    public void setInventorySlot(CatalogEntity inventorySlot) {
+//        this.inventorySlot = inventorySlot;
+//    }
 
     @Override
     public String toString() {
         return item.getIdentifier() + "; " + name;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

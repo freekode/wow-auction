@@ -24,8 +24,6 @@ public class WowheadAPI {
 
             doc.normalizeDocument();
 
-            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-
             Node itemNode = doc.getElementsByTagName("item").item(0);
 
             if (itemNode.getNodeType() == Node.ELEMENT_NODE) {

@@ -28,7 +28,6 @@
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="database" value="POSTGRESQL"/>
                 <property name="showSql" value="false"/>
-                <property name="generateDdl" value="true"/>
                 <property name="databasePlatform" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
             </bean>
         </property>
@@ -36,6 +35,7 @@
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
                 <!--<prop key="hibernate.jdbc.batch_size">100</prop>-->
             </props>
         </property>

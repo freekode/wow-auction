@@ -17,9 +17,9 @@ public class BidEntity {
 
     private String identifier;
 
-    private BigInteger rate;
+    private Long rate;
 
-    private BigInteger buyout;
+    private Long buyout;
 
     private Integer quantity;
 
@@ -102,19 +102,19 @@ public class BidEntity {
         this.createdAt = createdAt;
     }
 
-    public BigInteger getRate() {
+    public Long getRate() {
         return rate;
     }
 
-    public void setRate(BigInteger rate) {
+    public void setRate(Long rate) {
         this.rate = rate;
     }
 
-    public BigInteger getBuyout() {
+    public Long getBuyout() {
         return buyout;
     }
 
-    public void setBuyout(BigInteger buyout) {
+    public void setBuyout(Long buyout) {
         this.buyout = buyout;
     }
 

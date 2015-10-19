@@ -2,14 +2,8 @@ package org.freekode.wowauction.updater.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.freekode.wowauction.persistence.models.BidEntity;
-import org.freekode.wowauction.persistence.models.ItemEntity;
-import org.freekode.wowauction.persistence.models.RealmEntity;
-import org.freekode.wowauction.persistence.models.SnapshotEntity;
-import org.freekode.wowauction.updater.dao.interfaces.BidDAO;
-import org.freekode.wowauction.updater.dao.interfaces.ItemDAO;
-import org.freekode.wowauction.updater.dao.interfaces.RealmDAO;
-import org.freekode.wowauction.updater.dao.interfaces.SnapshotDAO;
+import org.freekode.wowauction.persistence.models.*;
+import org.freekode.wowauction.updater.dao.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +25,9 @@ public class SnapshotUpdater {
 
     @Autowired
     private RealmDAO realmDAO;
+
+    @Autowired
+    private ItemInfoDAO itemInfoDAO;
 
 
     public void scheduleUpdate() {
@@ -135,7 +132,10 @@ public class SnapshotUpdater {
 
 
                 // ok, now retrieve additional info about items
-                logger.info("wowhead = " + WowheadAPI.getItemInfo(newItems.get(0).getIdentifier()));
+                Map<String, String> infoMap = WowheadAPI.getItemInfo(newItems.get(0).getIdentifier());
+                ItemInfoEntity info = itemInfoDAO.buildInfo(newItems.get(0), infoMap.get("name"), infoMap.get("level"),
+                        infoMap.get("link"), infoMap.get("icon"));
+                itemInfoDAO.saveAll(Collections.singletonList(info));
             }
         }
 
