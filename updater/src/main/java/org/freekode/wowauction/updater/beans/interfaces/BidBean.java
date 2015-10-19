@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface BidBean {
-    Set<BidEntity> saveAll(Set<BidEntity> bids);
+    List<BidEntity> saveAll(List<BidEntity> bids);
 
     BidEntity closeBid(BidEntity bid);
 

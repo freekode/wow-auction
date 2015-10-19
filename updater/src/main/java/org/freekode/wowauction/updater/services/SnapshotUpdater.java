@@ -56,39 +56,42 @@ public class SnapshotUpdater {
 
 
                 List<Map<String, String>> auctionList = WorldOfWarcraftAPI.getAuctions(newSnapshot.getFile());
-                logger.info("auctionList size = " + auctionList.size());
+                logger.info("full auction list size = " + auctionList.size());
 
 
-                Set<BidEntity> refreshedBids = EntityConversion.convertToBids(auctionList);
+                logger.info("conversion to entities");
+                Set<BidEntity> refreshedBids = new HashSet<>(EntityConversion.convertToBids(auctionList));
+
                 Set<BidEntity> persistedBids = new HashSet<>(bidBean.findBySnapshot(lastSnapshot));
+                logger.info("loaded from db = " + persistedBids.size());
 
 
-                Set<BidEntity> closedBids = new HashSet<>(persistedBids);
+                // separate bids (closed, existing, new)
+                List<BidEntity> closedBids = new ArrayList<>(persistedBids);
                 closedBids.removeAll(refreshedBids);
-                newSnapshot.setClosed(closedBids.size());
-                logger.info("bids closed = " + closedBids.size());
+                logger.info("closed bids = " + closedBids.size());
 
-
-                Set<BidEntity> existingBids = new HashSet<>(persistedBids);
+                List<BidEntity> existingBids = new ArrayList<>(persistedBids);
                 existingBids.retainAll(refreshedBids);
-                newSnapshot.setExisting(existingBids.size());
-                logger.info("bids already exist = " + existingBids.size());
+                logger.info("already existing bids = " + existingBids.size());
 
-
-                Set<BidEntity> newBids = new HashSet<>(refreshedBids);
+                List<BidEntity> newBids = new ArrayList<>(refreshedBids);
                 newBids.removeAll(persistedBids);
+                logger.info("new bids = " + newBids.size());
+
+
+                newSnapshot.setClosed(closedBids.size());
+                newSnapshot.setExisting(existingBids.size());
                 newSnapshot.setNewAmount(newBids.size());
-                logger.info("bids new = " + newBids.size());
-
-                Set<ItemEntity> newItems = EntityConversion.getItemsWithoutBids(newBids);
-                logger.info("items = " + newItems.size());
-
-
-                logger.info("save snapshot = " + newSnapshot);
                 newSnapshot = snapshotBean.save(newSnapshot);
+                logger.info("save snapshot = " + newSnapshot);
 
 
-                logger.info("close bids");
+                List<ItemEntity> newItems = EntityConversion.getItemsWithoutBids(newBids);
+                logger.info("new items = " + newItems.size());
+
+
+                logger.info("close the bids");
                 for (BidEntity bid : closedBids) {
                     bidBean.closeBid(bid);
                 }
@@ -111,12 +114,15 @@ public class SnapshotUpdater {
 
 
                 logger.info("update or create items");
-                Set<ItemEntity> addedItems = itemBean.updateOrCreateAll(newItems);
+                List<ItemEntity> updatedItems = itemBean.saveAll(newItems);
 
 
+                // make a relationship between new bid and item
+                // be cautious new bids can may have connection with existing items
+                // so it is critical that addedItems was really full list of items
                 for (BidEntity bid : newBids) {
                     ItemEntity bidItem = bid.getItem();
-                    for (ItemEntity dbItem : addedItems) {
+                    for (ItemEntity dbItem : updatedItems) {
                         if (dbItem.equals(bidItem)) {
                             bid.setItem(dbItem);
                         }
@@ -124,8 +130,13 @@ public class SnapshotUpdater {
                 }
 
 
+                // save new bids with connection
                 logger.info("save new bids");
                 bidBean.saveAll(newBids);
+
+
+                // ok, now retrieve additional info about items
+                logger.info("wowhead = " + WowheadAPI.getItemInfo(newItems.get(0).getIdentifier()));
             }
         }
 

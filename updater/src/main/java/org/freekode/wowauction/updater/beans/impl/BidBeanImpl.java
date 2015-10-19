@@ -7,6 +7,7 @@ import org.freekode.wowauction.persistence.models.SnapshotEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,8 +19,8 @@ public class BidBeanImpl implements BidBean {
 
 
     @Override
-    public Set<BidEntity> saveAll(Set<BidEntity> bids) {
-        Set<BidEntity> addedBids = new HashSet<>();
+    public List<BidEntity> saveAll(List<BidEntity> bids) {
+        List<BidEntity> addedBids = new ArrayList<>();
         for (BidEntity bid : bids) {
             BidEntity addedItem = bidDAO.save(bid);
             addedBids.add(addedItem);

@@ -91,4 +91,9 @@ public class ItemInfoEntity {
     public void setInventorySlot(CatalogEntity inventorySlot) {
         this.inventorySlot = inventorySlot;
     }
+
+    @Override
+    public String toString() {
+        return item.getIdentifier() + "; " + name;
+    }
 }

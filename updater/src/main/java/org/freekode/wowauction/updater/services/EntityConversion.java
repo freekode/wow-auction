@@ -8,8 +8,8 @@ import java.math.BigInteger;
 import java.util.*;
 
 public class EntityConversion {
-    public static Set<BidEntity> convertToBids(List<Map<String, String>> auctionList) {
-        Set<BidEntity> bids = new HashSet<>();
+    public static List<BidEntity> convertToBids(List<Map<String, String>> auctionList) {
+        List<BidEntity> bids = new ArrayList<>();
 
         for (Map<String, String> auctionMap : auctionList) {
             ItemEntity item = new ItemEntity();
@@ -33,8 +33,8 @@ public class EntityConversion {
     }
 
     // TODO try to use that method
-    public static Set<ItemEntity> inverseBidsToItems(Set<BidEntity> bids) {
-        Set<ItemEntity> items = new HashSet<>();
+    public static List<ItemEntity> inverseBidsToItems(List<BidEntity> bids) {
+        List<ItemEntity> items = new ArrayList<>();
         for (BidEntity bid : bids) {
             ItemEntity item = bid.getItem();
 
@@ -55,12 +55,14 @@ public class EntityConversion {
         return items;
     }
 
-    public static Set<ItemEntity> getItemsWithoutBids(Set<BidEntity> bids) {
-        Set<ItemEntity> items = new HashSet<>();
+    public static List<ItemEntity> getItemsWithoutBids(List<BidEntity> bids) {
+        List<ItemEntity> items = new ArrayList<>();
         for (BidEntity bid : bids) {
             ItemEntity item = bid.getItem();
 
-            items.add(item);
+            if (!items.contains(item)) {
+                items.add(item);
+            }
         }
 
         return items;

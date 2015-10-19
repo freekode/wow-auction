@@ -17,7 +17,7 @@ public class ItemEntity {
     private Integer id;
 
     /**
-     * unique identifier of the item
+     * main identifier of the item
      */
     private String identifier;
 

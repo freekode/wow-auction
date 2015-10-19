@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,20 +21,8 @@ public class ItemDAOImpl implements ItemDAO {
 
 
     @Override
-    public void createAll(Set<ItemEntity> entitySet) {
-        for (ItemEntity entity : entitySet) {
-            entityManager.persist(entity);
-        }
-    }
-
-    @Override
-    public ItemEntity save(ItemEntity item) {
-        return entityManager.merge(item);
-    }
-
-    @Override
-    public Set<ItemEntity> updateAll(Set<ItemEntity> entitySet) {
-        Set<ItemEntity> updated = new HashSet<>();
+    public List<ItemEntity> updateAll(List<ItemEntity> entitySet) {
+        List<ItemEntity> updated = new ArrayList<>();
         for (ItemEntity entity : entitySet) {
             updated.add(entityManager.merge(entity));
         }

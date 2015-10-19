@@ -6,7 +6,9 @@ import org.freekode.wowauction.persistence.models.ItemEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -15,25 +17,22 @@ public class ItemBeanImpl implements ItemBean {
     private ItemDAO itemDAO;
 
 
-    @Override
-    public Set<ItemEntity> updateOrCreateAll(Set<ItemEntity> items) {
-        Set<ItemEntity> addedItems = new HashSet<>();
 
-        Set<ItemEntity> createItems = new HashSet<>();
-        Set<ItemEntity> updateItems = new HashSet<>();
+    @Override
+    public List<ItemEntity> saveAll(List<ItemEntity> items) {
+        List<ItemEntity> updateItems = new ArrayList<>();
         for (ItemEntity item : items) {
             ItemEntity existingItem = itemDAO.isExistsByConstraint(item);
-            if (existingItem == null) {
-                createItems.add(item);
-            } else {
+            if (existingItem != null) {
                 existingItem.setBids(item.getBids());
                 updateItems.add(existingItem);
+                continue;
             }
+
+            updateItems.add(item);
         }
 
-        itemDAO.createAll(createItems);
-        itemDAO.updateAll(updateItems);
 
-        return addedItems;
+        return itemDAO.updateAll(updateItems);
     }
 }
