@@ -27,10 +27,10 @@ public class ItemInfoEntity {
     @JoinColumn(name = "inventorySlotId")
     private CatalogEntity inventorySlot;
 
-//    @MapsId
-//    @OneToOne
-//    @JoinColumn(name = "id")
-//    private ItemEntity item;
+    @MapsId
+    @OneToOne
+    @JoinColumn(name = "id")
+    private ItemEntity item;
 
 
     public ItemInfoEntity() {
@@ -52,14 +52,14 @@ public class ItemInfoEntity {
         this.name = title;
     }
 
-//    public ItemEntity getItem() {
-//        return item;
-//    }
-//
-//    public void setItem(ItemEntity item) {
-//        this.item = item;
-//    }
-//
+    public ItemEntity getItem() {
+        return item;
+    }
+
+    public void setItem(ItemEntity item) {
+        this.item = item;
+    }
+
     public CatalogEntity getQuality() {
         return quality;
     }

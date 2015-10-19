@@ -18,19 +18,21 @@ public class ItemBeanImpl implements ItemBean {
     @Override
     public Set<ItemEntity> updateOrCreateAll(Set<ItemEntity> items) {
         Set<ItemEntity> addedItems = new HashSet<>();
-        for (ItemEntity item : items) {
-            ItemEntity addedItem;
 
+        Set<ItemEntity> createItems = new HashSet<>();
+        Set<ItemEntity> updateItems = new HashSet<>();
+        for (ItemEntity item : items) {
             ItemEntity existingItem = itemDAO.isExistsByConstraint(item);
             if (existingItem == null) {
-                addedItem = itemDAO.save(item);
+                createItems.add(item);
             } else {
                 existingItem.setBids(item.getBids());
-                addedItem = itemDAO.save(existingItem);
+                updateItems.add(existingItem);
             }
-
-            addedItems.add(addedItem);
         }
+
+        itemDAO.createAll(createItems);
+        itemDAO.updateAll(updateItems);
 
         return addedItems;
     }

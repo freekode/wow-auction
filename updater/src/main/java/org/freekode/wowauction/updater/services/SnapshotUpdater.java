@@ -2,16 +2,15 @@ package org.freekode.wowauction.updater.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.freekode.wowauction.updater.beans.interfaces.BidBean;
-import org.freekode.wowauction.updater.beans.interfaces.ItemBean;
-import org.freekode.wowauction.updater.beans.interfaces.RealmBean;
-import org.freekode.wowauction.updater.beans.interfaces.SnapshotBean;
 import org.freekode.wowauction.persistence.models.BidEntity;
 import org.freekode.wowauction.persistence.models.ItemEntity;
 import org.freekode.wowauction.persistence.models.RealmEntity;
 import org.freekode.wowauction.persistence.models.SnapshotEntity;
+import org.freekode.wowauction.updater.beans.interfaces.BidBean;
+import org.freekode.wowauction.updater.beans.interfaces.ItemBean;
+import org.freekode.wowauction.updater.beans.interfaces.RealmBean;
+import org.freekode.wowauction.updater.beans.interfaces.SnapshotBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -85,24 +84,33 @@ public class SnapshotUpdater {
                 logger.info("items = " + newItems.size());
 
 
+                logger.info("save snapshot = " + newSnapshot);
                 newSnapshot = snapshotBean.save(newSnapshot);
 
 
-                for (BidEntity bid : closedBids)
+                logger.info("close bids");
+                for (BidEntity bid : closedBids) {
                     bidBean.closeBid(bid);
+                }
 
+                // add for still existing bids new snapshot
                 for (BidEntity bid : existingBids) {
                     Set<SnapshotEntity> snapshots = new HashSet<>(snapshotBean.getByBid(bid));
                     snapshots.add(newSnapshot);
                     bid.setSnapshots(snapshots);
                 }
 
-                for (BidEntity bid : newBids)
+                // add snapshot for new bids
+                for (BidEntity bid : newBids) {
                     bid.setSnapshots(new HashSet<>(Collections.singletonList(newSnapshot)));
+                }
 
+                // update existing bids and their snapshots
+                logger.info("save existing bids");
                 bidBean.saveAll(existingBids);
 
 
+                logger.info("update or create items");
                 Set<ItemEntity> addedItems = itemBean.updateOrCreateAll(newItems);
 
 
@@ -114,6 +122,9 @@ public class SnapshotUpdater {
                         }
                     }
                 }
+
+
+                logger.info("save new bids");
                 bidBean.saveAll(newBids);
             }
         }

@@ -43,6 +43,7 @@ public class ItemEntity {
     private Date createdAt;
 
     @OneToOne
+    @PrimaryKeyJoinColumn
     private ItemInfoEntity itemInfo;
 
 
