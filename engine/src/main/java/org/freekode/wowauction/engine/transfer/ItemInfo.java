@@ -55,10 +55,6 @@ public class ItemInfo extends BaseTransfer<ItemInfoEntity> implements Initializa
         return item;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
-    }
-
     public enum Options {
     }
 }

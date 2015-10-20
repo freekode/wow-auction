@@ -24,8 +24,10 @@ public class RealmData {
         this.slug = realm.getSlug();
         this.updating = realm.getUpdating();
 
-        for (Snapshot snapshot : realm.getSnapshots()) {
-            snapshots.add(new SnapshotData(snapshot));
+        if (realm.getSnapshots() != null) {
+            for (Snapshot snapshot : realm.getSnapshots()) {
+                snapshots.add(new SnapshotData(snapshot));
+            }
         }
     }
 

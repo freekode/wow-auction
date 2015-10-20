@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class Utils {
     /**
-     * Инициализируем lazy- коллекцию, если это указано в options
+     * Initialize lazy collections
      */
     public static void initCollection(Collection coll, Set options) {
         for (Object aobj : coll) {

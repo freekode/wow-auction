@@ -21,8 +21,8 @@ public class ItemApiController {
 
 
     @RequestMapping(value = "/list/{page}/{amount}")
-    public @ResponseBody ResponseData<List<ItemData>> getSnapshots24h(
-            @PathVariable Integer page, @PathVariable Integer amount) {
+    public @ResponseBody ResponseData<List<ItemData>> getSnapshots24h(@PathVariable Integer page,
+                                                                      @PathVariable Integer amount) {
 
         return new ResponseData<>(itemService.getList(page, amount));
     }

@@ -2,19 +2,16 @@ var app = angular.module("app", ["layout"]);
 var api = new API();
 
 
-app.controller("IndexCtrl", function ($scope, $http) {
+app.controller("IndexCtrl", function ($scope) {
     $scope.page = 'index';
 
 
     $scope.changeRealm = function () {
         api.getSnapshots24h({realmId: $scope.realmId}).done(function(data) {
+            var graphData = [];
 
-        });
-        $http.get("/models/snapshots/24h").then(function (resp) {
-            var data = [];
-
-            resp.data.map(function (elem) {
-                data.push({
+            data.map(function (elem) {
+                graphData.push({
                     date: new Date(elem.lastModified),
                     existing: elem.existing,
                     overall: elem.closed + elem.existing + elem.newAmount,
@@ -24,8 +21,8 @@ app.controller("IndexCtrl", function ($scope, $http) {
                 });
             });
 
-            indexGraph(data, 'graph');
-        })
+            indexGraph(graphData, 'graph');
+        });
     };
 });
 

@@ -70,6 +70,10 @@ public class Item extends BaseTransfer<ItemEntity> implements Initializable {
         return bids;
     }
 
+    public ItemInfo getItemInfo() {
+        return itemInfo;
+    }
+
     public enum Options {
         INIT_ITEM_BIDS
     }

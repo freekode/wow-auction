@@ -4,9 +4,14 @@
  */
 var API = function () {
     /**
+     * Контекст
+     */
+    var ROOT = '/wow-auction';
+
+    /**
      * Список доступных url
      */
-    var urls = {
+    var resources = {
         snapshots24h: {
             url: '/api/snapshot/24h/{realmId}',
             type: 'get'
@@ -37,6 +42,8 @@ var API = function () {
             dataType: "json"
         };
         $.extend(config, resource);
+
+        config.url = ROOT + config.url;
 
         return _request(config);
     };
@@ -84,6 +91,12 @@ var API = function () {
         return dfd.promise();
     };
 
+    /**
+     * Преобразовывает url в строку для запросов вида /api/{id}
+     * @param resource ресурс
+     * @param values мап значений
+     * @private
+     */
     var _makeUrl = function (resource, values) {
         var params = resource.url.match(/{(\w+)}/gi);
 
@@ -101,7 +114,7 @@ var API = function () {
      * @param param объект с id реалма
      */
     this.getSnapshots24h = function (param) {
-        return _send(_makeUrl(urls.snapshots24h, param));
+        return _send(_makeUrl(resources.snapshots24h, param));
     };
 
     /**
@@ -109,6 +122,6 @@ var API = function () {
      * @param param страница и количество айтемов на странице
      */
     this.getItemList = function (param) {
-        return _send(_makeUrl(urls.getItemList, param));
+        return _send(_makeUrl(resources.getItemList, param));
     }
 };
