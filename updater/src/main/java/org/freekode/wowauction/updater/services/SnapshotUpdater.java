@@ -132,10 +132,18 @@ public class SnapshotUpdater {
 
 
                 // ok, now retrieve additional info about items
-                Map<String, String> infoMap = WowheadAPI.getItemInfo(newItems.get(0).getIdentifier());
-                ItemInfoEntity info = itemInfoDAO.buildInfo(newItems.get(0), infoMap.get("name"), infoMap.get("level"),
-                        infoMap.get("link"), infoMap.get("icon"));
-                itemInfoDAO.saveAll(Collections.singletonList(info));
+                logger.info("get info about new items");
+                List<ItemInfoEntity> infoEntities = new ArrayList<>();
+                for (ItemEntity item : newItems) {
+                    Map<String, String> infoMap = WowheadAPI.getItemInfo(item.getIdentifier());
+                    ItemInfoEntity info = itemInfoDAO.buildInfo(item, infoMap.get("name"), infoMap.get("level"),
+                            infoMap.get("link"), infoMap.get("icon"));
+
+                    infoEntities.add(info);
+                }
+
+                logger.info("save information");
+                itemInfoDAO.saveAll(infoEntities);
             }
         }
 
