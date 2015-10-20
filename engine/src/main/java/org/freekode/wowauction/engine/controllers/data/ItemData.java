@@ -13,6 +13,7 @@ public class ItemData {
     private String uniqueId;
     private String context;
     private Set<Bid> bids;
+    private ItemInfoData itemInfo;
     private Date createdAt;
 
 
@@ -26,6 +27,10 @@ public class ItemData {
         this.uniqueId = item.getUniqueId();
         this.context = item.getContext();
         this.createdAt = item.getCreatedAt();
+
+        if (item.getItemInfo() != null) {
+            itemInfo = new ItemInfoData(item.getItemInfo());
+        }
     }
 
     public Integer getId() {
@@ -82,5 +87,13 @@ public class ItemData {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public ItemInfoData getItemInfo() {
+        return itemInfo;
+    }
+
+    public void setItemInfo(ItemInfoData itemInfo) {
+        this.itemInfo = itemInfo;
     }
 }

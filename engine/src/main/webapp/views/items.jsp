@@ -31,7 +31,8 @@
             <div class="row">
                 <div class="col-xs-1" ng-repeat="item in items">
                     <a href="http://www.wowhead.com/item={{ item.identifier }}" class="q4 thumbnail">
-                        hm...
+                        <img ng-src="{{ item.itemInfo.icon }}"/>
+                        {{ item.itemInfo.name }}
                     </a>
                 </div>
             </div>

@@ -5,9 +5,6 @@ import org.freekode.wowauction.persistence.models.ItemInfoEntity;
 import java.util.Set;
 
 public class ItemInfo extends BaseTransfer<ItemInfoEntity> implements Initializable {
-    private Item item;
-
-
     public ItemInfo() {
         super();
         entity = new ItemInfoEntity();
@@ -15,8 +12,6 @@ public class ItemInfo extends BaseTransfer<ItemInfoEntity> implements Initializa
 
     public ItemInfo(ItemInfoEntity entity) {
         super(entity);
-
-        item = new Item(entity.getItem());
     }
 
     @Override
@@ -25,6 +20,14 @@ public class ItemInfo extends BaseTransfer<ItemInfoEntity> implements Initializa
 
     public Integer getId() {
         return entity.getId();
+    }
+
+    public String getName() {
+        return entity.getName();
+    }
+
+    public void setName(String name) {
+        entity.setName(name);
     }
 
     public String getLevel() {
@@ -49,10 +52,6 @@ public class ItemInfo extends BaseTransfer<ItemInfoEntity> implements Initializa
 
     public void setUrl(String url) {
         entity.setUrl(url);
-    }
-
-    public Item getItem() {
-        return item;
     }
 
     public enum Options {
