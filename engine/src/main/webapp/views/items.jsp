@@ -24,16 +24,69 @@
                 renamelinks: true
             }
         </script>
+        <style>
+            .icon {
+                width: 56px;
+                height: 56px;
+            }
+
+            .icon__frame {
+                width: 68px;
+                height: 68px;
+                margin-top: -65px;
+                margin-left: -6px;
+            }
+
+            .icon__hover {
+                width: 62px;
+                height: 62px;
+                margin-top: -59px;
+                margin-left: -3px;
+            }
+
+            .icon__frame__large {
+                background: no-repeat url('${pageContext.request.contextPath}/static/img/item_large_border.png')
+            }
+
+            .icon__hover__large {
+                background: no-repeat url('${pageContext.request.contextPath}/static/img/item_large_hover.png')
+            }
+        </style>
     </jsp:attribute>
 
     <jsp:body>
         <div ng-controller="ItemsCtrl">
             <div class="row">
-                <div class="col-xs-1" ng-repeat="item in items">
-                    <a href="http://www.wowhead.com/item={{ item.identifier }}" class="q4 thumbnail">
-                        <img ng-src="{{ item.itemInfo.icon }}"/>
-                        {{ item.itemInfo.name }}
-                    </a>
+                <div class="col-xs-12">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>level</th>
+                            <th>class</th>
+                            <th>sub class</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in items">
+                            <td>{{ item.identifier }}</td>
+                            <td>
+                                <a href="{{ item.itemInfo.url }}" class="q4">
+                                    <div class="icon"
+                                         ng-style="{'background' : 'no-repeat url({{item.itemInfo.icon}})'}"></div>
+                                    <div class="icon__hover icon__hover__large"></div>
+                                    <div class="icon__frame icon__frame__large"></div>
+
+                                    {{ item.itemInfo.name }}
+                                </a>
+                            </td>
+                            <td>{{ item.itemInfo.level }}</td>
+                            <td>null</td>
+                            <td>null</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

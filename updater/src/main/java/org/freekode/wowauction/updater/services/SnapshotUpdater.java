@@ -26,9 +26,6 @@ public class SnapshotUpdater {
     @Autowired
     private RealmDAO realmDAO;
 
-    @Autowired
-    private ItemInfoDAO itemInfoDAO;
-
 
     public void scheduleUpdate() {
         updateAuction();
@@ -142,8 +139,13 @@ public class SnapshotUpdater {
                 logger.info("get info about new items");
                 for (ItemEntity item : createdItems) {
                     Map<String, String> infoMap = WowheadAPI.getItemInfo(item.getIdentifier());
-                    ItemInfoEntity info = itemInfoDAO.buildInfo(item, infoMap.get("name"), infoMap.get("level"),
-                            infoMap.get("link"), infoMap.get("icon"));
+
+                    ItemInfoEntity info = new ItemInfoEntity();
+                    info.setName(infoMap.get("name"));
+                    info.setLevel(infoMap.get("level"));
+                    info.setUrl(infoMap.get("link"));
+                    info.setIcon(infoMap.get("icon") + ".jpg");
+                    info.setItem(item);
 
                     item.setItemInfo(info);
                 }
@@ -154,109 +156,5 @@ public class SnapshotUpdater {
         }
 
         logger.info("auction update ended");
-    }
-
-    public void testItemInfo() {
-        logger.info("test info update started");
-
-        for (RealmEntity realm : realmDAO.findForUpdate()) {
-            logger.info("realm = " + realm);
-
-            Map<String, String> newSnapshotMap = WorldOfWarcraftAPI.getSnapshot(realm.getRegion().toString(), realm.getSlug());
-            SnapshotEntity newSnapshot = new SnapshotEntity();
-            newSnapshot.setRealm(realm);
-            newSnapshot.setFile(newSnapshotMap.get("url"));
-            newSnapshot.setLastModified(new Date(new Long(newSnapshotMap.get("lastModified"))));
-
-            SnapshotEntity lastSnapshot = snapshotDAO.getLast(realm);
-
-            if (lastSnapshot == null || lastSnapshot.getLastModified().getTime() < newSnapshot.getLastModified().getTime()) {
-                logger.info("newSnapshot = " + newSnapshot);
-
-
-                List<Map<String, String>> auctionList = WorldOfWarcraftAPI.getAuctions(newSnapshot.getFile());
-                logger.info("full auction list size = " + auctionList.size());
-
-
-                logger.info("conversion to entities");
-                Set<BidEntity> refreshedBids = new HashSet<>(EntityConversion.convertToBids(auctionList));
-
-                Set<BidEntity> persistedBids = new HashSet<>(bidDAO.findBySnapshot(lastSnapshot));
-                logger.info("loaded from db = " + persistedBids.size());
-
-
-                // separate bids (closed, existing, new)
-                List<BidEntity> closedBids = new ArrayList<>(persistedBids);
-                closedBids.removeAll(refreshedBids);
-                logger.info("closed bids = " + closedBids.size());
-
-                List<BidEntity> existingBids = new ArrayList<>(persistedBids);
-                existingBids.retainAll(refreshedBids);
-                logger.info("already existing bids = " + existingBids.size());
-
-                List<BidEntity> newBids = new ArrayList<>(refreshedBids);
-                newBids.removeAll(persistedBids);
-                logger.info("new bids = " + newBids.size());
-
-
-                newSnapshot.setClosed(closedBids.size());
-                newSnapshot.setExisting(existingBids.size());
-                newSnapshot.setNewAmount(newBids.size());
-                newSnapshot = snapshotDAO.save(newSnapshot);
-                logger.info("save snapshot = " + newSnapshot);
-
-
-                List<ItemEntity> newItems = EntityConversion.getItemsWithoutBids(newBids);
-                logger.info("new items = " + newItems.size());
-
-
-                logger.info("close the bids");
-                bidDAO.closeAll(closedBids);
-
-
-                // add for still existing bids new snapshot
-                for (BidEntity bid : existingBids) {
-                    Set<SnapshotEntity> snapshots = new HashSet<>(snapshotDAO.findByBid(bid));
-                    snapshots.add(newSnapshot);
-                    bid.setSnapshots(snapshots);
-                }
-
-                // add snapshot for new bids
-                for (BidEntity bid : newBids) {
-                    bid.setSnapshots(new HashSet<>(Collections.singletonList(newSnapshot)));
-                }
-
-                // update existing bids and their snapshots
-                logger.info("save existing bids");
-                bidDAO.saveAll(existingBids);
-
-
-                logger.info("update or create one item");
-                List<ItemEntity> updatedItems = itemDAO.updateAll(Collections.singletonList(newItems.get(0)));
-                List<ItemEntity> createdItems = itemDAO.createAll(Collections.singletonList(newItems.get(0)));
-
-
-                // save new bids with connection
-                logger.info("save new bids");
-
-
-                // ok, now retrieve additional info about items
-                logger.info("get info about new items");
-                for (ItemEntity item : Collections.singletonList(createdItems.get(0))) {
-                    Map<String, String> infoMap = WowheadAPI.getItemInfo(item.getIdentifier());
-                    ItemInfoEntity info = itemInfoDAO.buildInfo(item, infoMap.get("name"), infoMap.get("level"),
-                            infoMap.get("link"), infoMap.get("icon"));
-
-                    item.setItemInfo(info);
-
-                    itemDAO.updateAll(Collections.singletonList(item));
-                }
-
-//                logger.info("save information");
-//                itemInfoDAO.saveAll(infoEntities);
-            }
-        }
-
-        logger.info("test info update ended");
     }
 }

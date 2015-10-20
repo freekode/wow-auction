@@ -4,7 +4,7 @@ var api = new API();
 
 app.controller("ItemsCtrl", function ($scope) {
     $scope.page = 'items';
-    var currentPage = 501;
+    var currentPage = 0;
     var amount = 50;
 
 
