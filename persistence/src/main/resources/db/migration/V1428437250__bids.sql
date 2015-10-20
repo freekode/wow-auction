@@ -9,6 +9,6 @@ CREATE TABLE bids (
   createdAt  TIMESTAMP,
   itemId     INTEGER,
   playerId   INTEGER,
-  CONSTRAINT bids_items_fk FOREIGN KEY (itemId) REFERENCES items (id),
+  CONSTRAINT bids_items_fk FOREIGN KEY (itemId) REFERENCES items (id) ON UPDATE RESTRICT ON DELETE CASCADE,
   CONSTRAINT bids_owners_fk FOREIGN KEY (playerId) REFERENCES players (id)
 );

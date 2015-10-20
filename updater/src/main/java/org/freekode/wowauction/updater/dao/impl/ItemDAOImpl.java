@@ -19,22 +19,34 @@ public class ItemDAOImpl implements ItemDAO {
 
 
     @Override
-    public List<ItemEntity> saveAll(List<ItemEntity> items) {
-        List<ItemEntity> updateItems = new ArrayList<>();
+    public List<ItemEntity> createAll(List<ItemEntity> items) {
+        List<ItemEntity> createItems = new ArrayList<>();
         for (ItemEntity item : items) {
-            ItemEntity updateItem;
-
-            ItemEntity existingItem = isExistsByConstraint(item);
-            if (existingItem == null) {
-                updateItem = item;
-            } else {
-                existingItem.setBids(item.getBids());
-                updateItem = existingItem;
+            if (isExistsByConstraint(item) == null) {
+                createItems.add(entityManager.merge(item));
             }
-
-            updateItems.add(entityManager.merge(updateItem));
         }
 
+        return createItems;
+    }
+
+    @Override
+    public List<ItemEntity> updateAll(List<ItemEntity> items) {
+        List<ItemEntity> updateItems = new ArrayList<>();
+        for (ItemEntity item : items) {
+            ItemEntity existingItem = isExistsByConstraint(item);
+            if (existingItem != null) {
+                existingItem.setIdentifier(item.getIdentifier());
+                existingItem.setSuffixId(item.getSuffixId());
+                existingItem.setUniqueId(item.getUniqueId());
+                existingItem.setContext(item.getContext());
+                existingItem.setCreatedAt(item.getCreatedAt());
+                existingItem.setItemInfo(item.getItemInfo());
+                existingItem.setBids(item.getBids());
+
+                updateItems.add(entityManager.merge(existingItem));
+            }
+        }
 
         return updateItems;
     }

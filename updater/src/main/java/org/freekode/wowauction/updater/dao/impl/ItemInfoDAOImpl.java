@@ -25,8 +25,6 @@ public class ItemInfoDAOImpl implements ItemInfoDAO {
         info.setLevel(level);
         info.setUrl(url);
         info.setIcon("http://wow.zamimg.com/images/wow/icons/large/" + icon + ".jpg");
-
-        item.setItemInfo(info);
         info.setItem(item);
         return info;
     }

@@ -3,6 +3,6 @@ CREATE TABLE catalogs (
   headId INTEGER,
   code   INTEGER,
   value  CHARACTER VARYING,
-  CONSTRAINT references_head_fk FOREIGN KEY (headId) REFERENCES catalog_heads (id)
+  CONSTRAINT references_head_fk FOREIGN KEY (headId) REFERENCES catalog_heads (id) ON UPDATE RESTRICT ON DELETE RESTRICT
 );
 

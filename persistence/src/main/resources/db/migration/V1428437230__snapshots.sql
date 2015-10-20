@@ -7,5 +7,5 @@ CREATE TABLE snapshots (
   newAmount    INTEGER,
   createdAt    TIMESTAMP,
   realmId      INTEGER,
-  CONSTRAINT snapshots_realm_fk FOREIGN KEY (realmId) REFERENCES realms (id)
+  CONSTRAINT snapshots_realm_fk FOREIGN KEY (realmId) REFERENCES realms (id) ON UPDATE RESTRICT ON DELETE RESTRICT
 );

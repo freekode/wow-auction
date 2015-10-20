@@ -7,6 +7,8 @@ import javax.persistence.*;
 @Table(name = "items_info")
 public class ItemInfoEntity {
     @Id
+    @Column(columnDefinition = "serial")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String name;
@@ -33,9 +35,8 @@ public class ItemInfoEntity {
 //    @JoinColumn(name = "inventorySlotId")
 //    private CatalogEntity inventorySlot;
 
-    @MapsId
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "itemId", referencedColumnName = "id")
     private ItemEntity item;
 
 

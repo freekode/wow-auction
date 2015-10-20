@@ -1,7 +1,5 @@
 package org.freekode.wowauction.persistence.models;
 
-import org.hibernate.annotations.Index;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -42,8 +40,7 @@ public class ItemEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL)
     private ItemInfoEntity itemInfo;
 
 
@@ -111,6 +108,14 @@ public class ItemEntity {
         this.context = context;
     }
 
+    public ItemInfoEntity getItemInfo() {
+        return itemInfo;
+    }
+
+    public void setItemInfo(ItemInfoEntity itemInfo) {
+        this.itemInfo = itemInfo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -128,13 +133,5 @@ public class ItemEntity {
         int result = identifier.hashCode();
         result = 31 * result + uniqueId.hashCode();
         return result;
-    }
-
-    public ItemInfoEntity getItemInfo() {
-        return itemInfo;
-    }
-
-    public void setItemInfo(ItemInfoEntity itemInfo) {
-        this.itemInfo = itemInfo;
     }
 }
