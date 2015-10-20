@@ -31,8 +31,8 @@ public class SnapshotUpdater {
 
 
     public void scheduleUpdate() {
-//        updateAuction();
-        testItemInfo();
+        updateAuction();
+//        testItemInfo();
     }
 
     public void updateAuction() {
@@ -146,7 +146,6 @@ public class SnapshotUpdater {
                             infoMap.get("link"), infoMap.get("icon"));
 
                     item.setItemInfo(info);
-
                 }
 
                 logger.info("save items information");
