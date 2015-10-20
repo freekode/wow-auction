@@ -98,11 +98,6 @@ public class ItemInfoEntity {
 //        this.inventorySlot = inventorySlot;
 //    }
 
-    @Override
-    public String toString() {
-        return item.getIdentifier() + "; " + name;
-    }
-
     public String getLevel() {
         return level;
     }
@@ -125,5 +120,10 @@ public class ItemInfoEntity {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        return item.getIdentifier() + "; " + name;
     }
 }

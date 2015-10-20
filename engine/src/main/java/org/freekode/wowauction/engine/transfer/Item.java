@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Set;
 
 public class Item extends BaseTransfer<ItemEntity> implements Initializable {
+    private ItemInfo itemInfo;
+
     private List<Bid> bids;
 
 
@@ -20,6 +22,10 @@ public class Item extends BaseTransfer<ItemEntity> implements Initializable {
 
     public Item(ItemEntity entity) {
         super(entity);
+
+        if (entity.getItemInfo() != null) {
+            itemInfo = new ItemInfo(entity.getItemInfo());
+        }
     }
 
     @Override

@@ -53,11 +53,11 @@ public class Bid extends BaseTransfer<BidEntity> implements Initializable {
         return entity.getIdentifier();
     }
 
-    public BigInteger getRate() {
+    public Long getRate() {
         return entity.getRate();
     }
 
-    public BigInteger getBuyout() {
+    public Long getBuyout() {
         return entity.getBuyout();
     }
 
