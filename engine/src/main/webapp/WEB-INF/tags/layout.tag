@@ -18,6 +18,7 @@
     <script src="${pageContext.request.contextPath}/static/js/api.js"></script>
 
     <script src="${pageContext.request.contextPath}/static/js/lib/angular.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/lib/angular-route.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/layout.js"></script>
 
 

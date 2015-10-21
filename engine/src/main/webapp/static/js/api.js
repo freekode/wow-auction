@@ -98,14 +98,17 @@ var API = function () {
      * @private
      */
     var _makeUrl = function (resource, values) {
-        var params = resource.url.match(/{(\w+)}/gi);
+        var cloneResource = {};
+        $.extend(cloneResource, resource);
+
+        var params = cloneResource.url.match(/{(\w+)}/gi);
 
         params.map(function (elem) {
             var paramName = elem.replace('{', '').replace('}', '');
-            resource.url = resource.url.replace(elem, values[paramName])
+            cloneResource.url = cloneResource.url.replace(elem, values[paramName])
         });
 
-        return resource
+        return cloneResource
     };
 
 

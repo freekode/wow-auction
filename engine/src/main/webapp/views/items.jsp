@@ -11,6 +11,8 @@
         <spring:url value="/static/js/graph.js" var="graphJs"/>
         <spring:url value="/static/js/items.js" var="itemsJs"/>
 
+        <base href="${pageContext.request.contextPath}/items/">
+
         <link href="${graphCss}" rel="stylesheet"/>
         <script src="${d3Js}"></script>
         <script src="${graphJs}"></script>
@@ -25,6 +27,11 @@
             }
         </script>
         <style>
+            .inline {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
             .icon {
                 width: 56px;
                 height: 56px;
@@ -56,6 +63,8 @@
 
     <jsp:body>
         <div ng-controller="ItemsCtrl">
+            <div ng-view></div>
+
             <div class="row">
                 <div class="col-xs-12">
                     <table class="table table-striped">
@@ -72,13 +81,14 @@
                         <tr ng-repeat="item in items">
                             <td>{{ item.identifier }}</td>
                             <td>
-                                <a href="{{ item.itemInfo.url }}" class="q4">
-                                    <div class="icon"
-                                         ng-style="{'background' : 'no-repeat url({{item.itemInfo.icon}})'}"></div>
-                                    <div class="icon__hover icon__hover__large"></div>
-                                    <div class="icon__frame icon__frame__large"></div>
-
-                                    {{ item.itemInfo.name }}
+                                <a href="{{ item.itemInfo.url }}" class="q4" target="_blank">
+                                    <div class="inline">
+                                        <div class="icon"
+                                             ng-style="{'background' : 'no-repeat url({{item.itemInfo.icon}})'}"></div>
+                                        <div class="icon__hover icon__hover__large"></div>
+                                        <div class="icon__frame icon__frame__large"></div>
+                                    </div>
+                                    <div class="inline">{{ item.itemInfo.name }}</div>
                                 </a>
                             </td>
                             <td>{{ item.itemInfo.level }}</td>
