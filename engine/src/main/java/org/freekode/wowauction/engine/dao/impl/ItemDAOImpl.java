@@ -48,6 +48,10 @@ public class ItemDAOImpl implements ItemDAO {
     @Override
     @SuppressWarnings("unchecked")
     public List<Item> getList(Integer page, Integer amount, Set options) {
+        if (page > 0) {
+            page--;
+        }
+
         Query query = entityManager.createQuery("select item from ItemEntity item order by item.id");
 
         if (page != null && amount != null) {

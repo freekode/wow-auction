@@ -14,6 +14,7 @@
         <base href="${pageContext.request.contextPath}/items/">
 
         <link href="${graphCss}" rel="stylesheet"/>
+
         <script src="${d3Js}"></script>
         <script src="${graphJs}"></script>
         <script src="${itemsJs}"></script>
@@ -26,6 +27,7 @@
                 renamelinks: true
             }
         </script>
+
         <style>
             a {
                 text-decoration: none;
@@ -41,7 +43,7 @@
                 height: 56px;
             }
 
-            .icon__frame__large {
+            .icon__border__large {
                 width: 68px;
                 height: 68px;
                 margin-top: -65px;
@@ -57,8 +59,31 @@
             }
 
             .icon__hover__large:hover {
-                background: black;
-            <%--background: no-repeat url('${pageContext.request.contextPath}/static/img/item_large_hover.png')--%>
+                background: no-repeat url('${pageContext.request.contextPath}/static/img/item_large_hover.png')
+            }
+
+            .icon__medium {
+                width: 36px;
+                height: 36px;
+            }
+
+            .icon__border__medium {
+                width: 44px;
+                height: 44px;
+                margin-top: -41px;
+                margin-left: -4px;
+                background: no-repeat url('${pageContext.request.contextPath}/static/img/item_medium_border.png')
+            }
+
+            .icon__hover__medium {
+                width: 38px;
+                height: 38px;
+                margin-top: -37px;
+                margin-left: -1px;
+            }
+
+            .icon__hover__medium:hover {
+                background: no-repeat url('${pageContext.request.contextPath}/static/img/item_medium_hover.png')
             }
         </style>
     </jsp:attribute>
@@ -69,7 +94,7 @@
 
             <div class="row">
                 <div class="col-xs-1">
-                    <input type="text" class="form-control" placeholder="Amount" ng-model="itemListSearch.amount">
+                    <input type="text" class="form-control" style="width:60px;" placeholder="Amount" ng-model="itemListSearch.amount">
                 </div>
                 <div class="col-xs-3">
                     <div class="form-inline">
@@ -98,10 +123,10 @@
                             <td>
                                 <a href="{{ item.itemInfo.url }}" class="q4 item__a" target="_blank">
                                     <div class="inline">
-                                        <div class="icon__large"
-                                             ng-style="{'background' : 'no-repeat url({{item.itemInfo.icon}})'}"></div>
-                                        <div class="icon__hover__large"></div>
-                                        <div class="icon__frame__large"></div>
+                                        <div class="icon__medium"
+                                             ng-style="{'background' : 'no-repeat url(http://wow.zamimg.com/images/wow/icons/medium/{{item.itemInfo.icon}})'}"></div>
+                                        <div class="icon__hover__medium"></div>
+                                        <div class="icon__border__medium"></div>
                                     </div>
                                     <div class="inline">{{ item.itemInfo.name }}</div>
                                 </a>

@@ -3,9 +3,13 @@ var app = angular.module('app', ['layout', 'ngRoute']);
 
 
 app.config(function($routeProvider) {
-    $routeProvider.when('/:page/:amount', {
-        reloadOnSearch: false
-    });
+    $routeProvider
+        .when('/:page/:amount', {
+            reloadOnSearch: false
+        })
+        .when('/', {
+            reloadOnSearch: false
+        });
 });
 
 
@@ -13,20 +17,30 @@ app.controller('ItemsCtrl', function ($scope, $routeParams, $rootScope, $locatio
     $scope.page = 'items';
     $scope.itemListSearch = {
         amount: 30,
-        page: 0
+        page: 1
     };
 
-    if ($routeParams.page == undefined || $routeParams.amount == undefined) {
-        $location.path('/' + $scope.itemListSearch.page + '/' + $scope.itemListSearch.amount);
-    }
-    
+    //if ($routeParams.page == undefined || $routeParams.amount == undefined) {
+    //    $location.path('/' + $scope.itemListSearch.page + '/' + $scope.itemListSearch.amount);
+    //}
+
+    $rootScope.$on("$routeChangeSuccess", function(event, current) {
+        if ($routeParams.page == undefined || $routeParams.amount == undefined) {
+            $location.path('/' + $scope.itemListSearch.page + '/' + $scope.itemListSearch.amount);
+            return
+        }
+
+        $scope.loadItems($routeParams.page, $routeParams.amount);
+    });
+
     $scope.$watch('itemListSearch', function (newValue, oldValue) {
-        if (newValue.amount == '' || newValue.page == '' ) {
+        // prevent to work with null params
+        if (newValue.amount == '' || newValue.page == '') {
             return;
         }
 
-        $scope.loadItems(newValue.page, newValue.amount)
-    }, true);
+        $location.path('/' + newValue.page + '/' + newValue.amount);
+    }, false);
 
     $scope.loadItems = function (page, amount) {
         api.getItemList({page: page, amount: amount}).done(function (data) {
@@ -35,12 +49,8 @@ app.controller('ItemsCtrl', function ($scope, $routeParams, $rootScope, $locatio
         });
     };
 
-    $rootScope.$on("$routeChangeSuccess", function(event, current) {
-        $scope.loadItems($routeParams.page, $routeParams.amount);
-    });
-
     $scope.prevPage = function () {
-        if ($scope.itemListSearch.page == 0) {
+        if ($scope.itemListSearch.page == 1) {
             return;
         }
 
