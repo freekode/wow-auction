@@ -36,7 +36,7 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li ng-class="{active : page == 'items'}"><a href="${pageContext.request.contextPath}/items">Items</a></li>
+                <li ng-class="{active : page == 'items'}"><a href="${pageContext.request.contextPath}/items/">Items</a></li>
                 <li ng-class="{active : page == 'auctions'}"><a href="#">Auctions</a></li>
             </ul>
 

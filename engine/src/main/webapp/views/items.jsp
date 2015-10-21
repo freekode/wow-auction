@@ -27,36 +27,38 @@
             }
         </script>
         <style>
+            a {
+                text-decoration: none;
+            }
+
             .inline {
                 display: inline-block;
                 vertical-align: middle;
             }
 
-            .icon {
+            .icon__large {
                 width: 56px;
                 height: 56px;
             }
 
-            .icon__frame {
+            .icon__frame__large {
                 width: 68px;
                 height: 68px;
                 margin-top: -65px;
                 margin-left: -6px;
+                background: no-repeat url('${pageContext.request.contextPath}/static/img/item_large_border.png')
             }
 
-            .icon__hover {
+            .icon__hover__large {
                 width: 62px;
                 height: 62px;
                 margin-top: -59px;
                 margin-left: -3px;
             }
 
-            .icon__frame__large {
-                background: no-repeat url('${pageContext.request.contextPath}/static/img/item_large_border.png')
-            }
-
-            .icon__hover__large {
-                background: no-repeat url('${pageContext.request.contextPath}/static/img/item_large_hover.png')
+            .icon__hover__large:hover {
+                background: black;
+            <%--background: no-repeat url('${pageContext.request.contextPath}/static/img/item_large_hover.png')--%>
             }
         </style>
     </jsp:attribute>
@@ -64,6 +66,19 @@
     <jsp:body>
         <div ng-controller="ItemsCtrl">
             <div ng-view></div>
+
+            <div class="row">
+                <div class="col-xs-1">
+                    <input type="text" class="form-control" placeholder="Amount" ng-model="itemListSearch.amount">
+                </div>
+                <div class="col-xs-3">
+                    <div class="form-inline">
+                        <button type="button" class="btn btn-info" ng-click="prevPage()">&laquo;</button>
+                        <input type="text" class="form-control" style="width:60px;text-align:center;" placeholder="Page" ng-model="itemListSearch.page"/>
+                        <button type="button" class="btn btn-info" ng-click="nextPage()">&raquo;</button>
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-xs-12">
@@ -81,12 +96,12 @@
                         <tr ng-repeat="item in items">
                             <td>{{ item.identifier }}</td>
                             <td>
-                                <a href="{{ item.itemInfo.url }}" class="q4" target="_blank">
+                                <a href="{{ item.itemInfo.url }}" class="q4 item__a" target="_blank">
                                     <div class="inline">
-                                        <div class="icon"
+                                        <div class="icon__large"
                                              ng-style="{'background' : 'no-repeat url({{item.itemInfo.icon}})'}"></div>
-                                        <div class="icon__hover icon__hover__large"></div>
-                                        <div class="icon__frame icon__frame__large"></div>
+                                        <div class="icon__hover__large"></div>
+                                        <div class="icon__frame__large"></div>
                                     </div>
                                     <div class="inline">{{ item.itemInfo.name }}</div>
                                 </a>
@@ -98,28 +113,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-
-            <div class="row">
-                <nav>
-                    <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li><a href="#">0</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
             </div>
         </div>
     </jsp:body>

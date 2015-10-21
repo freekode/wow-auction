@@ -2,22 +2,31 @@ var api = new API();
 var app = angular.module('app', ['layout', 'ngRoute']);
 
 
-app.config(function($routeProvider, $locationProvider) {
+app.config(function($routeProvider) {
     $routeProvider.when('/:page/:amount', {
         reloadOnSearch: false
     });
-
-    //$locationProvider.html5Mode(true);
 });
 
 
 app.controller('ItemsCtrl', function ($scope, $routeParams, $rootScope, $location) {
     $scope.page = 'items';
-    $scope.currentPage = 0;
-    $scope.amount = 30;
+    $scope.itemListSearch = {
+        amount: 30,
+        page: 0
+    };
 
+    if ($routeParams.page == undefined || $routeParams.amount == undefined) {
+        $location.path('/' + $scope.itemListSearch.page + '/' + $scope.itemListSearch.amount);
+    }
+    
+    $scope.$watch('itemListSearch', function (newValue, oldValue) {
+        if (newValue.amount == '' || newValue.page == '' ) {
+            return;
+        }
 
-    $location.path('0/' + $scope.amount);
+        $scope.loadItems(newValue.page, newValue.amount)
+    }, true);
 
     $scope.loadItems = function (page, amount) {
         api.getItemList({page: page, amount: amount}).done(function (data) {
@@ -29,6 +38,18 @@ app.controller('ItemsCtrl', function ($scope, $routeParams, $rootScope, $locatio
     $rootScope.$on("$routeChangeSuccess", function(event, current) {
         $scope.loadItems($routeParams.page, $routeParams.amount);
     });
+
+    $scope.prevPage = function () {
+        if ($scope.itemListSearch.page == 0) {
+            return;
+        }
+
+        $scope.itemListSearch.page--
+    };
+
+    $scope.nextPage = function () {
+        $scope.itemListSearch.page++
+    }
 });
 
 
