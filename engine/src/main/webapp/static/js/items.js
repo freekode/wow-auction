@@ -15,10 +15,12 @@ app.config(function ($routeProvider) {
 
 app.controller('ItemsCtrl', function ($scope, $routeParams, $rootScope, $location) {
     $scope.page = 'items';
+    $scope.itemListSearch = {};
     var defaultListConfig = {
         amount: 30,
         page: 1
     };
+
 
     $rootScope.$on("$routeChangeSuccess", function (event, current) {
         if ($routeParams.page == undefined || $routeParams.amount == undefined) {
@@ -38,7 +40,7 @@ app.controller('ItemsCtrl', function ($scope, $routeParams, $rootScope, $locatio
         }
 
         $location.path('/' + newValue.page + '/' + newValue.amount);
-    });
+    }, true);
 
     $scope.loadItems = function (page, amount) {
         api.getItemList({page: page, amount: amount}).done(function (data) {
