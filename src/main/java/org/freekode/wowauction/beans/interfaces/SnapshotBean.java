@@ -1,6 +1,7 @@
 package org.freekode.wowauction.beans.interfaces;
 
 
+import org.freekode.wowauction.models.RealmEntity;
 import org.freekode.wowauction.transfer.Snapshot;
 import org.freekode.wowauction.models.BidEntity;
 import org.freekode.wowauction.models.SnapshotEntity;
@@ -14,11 +15,13 @@ public interface SnapshotBean {
 
     SnapshotEntity getEntity(int id);
 
+    SnapshotEntity getLastEntity(RealmEntity realm);
+
     Snapshot getSnapshot(int id, Set options);
 
     List<Snapshot> findAll(Set options);
 
     List<Snapshot> findBetweenDates(int realmId, Date startTime, Date endTime, Set options);
 
-    List<SnapshotEntity> getByBid(BidEntity bid);
+    List<SnapshotEntity> findByBid(BidEntity bid);
 }

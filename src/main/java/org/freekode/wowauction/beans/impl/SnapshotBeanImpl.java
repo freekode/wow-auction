@@ -2,6 +2,7 @@ package org.freekode.wowauction.beans.impl;
 
 import org.freekode.wowauction.dao.interfaces.SnapshotDAO;
 import org.freekode.wowauction.beans.interfaces.SnapshotBean;
+import org.freekode.wowauction.models.RealmEntity;
 import org.freekode.wowauction.transfer.Snapshot;
 import org.freekode.wowauction.models.BidEntity;
 import org.freekode.wowauction.models.SnapshotEntity;
@@ -16,6 +17,11 @@ import java.util.Set;
 public class SnapshotBeanImpl implements SnapshotBean {
     @Autowired
     private SnapshotDAO snapshotDAO;
+
+    @Override
+    public SnapshotEntity getLastEntity(RealmEntity realm) {
+        return snapshotDAO.getLastEntity(realm);
+    }
 
     @Override
     public List<Snapshot> findBetweenDates(int realmId, Date startTime, Date endTime, Set options) {
@@ -43,7 +49,7 @@ public class SnapshotBeanImpl implements SnapshotBean {
     }
 
     @Override
-    public List<SnapshotEntity> getByBid(BidEntity bid) {
+    public List<SnapshotEntity> findByBid(BidEntity bid) {
         return snapshotDAO.findByBid(bid);
     }
 }

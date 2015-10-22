@@ -2,14 +2,14 @@ package org.freekode.wowauction.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.freekode.wowauction.beans.interfaces.SnapshotBean;
 import org.freekode.wowauction.dao.interfaces.BidDAO;
 import org.freekode.wowauction.dao.interfaces.ItemDAO;
 import org.freekode.wowauction.dao.interfaces.RealmDAO;
-import org.freekode.wowauction.dao.interfaces.SnapshotDAO;
+import org.freekode.wowauction.models.*;
 import org.freekode.wowauction.tools.EntityConversion;
 import org.freekode.wowauction.tools.WorldOfWarcraftAPI;
 import org.freekode.wowauction.tools.WowheadAPI;
-import org.freekode.wowauction.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +21,7 @@ public class SnapshotUpdater {
     private static final Logger logger = LogManager.getLogger(SnapshotUpdater.class);
 
     @Autowired
-    private SnapshotDAO snapshotDAO;
+    private SnapshotBean snapshotBean;
 
     @Autowired
     private BidDAO bidDAO;
@@ -50,7 +50,7 @@ public class SnapshotUpdater {
             newSnapshot.setFile(newSnapshotMap.get("url"));
             newSnapshot.setLastModified(new Date(new Long(newSnapshotMap.get("lastModified"))));
 
-            SnapshotEntity lastSnapshot = snapshotDAO.getLastEntity(realm);
+            SnapshotEntity lastSnapshot = snapshotBean.getLastEntity(realm);
 
             if (lastSnapshot == null || lastSnapshot.getLastModified().getTime() < newSnapshot.getLastModified().getTime()) {
                 logger.info("newSnapshot = " + newSnapshot);
@@ -84,7 +84,7 @@ public class SnapshotUpdater {
                 newSnapshot.setClosed(closedBids.size());
                 newSnapshot.setExisting(existingBids.size());
                 newSnapshot.setNewAmount(newBids.size());
-                newSnapshot = snapshotDAO.save(newSnapshot);
+                newSnapshot = snapshotBean.save(newSnapshot);
                 logger.info("save snapshot = " + newSnapshot);
 
 
@@ -98,7 +98,7 @@ public class SnapshotUpdater {
 
                 // add for still existing bids new snapshot
                 for (BidEntity bid : existingBids) {
-                    Set<SnapshotEntity> snapshots = new HashSet<>(snapshotDAO.findByBid(bid));
+                    Set<SnapshotEntity> snapshots = new HashSet<>(snapshotBean.findByBid(bid));
                     snapshots.add(newSnapshot);
                     bid.setSnapshots(snapshots);
                 }
