@@ -1,8 +1,8 @@
 package org.freekode.wowauction.beans.interfaces;
 
 
-import org.freekode.wowauction.persistence.models.BidEntity;
-import org.freekode.wowauction.persistence.models.SnapshotEntity;
+import org.freekode.wowauction.models.BidEntity;
+import org.freekode.wowauction.models.SnapshotEntity;
 
 import java.util.List;
 import java.util.Set;

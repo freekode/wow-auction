@@ -3,8 +3,8 @@ package org.freekode.wowauction.beans.impl;
 import org.freekode.wowauction.dao.interfaces.SnapshotDAO;
 import org.freekode.wowauction.beans.interfaces.SnapshotBean;
 import org.freekode.wowauction.transfer.Snapshot;
-import org.freekode.wowauction.persistence.models.BidEntity;
-import org.freekode.wowauction.persistence.models.SnapshotEntity;
+import org.freekode.wowauction.models.BidEntity;
+import org.freekode.wowauction.models.SnapshotEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -43,7 +43,7 @@ public class SnapshotBeanImpl implements SnapshotBean {
     }
 
     @Override
-    public List<Snapshot> getByBid(BidEntity bid, Set options) {
-        return snapshotDAO.findByBid(bid, options);
+    public List<SnapshotEntity> getByBid(BidEntity bid) {
+        return snapshotDAO.findByBid(bid);
     }
 }

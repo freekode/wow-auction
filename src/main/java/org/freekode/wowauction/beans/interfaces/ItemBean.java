@@ -2,7 +2,7 @@ package org.freekode.wowauction.beans.interfaces;
 
 
 import org.freekode.wowauction.transfer.Item;
-import org.freekode.wowauction.persistence.models.ItemEntity;
+import org.freekode.wowauction.models.ItemEntity;
 
 import java.util.List;
 import java.util.Set;

@@ -2,7 +2,7 @@ package org.freekode.wowauction.beans.interfaces;
 
 
 import org.freekode.wowauction.transfer.Realm;
-import org.freekode.wowauction.persistence.models.RealmEntity;
+import org.freekode.wowauction.models.RealmEntity;
 
 import java.util.List;
 import java.util.Set;

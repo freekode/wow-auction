@@ -3,7 +3,7 @@ package org.freekode.wowauction.beans.impl;
 import org.freekode.wowauction.beans.interfaces.ItemBean;
 import org.freekode.wowauction.dao.interfaces.ItemDAO;
 import org.freekode.wowauction.transfer.Item;
-import org.freekode.wowauction.persistence.models.ItemEntity;
+import org.freekode.wowauction.models.ItemEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
