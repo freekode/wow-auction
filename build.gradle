@@ -1,6 +1,9 @@
 group 'org.freekode'
 version '0.1'
 
+apply plugin: 'java'
+apply plugin: 'war'
+
 
 ext.libraries = [
         spring_context: 'org.springframework:spring-context:4.1.6.RELEASE',
@@ -31,4 +34,28 @@ ext.libraries = [
 
 repositories {
     mavenCentral()
+}
+
+
+dependencies {
+    compile libraries.spring_context
+    compile libraries.spring_tx
+    compile libraries.spring_orm
+    compile libraries.spring_webmvc
+
+    compile libraries.flyway_plugin
+
+    compile libraries.jackson_databind
+    compile libraries.jackson_datatype
+
+    compile libraries.log4j_core
+    compile libraries.log4j_api
+
+    compile libraries.gson
+
+    compile libraries.servlet_jstl
+    providedCompile libraries.servlet_api
+
+    compile libraries.hibernate_core
+    compile libraries.hibernate_entitymanager
 }
