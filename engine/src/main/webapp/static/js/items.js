@@ -2,12 +2,12 @@ var api = new API();
 var app = angular.module('app', ['layout', 'ngRoute']);
 
 
-app.config(function($routeProvider) {
+app.config(function ($routeProvider) {
     $routeProvider
-        .when('/:page/:amount', {
+        .when('/', {
             reloadOnSearch: false
         })
-        .when('/', {
+        .when('/:page/:amount', {
             reloadOnSearch: false
         });
 });
@@ -15,32 +15,30 @@ app.config(function($routeProvider) {
 
 app.controller('ItemsCtrl', function ($scope, $routeParams, $rootScope, $location) {
     $scope.page = 'items';
-    $scope.itemListSearch = {
+    var defaultListConfig = {
         amount: 30,
         page: 1
     };
 
-    //if ($routeParams.page == undefined || $routeParams.amount == undefined) {
-    //    $location.path('/' + $scope.itemListSearch.page + '/' + $scope.itemListSearch.amount);
-    //}
-
-    $rootScope.$on("$routeChangeSuccess", function(event, current) {
+    $rootScope.$on("$routeChangeSuccess", function (event, current) {
         if ($routeParams.page == undefined || $routeParams.amount == undefined) {
-            $location.path('/' + $scope.itemListSearch.page + '/' + $scope.itemListSearch.amount);
-            return
+            $scope.itemListSearch = defaultListConfig;
+            return;
         }
 
+        $scope.itemListSearch = $routeParams;
         $scope.loadItems($routeParams.page, $routeParams.amount);
     });
 
     $scope.$watch('itemListSearch', function (newValue, oldValue) {
-        // prevent to work with null params
-        if (newValue.amount == '' || newValue.page == '') {
+        if (newValue == undefined ||
+            newValue.page == undefined || newValue.amount == undefined ||
+            newValue.page == '' || newValue.amount == '') {
             return;
         }
 
         $location.path('/' + newValue.page + '/' + newValue.amount);
-    }, false);
+    });
 
     $scope.loadItems = function (page, amount) {
         api.getItemList({page: page, amount: amount}).done(function (data) {

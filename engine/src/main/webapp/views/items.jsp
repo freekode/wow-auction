@@ -20,6 +20,7 @@
         <script src="${itemsJs}"></script>
 
         <script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/async/1.4.2/async.min.js"/>
         <script>
             var wowhead_tooltips = {
                 colorlinks: true,
