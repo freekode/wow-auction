@@ -1,9 +1,6 @@
 package org.freekode.wowauction.persistence.models;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "catalogs")
@@ -13,7 +10,9 @@ public class CatalogEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer code;
+    private Integer codeInteger;
+
+    private String codeString;
 
     private String value;
 
@@ -33,14 +32,6 @@ public class CatalogEntity {
         this.id = id;
     }
 
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
     public String getValue() {
         return value;
     }
@@ -55,5 +46,21 @@ public class CatalogEntity {
 
     public void setHead(CatalogHeadEntity head) {
         this.head = head;
+    }
+
+    public Integer getCodeInteger() {
+        return codeInteger;
+    }
+
+    public void setCodeInteger(Integer codeInteger) {
+        this.codeInteger = codeInteger;
+    }
+
+    public String getCodeString() {
+        return codeString;
+    }
+
+    public void setCodeString(String codeString) {
+        this.codeString = codeString;
     }
 }

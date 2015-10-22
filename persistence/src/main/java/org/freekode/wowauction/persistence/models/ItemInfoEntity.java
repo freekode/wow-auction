@@ -19,21 +19,21 @@ public class ItemInfoEntity {
 
     private String icon;
 
-//    @ManyToOne
-//    @JoinColumn(name = "qualityId")
-//    private CatalogEntity quality;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "itemClassId")
-//    private CatalogEntity itemClass;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "itemSubclassId")
-//    private CatalogEntity itemSubclass;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "inventorySlotId")
-//    private CatalogEntity inventorySlot;
+    @ManyToOne
+    @JoinColumn(name = "qualityId")
+    private CatalogEntity quality;
+
+    @ManyToOne
+    @JoinColumn(name = "itemClassId")
+    private CatalogEntity itemClass;
+
+    @ManyToOne
+    @JoinColumn(name = "itemSubclassId")
+    private CatalogEntity itemSubclass;
+
+    @ManyToOne
+    @JoinColumn(name = "inventorySlotId")
+    private CatalogEntity inventorySlot;
 
     @OneToOne
     @JoinColumn(name = "itemId", referencedColumnName = "id")
@@ -67,37 +67,37 @@ public class ItemInfoEntity {
         this.item = item;
     }
 
-//    public CatalogEntity getQuality() {
-//        return quality;
-//    }
-//
-//    public void setQuality(CatalogEntity quality) {
-//        this.quality = quality;
-//    }
-//
-//    public CatalogEntity getItemClass() {
-//        return itemClass;
-//    }
-//
-//    public void setItemClass(CatalogEntity itemClass) {
-//        this.itemClass = itemClass;
-//    }
-//
-//    public CatalogEntity getItemSubclass() {
-//        return itemSubclass;
-//    }
-//
-//    public void setItemSubclass(CatalogEntity itemSubclass) {
-//        this.itemSubclass = itemSubclass;
-//    }
-//
-//    public CatalogEntity getInventorySlot() {
-//        return inventorySlot;
-//    }
-//
-//    public void setInventorySlot(CatalogEntity inventorySlot) {
-//        this.inventorySlot = inventorySlot;
-//    }
+    public CatalogEntity getQuality() {
+        return quality;
+    }
+
+    public void setQuality(CatalogEntity quality) {
+        this.quality = quality;
+    }
+
+    public CatalogEntity getItemClass() {
+        return itemClass;
+    }
+
+    public void setItemClass(CatalogEntity itemClass) {
+        this.itemClass = itemClass;
+    }
+
+    public CatalogEntity getItemSubclass() {
+        return itemSubclass;
+    }
+
+    public void setItemSubclass(CatalogEntity itemSubclass) {
+        this.itemSubclass = itemSubclass;
+    }
+
+    public CatalogEntity getInventorySlot() {
+        return inventorySlot;
+    }
+
+    public void setInventorySlot(CatalogEntity inventorySlot) {
+        this.inventorySlot = inventorySlot;
+    }
 
     public String getLevel() {
         return level;
