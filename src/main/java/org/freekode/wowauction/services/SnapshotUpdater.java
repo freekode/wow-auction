@@ -3,10 +3,9 @@ package org.freekode.wowauction.services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.freekode.wowauction.beans.interfaces.BidBean;
+import org.freekode.wowauction.beans.interfaces.ItemBean;
+import org.freekode.wowauction.beans.interfaces.RealmBean;
 import org.freekode.wowauction.beans.interfaces.SnapshotBean;
-import org.freekode.wowauction.dao.interfaces.BidDAO;
-import org.freekode.wowauction.dao.interfaces.ItemDAO;
-import org.freekode.wowauction.dao.interfaces.RealmDAO;
 import org.freekode.wowauction.models.*;
 import org.freekode.wowauction.tools.EntityConversion;
 import org.freekode.wowauction.tools.WorldOfWarcraftAPI;
@@ -28,10 +27,10 @@ public class SnapshotUpdater {
     private BidBean bidBean;
 
     @Autowired
-    private ItemDAO itemDAO;
+    private ItemBean itemBean;
 
     @Autowired
-    private RealmDAO realmDAO;
+    private RealmBean realmBean;
 
 
     public void scheduleUpdate() {
@@ -41,7 +40,7 @@ public class SnapshotUpdater {
     public void updateAuction() {
         logger.info("auction update started");
 
-        for (RealmEntity realm : realmDAO.findForUpdate()) {
+        for (RealmEntity realm : realmBean.findForUpdate()) {
             logger.info("realm = " + realm);
 
             Map<String, String> newSnapshotMap = WorldOfWarcraftAPI.getSnapshot(realm.getRegion().toString(), realm.getSlug());
@@ -114,10 +113,10 @@ public class SnapshotUpdater {
 
 
                 logger.info("update items");
-                List<ItemEntity> updatedItems = itemDAO.updateAll(newItems);
+                List<ItemEntity> updatedItems = itemBean.updateAll(newItems);
 
                 logger.info("create items");
-                List<ItemEntity> createdItems = itemDAO.createAll(newItems);
+                List<ItemEntity> createdItems = itemBean.createAll(newItems);
 
 
                 // make a relationship between new bid and item
@@ -146,18 +145,16 @@ public class SnapshotUpdater {
                 for (ItemEntity item : createdItems) {
                     Map<String, String> infoMap = WowheadAPI.getItemInfo(item.getIdentifier());
 
-                    ItemInfoEntity info = new ItemInfoEntity();
-                    info.setName(infoMap.get("name"));
-                    info.setLevel(infoMap.get("level"));
-                    info.setUrl(infoMap.get("link"));
-                    info.setIcon(infoMap.get("icon") + ".jpg");
-                    info.setItem(item);
+
+                    ItemInfoEntity info = itemBean.buildItemInfo(infoMap.get("name"), infoMap.get("level"), infoMap.get("link"),
+                            infoMap.get("icon") + ".jpg", new Integer(infoMap.get("quality")), new Integer(infoMap.get("class")),
+                            new Integer(infoMap.get("subclass")), new Integer(infoMap.get("inventorySlot")), item);
 
                     item.setItemInfo(info);
                 }
 
                 logger.info("save items information");
-                itemDAO.updateAll(createdItems);
+                itemBean.updateAll(createdItems);
             }
         }
 

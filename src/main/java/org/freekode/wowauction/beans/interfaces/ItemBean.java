@@ -15,6 +15,10 @@ public interface ItemBean {
 
     List<Item> getList(Integer page, Integer amount, Set options);
 
+    List<ItemEntity> createAll(List<ItemEntity> items);
+
+    List<ItemEntity> updateAll(List<ItemEntity> items);
+
     ItemInfoEntity buildItemInfo(String name, String level, String url, String icon,
                                  Integer quality, Integer itemClass, Integer itemSubclass, Integer inventorySlot,
                                  ItemEntity item);

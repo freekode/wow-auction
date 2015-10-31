@@ -37,6 +37,16 @@ public class ItemBeanImpl implements ItemBean {
     }
 
     @Override
+    public List<ItemEntity> createAll(List<ItemEntity> items) {
+        return itemDAO.createAll(items);
+    }
+
+    @Override
+    public List<ItemEntity> updateAll(List<ItemEntity> items) {
+        return itemDAO.updateAll(items);
+    }
+
+    @Override
     public ItemInfoEntity buildItemInfo(String name, String level, String url, String icon,
                                         Integer quality, Integer itemClass, Integer itemSubclass, Integer inventorySlot,
                                         ItemEntity item) {

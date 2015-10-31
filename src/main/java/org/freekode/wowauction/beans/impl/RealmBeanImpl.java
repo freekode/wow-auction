@@ -7,6 +7,7 @@ import org.freekode.wowauction.models.RealmEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -34,5 +35,18 @@ public class RealmBeanImpl implements RealmBean {
     @Override
     public List<Realm> findAll(Set options) {
         return realmDAO.findAll(options);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<RealmEntity> findForUpdate() {
+        List<RealmEntity> realms = new ArrayList<>();
+        for (Realm realm : findAll(null)) {
+            if (realm.getUpdating()) {
+                realms.add(realm.getEntity());
+            }
+        }
+
+        return realms;
     }
 }

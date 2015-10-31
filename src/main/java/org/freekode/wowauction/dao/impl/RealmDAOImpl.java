@@ -57,19 +57,4 @@ public class RealmDAOImpl implements RealmDAO {
 
         return list;
     }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<RealmEntity> findForUpdate() {
-        List<RealmEntity> entities =  entityManager.createQuery("select realm from RealmEntity realm").getResultList();
-
-        List<RealmEntity> realms = new ArrayList<>();
-        for (RealmEntity realm : entities) {
-            if (realm.getUpdating()) {
-                realms.add(realm);
-            }
-        }
-
-        return realms;
-    }
 }

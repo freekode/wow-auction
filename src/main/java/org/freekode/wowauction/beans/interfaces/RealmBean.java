@@ -15,4 +15,6 @@ public interface RealmBean {
     Realm getRealm(int id, Set options);
 
     List<Realm> findAll(Set options);
+
+    List<RealmEntity> findForUpdate();
 }
