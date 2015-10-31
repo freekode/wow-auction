@@ -47,11 +47,11 @@ public class CatalogBeanImpl implements CatalogBean {
 
     @Override
     public List<CatalogEntry> getItemInventorySlotTypes() {
-        return catalogDAO.getTypes(CatalogHead.ITEM_INVENTOTY_SLOT);
+        return catalogDAO.getTypes(CatalogHead.ITEM_INVENTORY_SLOT);
     }
 
     @Override
     public CatalogEntry getItemInventorySlotType(int codeInteger) {
-        return catalogDAO.getByCodeInt(CatalogHead.ITEM_INVENTOTY_SLOT, codeInteger);
+        return catalogDAO.getByCodeInt(CatalogHead.ITEM_INVENTORY_SLOT, codeInteger);
     }
 }

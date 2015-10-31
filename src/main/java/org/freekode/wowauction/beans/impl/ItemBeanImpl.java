@@ -5,6 +5,7 @@ import org.freekode.wowauction.beans.interfaces.ItemBean;
 import org.freekode.wowauction.dao.interfaces.ItemDAO;
 import org.freekode.wowauction.models.ItemEntity;
 import org.freekode.wowauction.models.ItemInfoEntity;
+import org.freekode.wowauction.transfer.CatalogEntry;
 import org.freekode.wowauction.transfer.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -57,10 +58,26 @@ public class ItemBeanImpl implements ItemBean {
         info.setUrl(url);
         info.setIcon(icon);
         info.setItem(item);
-        info.setQuality(catalogBean.getQualityType(quality).getEntity());
-        info.setItemClass(catalogBean.getItemClassType(itemClass).getEntity());
-        info.setItemSubclass(catalogBean.getItemSubclassType(itemSubclass).getEntity());
-        info.setInventorySlot(catalogBean.getItemInventorySlotType(inventorySlot).getEntity());
+
+        CatalogEntry itemQuality = catalogBean.getQualityType(quality);
+        if (itemQuality != null) {
+            info.setQuality(itemQuality.getEntity());
+        }
+
+        CatalogEntry itemClassEntry = catalogBean.getItemClassType(itemClass);
+        if (itemClassEntry != null) {
+            info.setItemClass(itemClassEntry.getEntity());
+        }
+
+        CatalogEntry subclassEntry = catalogBean.getItemSubclassType(itemSubclass);
+        if (subclassEntry != null) {
+            info.setItemSubclass(catalogBean.getItemSubclassType(itemSubclass).getEntity());
+        }
+
+        CatalogEntry inventorySlotEntry = catalogBean.getItemInventorySlotType(inventorySlot);
+        if (inventorySlotEntry != null) {
+            info.setInventorySlot(inventorySlotEntry.getEntity());
+        }
 
         return info;
     }

@@ -8,7 +8,7 @@ public class CatalogHead extends BaseTransfer<CatalogHeadEntity> implements Init
     public static final int ITEM_QUALITY = 1;
     public static final int ITEM_CLASS = 2;
     public static final int ITEM_SUBCLASS = 3;
-    public static final int ITEM_INVENTOTY_SLOT = 4;
+    public static final int ITEM_INVENTORY_SLOT = 4;
 
 
     public CatalogHead() {
@@ -23,6 +23,4 @@ public class CatalogHead extends BaseTransfer<CatalogHeadEntity> implements Init
     @Override
     public void init(Set options) {
     }
-
-
 }
