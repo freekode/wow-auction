@@ -21,19 +21,19 @@ public class ItemInfoEntity {
 
     @ManyToOne
     @JoinColumn(name = "qualityId")
-    private CatalogEntity quality;
+    private CatalogEntryEntity quality;
 
     @ManyToOne
     @JoinColumn(name = "itemClassId")
-    private CatalogEntity itemClass;
+    private CatalogEntryEntity itemClass;
 
     @ManyToOne
     @JoinColumn(name = "itemSubclassId")
-    private CatalogEntity itemSubclass;
+    private CatalogEntryEntity itemSubclass;
 
     @ManyToOne
     @JoinColumn(name = "inventorySlotId")
-    private CatalogEntity inventorySlot;
+    private CatalogEntryEntity inventorySlot;
 
     @OneToOne
     @JoinColumn(name = "itemId", referencedColumnName = "id")
@@ -67,35 +67,35 @@ public class ItemInfoEntity {
         this.item = item;
     }
 
-    public CatalogEntity getQuality() {
+    public CatalogEntryEntity getQuality() {
         return quality;
     }
 
-    public void setQuality(CatalogEntity quality) {
+    public void setQuality(CatalogEntryEntity quality) {
         this.quality = quality;
     }
 
-    public CatalogEntity getItemClass() {
+    public CatalogEntryEntity getItemClass() {
         return itemClass;
     }
 
-    public void setItemClass(CatalogEntity itemClass) {
+    public void setItemClass(CatalogEntryEntity itemClass) {
         this.itemClass = itemClass;
     }
 
-    public CatalogEntity getItemSubclass() {
+    public CatalogEntryEntity getItemSubclass() {
         return itemSubclass;
     }
 
-    public void setItemSubclass(CatalogEntity itemSubclass) {
+    public void setItemSubclass(CatalogEntryEntity itemSubclass) {
         this.itemSubclass = itemSubclass;
     }
 
-    public CatalogEntity getInventorySlot() {
+    public CatalogEntryEntity getInventorySlot() {
         return inventorySlot;
     }
 
-    public void setInventorySlot(CatalogEntity inventorySlot) {
+    public void setInventorySlot(CatalogEntryEntity inventorySlot) {
         this.inventorySlot = inventorySlot;
     }
 

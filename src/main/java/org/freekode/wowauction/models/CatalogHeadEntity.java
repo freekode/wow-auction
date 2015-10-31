@@ -15,7 +15,7 @@ public class CatalogHeadEntity {
     private String value;
 
     @OneToMany(mappedBy = "head")
-    private List<CatalogEntity> catalogs = new ArrayList<>();
+    private List<CatalogEntryEntity> catalogs = new ArrayList<>();
 
 
     public CatalogHeadEntity() {
@@ -37,11 +37,11 @@ public class CatalogHeadEntity {
         this.value = value;
     }
 
-    public List<CatalogEntity> getCatalogs() {
+    public List<CatalogEntryEntity> getCatalogs() {
         return catalogs;
     }
 
-    public void setCatalogs(List<CatalogEntity> catalogs) {
+    public void setCatalogs(List<CatalogEntryEntity> catalogs) {
         this.catalogs = catalogs;
     }
 }

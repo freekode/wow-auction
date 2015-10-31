@@ -2,6 +2,7 @@ package org.freekode.wowauction.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.freekode.wowauction.beans.interfaces.BidBean;
 import org.freekode.wowauction.beans.interfaces.SnapshotBean;
 import org.freekode.wowauction.dao.interfaces.BidDAO;
 import org.freekode.wowauction.dao.interfaces.ItemDAO;
@@ -24,7 +25,7 @@ public class SnapshotUpdater {
     private SnapshotBean snapshotBean;
 
     @Autowired
-    private BidDAO bidDAO;
+    private BidBean bidBean;
 
     @Autowired
     private ItemDAO itemDAO;
@@ -35,7 +36,6 @@ public class SnapshotUpdater {
 
     public void scheduleUpdate() {
         updateAuction();
-//        testItemInfo();
     }
 
     public void updateAuction() {
@@ -63,7 +63,7 @@ public class SnapshotUpdater {
                 logger.info("conversion to entities");
                 Set<BidEntity> refreshedBids = new HashSet<>(EntityConversion.convertToBids(auctionList));
 
-                Set<BidEntity> persistedBids = new HashSet<>(bidDAO.findBySnapshot(lastSnapshot));
+                Set<BidEntity> persistedBids = new HashSet<>(bidBean.findBySnapshot(lastSnapshot));
                 logger.info("loaded from db = " + persistedBids.size());
 
 
@@ -93,7 +93,7 @@ public class SnapshotUpdater {
 
 
                 logger.info("close the bids");
-                bidDAO.closeAll(closedBids);
+                bidBean.closeAll(closedBids);
 
 
                 // add for still existing bids new snapshot
@@ -110,7 +110,7 @@ public class SnapshotUpdater {
 
                 // update existing bids and their snapshots
                 logger.info("save existing bids");
-                bidDAO.saveAll(existingBids);
+                bidBean.saveAll(existingBids);
 
 
                 logger.info("update items");
@@ -138,7 +138,7 @@ public class SnapshotUpdater {
 
                 // save new bids with connection
                 logger.info("save new bids");
-                bidDAO.saveAll(newBids);
+                bidBean.saveAll(newBids);
 
 
                 // ok, now retrieve additional info about items

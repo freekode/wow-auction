@@ -7,9 +7,8 @@ import org.freekode.wowauction.models.SnapshotEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Component
 public class BidBeanImpl implements BidBean {
@@ -18,14 +17,14 @@ public class BidBeanImpl implements BidBean {
 
 
     @Override
-    public Set<BidEntity> saveAll(Set<BidEntity> bids) {
-        Set<BidEntity> addedBids = new HashSet<>();
+    public List<BidEntity> saveAll(List<BidEntity> bids) {
+        List<BidEntity> savedBids = new ArrayList<>();
         for (BidEntity bid : bids) {
             BidEntity addedItem = bidDAO.save(bid);
-            addedBids.add(addedItem);
+            savedBids.add(addedItem);
         }
 
-        return addedBids;
+        return savedBids;
     }
 
     @Override
@@ -39,11 +38,12 @@ public class BidBeanImpl implements BidBean {
     }
 
     @Override
-    public BidEntity closeBid(BidEntity closedBid) {
-        BidEntity bid = bidDAO.getById(closedBid.getId());
+    public List<BidEntity> closeAll(List<BidEntity> closeBids) {
+        for (BidEntity bid : closeBids) {
+            bid.setClosed(true);
+        }
 
-        bid.setClosed(true);
-        return bidDAO.save(bid);
+        return saveAll(closeBids);
     }
 
     @Override

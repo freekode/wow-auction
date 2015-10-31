@@ -1,6 +1,7 @@
 package org.freekode.wowauction.beans.interfaces;
 
 
+import org.freekode.wowauction.models.ItemInfoEntity;
 import org.freekode.wowauction.transfer.Item;
 import org.freekode.wowauction.models.ItemEntity;
 
@@ -13,4 +14,8 @@ public interface ItemBean {
     ItemEntity getEntity(Integer id);
 
     List<Item> getList(Integer page, Integer amount, Set options);
+
+    ItemInfoEntity buildItemInfo(String name, String level, String url, String icon,
+                                 Integer quality, Integer itemClass, Integer itemSubclass, Integer inventorySlot,
+                                 ItemEntity item);
 }

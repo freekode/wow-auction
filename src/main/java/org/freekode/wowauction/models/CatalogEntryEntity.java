@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "catalogs")
-public class CatalogEntity {
+public class CatalogEntryEntity {
     @Id
     @Column(columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class CatalogEntity {
     private CatalogHeadEntity head;
 
 
-    public CatalogEntity() {
+    public CatalogEntryEntity() {
     }
 
     public Integer getId() {

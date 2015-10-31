@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Set;
 
 public interface BidBean {
-    Set<BidEntity> saveAll(Set<BidEntity> bids);
+    List<BidEntity> saveAll(List<BidEntity> bids);
 
     BidEntity getById(Integer id);
 
     List<BidEntity> findAll();
 
-    BidEntity closeBid(BidEntity bid);
+    List<BidEntity> closeAll(List<BidEntity> closeBids);
 
     List<BidEntity> findBySnapshot(SnapshotEntity snapshot);
 }

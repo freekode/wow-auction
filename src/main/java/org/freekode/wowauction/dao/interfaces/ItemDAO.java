@@ -1,8 +1,8 @@
 package org.freekode.wowauction.dao.interfaces;
 
 
-import org.freekode.wowauction.transfer.Item;
 import org.freekode.wowauction.models.ItemEntity;
+import org.freekode.wowauction.transfer.Item;
 
 import java.util.List;
 import java.util.Set;
