@@ -3,4 +3,5 @@ Auction statistics for World of Warcraft
 
 
 ## Task
-    * item information
+* calculations
+* add class subclass to catalog

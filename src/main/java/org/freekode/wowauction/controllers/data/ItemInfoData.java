@@ -7,6 +7,10 @@ public class ItemInfoData {
     private String level;
     private String url;
     private String icon;
+    private CatalogEntryData quality;
+    private CatalogEntryData itemClass;
+    private CatalogEntryData itemSubclass;
+    private CatalogEntryData inventorySlot;
 
 
     public ItemInfoData() {
@@ -17,6 +21,22 @@ public class ItemInfoData {
         level = itemInfo.getLevel();
         url = itemInfo.getUrl();
         icon = itemInfo.getIcon();
+
+        if (itemInfo.getQuality() != null) {
+            quality = new CatalogEntryData(itemInfo.getQuality());
+        }
+
+        if (itemInfo.getItemClass() != null) {
+            itemClass = new CatalogEntryData(itemInfo.getItemClass());
+        }
+
+        if (itemInfo.getItemSubclass() != null) {
+            itemSubclass = new CatalogEntryData(itemInfo.getItemSubclass());
+        }
+
+        if (itemInfo.getInventorySlot() != null) {
+            inventorySlot = new CatalogEntryData(itemInfo.getInventorySlot());
+        }
     }
 
     public String getName() {
@@ -49,5 +69,37 @@ public class ItemInfoData {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public CatalogEntryData getQuality() {
+        return quality;
+    }
+
+    public void setQuality(CatalogEntryData quality) {
+        this.quality = quality;
+    }
+
+    public CatalogEntryData getItemClass() {
+        return itemClass;
+    }
+
+    public void setItemClass(CatalogEntryData itemClass) {
+        this.itemClass = itemClass;
+    }
+
+    public CatalogEntryData getItemSubclass() {
+        return itemSubclass;
+    }
+
+    public void setItemSubclass(CatalogEntryData itemSubclass) {
+        this.itemSubclass = itemSubclass;
+    }
+
+    public CatalogEntryData getInventorySlot() {
+        return inventorySlot;
+    }
+
+    public void setInventorySlot(CatalogEntryData inventorySlot) {
+        this.inventorySlot = inventorySlot;
     }
 }

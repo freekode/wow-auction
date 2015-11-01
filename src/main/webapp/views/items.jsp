@@ -114,8 +114,10 @@
                             <th>id</th>
                             <th>name</th>
                             <th>level</th>
+                            <th>quality</th>
                             <th>class</th>
                             <th>sub class</th>
+                            <th>inventory slot</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -133,8 +135,10 @@
                                 </a>
                             </td>
                             <td>{{ item.itemInfo.level }}</td>
-                            <td>null</td>
-                            <td>null</td>
+                            <td>{{ item.itemInfo.quality.value }}</td>
+                            <td>{{ item.itemInfo.itemClass.value }}</td>
+                            <td>{{ item.itemInfo.itemSubclass.value }}</td>
+                            <td>{{ item.itemInfo.inventorySlot.value }}</td>
                         </tr>
                         </tbody>
                     </table>

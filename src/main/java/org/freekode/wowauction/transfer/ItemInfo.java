@@ -5,6 +5,15 @@ import org.freekode.wowauction.models.ItemInfoEntity;
 import java.util.Set;
 
 public class ItemInfo extends BaseTransfer<ItemInfoEntity> implements Initializable {
+    private CatalogEntry quality;
+
+    private CatalogEntry itemClass;
+
+    private CatalogEntry itemSubclass;
+
+    private CatalogEntry inventorySlot;
+
+
     public ItemInfo() {
         super();
         entity = new ItemInfoEntity();
@@ -12,6 +21,22 @@ public class ItemInfo extends BaseTransfer<ItemInfoEntity> implements Initializa
 
     public ItemInfo(ItemInfoEntity entity) {
         super(entity);
+
+        if (entity.getQuality() != null) {
+            quality = new CatalogEntry(entity.getQuality());
+        }
+
+        if (entity.getItemClass() != null) {
+            itemClass = new CatalogEntry(entity.getItemClass());
+        }
+
+        if (entity.getItemSubclass() != null) {
+            itemSubclass = new CatalogEntry(entity.getItemSubclass());
+        }
+
+        if (entity.getInventorySlot() != null) {
+            inventorySlot = new CatalogEntry(entity.getInventorySlot());
+        }
     }
 
     @Override
@@ -52,6 +77,38 @@ public class ItemInfo extends BaseTransfer<ItemInfoEntity> implements Initializa
 
     public void setUrl(String url) {
         entity.setUrl(url);
+    }
+
+    public CatalogEntry getQuality() {
+        return quality;
+    }
+
+    public void setQuality(CatalogEntry quality) {
+        this.quality = quality;
+    }
+
+    public CatalogEntry getItemClass() {
+        return itemClass;
+    }
+
+    public void setItemClass(CatalogEntry itemClass) {
+        this.itemClass = itemClass;
+    }
+
+    public CatalogEntry getItemSubclass() {
+        return itemSubclass;
+    }
+
+    public void setItemSubclass(CatalogEntry itemSubclass) {
+        this.itemSubclass = itemSubclass;
+    }
+
+    public CatalogEntry getInventorySlot() {
+        return inventorySlot;
+    }
+
+    public void setInventorySlot(CatalogEntry inventorySlot) {
+        this.inventorySlot = inventorySlot;
     }
 
     public enum Options {
