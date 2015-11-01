@@ -86,6 +86,39 @@
             .icon__hover__medium:hover {
                 background: no-repeat url('${pageContext.request.contextPath}/static/img/item_medium_hover.png')
             }
+
+            .item__poor {
+                color: #9d9d9d !important;
+            }
+
+            .item__common {
+                color: #fff !important;
+            }
+
+            .item__uncommon {
+                color: #1eff00 !important;
+            }
+
+            .item__rare {
+                color: #0070dd !important;
+            }
+
+            .item__epic {
+                color: #a335ee !important;
+            }
+
+            .item__legendary {
+                color: #ff8000 !important;
+            }
+
+            .item__artifact,
+            .item__heirloom {
+                color: #e5cc80 !important
+            }
+
+            .item__wow_token {
+                color: #0cf !important;
+            }
         </style>
     </jsp:attribute>
 
@@ -95,12 +128,14 @@
 
             <div class="row">
                 <div class="col-xs-1">
-                    <input type="text" class="form-control" style="width:60px;" placeholder="Amount" ng-model="itemListSearch.amount">
+                    <input type="text" class="form-control" style="width:60px;" placeholder="Amount"
+                           ng-model="itemListSearch.amount">
                 </div>
                 <div class="col-xs-3">
                     <div class="form-inline">
                         <button type="button" class="btn btn-info" ng-click="prevPage()">&laquo;</button>
-                        <input type="text" class="form-control" style="width:60px;text-align:center;" placeholder="Page" ng-model="itemListSearch.page"/>
+                        <input type="text" class="form-control" style="width:60px;text-align:center;" placeholder="Page"
+                               ng-model="itemListSearch.page"/>
                         <button type="button" class="btn btn-info" ng-click="nextPage()">&raquo;</button>
                     </div>
                 </div>
@@ -124,18 +159,21 @@
                         <tr ng-repeat="item in items">
                             <td>{{ item.identifier }}</td>
                             <td>
-                                <a href="{{ item.itemInfo.url }}" class="q4 item__a" target="_blank">
+                                <a href="{{ item.itemInfo.url }}" class="item__a" target="_blank">
+
                                     <div class="inline">
                                         <div class="icon__medium"
                                              ng-style="{'background' : 'no-repeat url(http://wow.zamimg.com/images/wow/icons/medium/{{item.itemInfo.icon}})'}"></div>
                                         <div class="icon__hover__medium"></div>
                                         <div class="icon__border__medium"></div>
                                     </div>
-                                    <div class="inline">{{ item.itemInfo.name }}</div>
+                                    <div class="inline" ng-class="qualityClass(item.itemInfo)">{{ item.itemInfo.name }}</div>
                                 </a>
                             </td>
                             <td>{{ item.itemInfo.level }}</td>
-                            <td>{{ item.itemInfo.quality.value }}</td>
+                            <td ng-class="qualityClass(item.itemInfo)">
+                                {{ item.itemInfo.quality.value }}
+                            </td>
                             <td>{{ item.itemInfo.itemClass.value }}</td>
                             <td>{{ item.itemInfo.itemSubclass.value }}</td>
                             <td>{{ item.itemInfo.inventorySlot.value }}</td>

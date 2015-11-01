@@ -20,6 +20,17 @@ app.controller('ItemsCtrl', function ($scope, $routeParams, $rootScope, $locatio
         amount: 30,
         page: 1
     };
+    var qualityClasses = [
+        'item__poor',
+        'item__common',
+        'item__uncommon',
+        'item__rare',
+        'item__epic',
+        'item__legendary',
+        'item__artifact',
+        'item__heirloom',
+        'item__wow_token'
+    ];
 
 
     $rootScope.$on("$routeChangeSuccess", function (event, current) {
@@ -59,7 +70,10 @@ app.controller('ItemsCtrl', function ($scope, $routeParams, $rootScope, $locatio
 
     $scope.nextPage = function () {
         $scope.itemListSearch.page++
+    };
+
+    $scope.qualityClass = function (itemInfo) {
+        return qualityClasses[itemInfo.quality.codeInteger];
     }
 });
-
 

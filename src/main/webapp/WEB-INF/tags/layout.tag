@@ -9,8 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/lib/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/lib/bootstrap-theme.min.css">
+    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/lib/bootstrap.min.css">--%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/lib/bootstrap-slate.min.css">
 
     <script src="${pageContext.request.contextPath}/static/js/lib/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/lib/bootstrap.min.js"></script>
