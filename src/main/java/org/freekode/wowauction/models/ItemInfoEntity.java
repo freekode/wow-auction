@@ -13,7 +13,7 @@ public class ItemInfoEntity {
 
     private String name;
 
-    private String level;
+    private Integer level;
 
     private String url;
 
@@ -99,11 +99,11 @@ public class ItemInfoEntity {
         this.inventorySlot = inventorySlot;
     }
 
-    public String getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 

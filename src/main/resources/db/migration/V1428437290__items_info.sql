@@ -1,7 +1,7 @@
 CREATE TABLE items_info (
   id              SERIAL PRIMARY KEY,
   name            CHARACTER VARYING,
-  level           CHARACTER VARYING,
+  level           INTEGER,
   url             CHARACTER VARYING,
   icon            CHARACTER VARYING,
   itemId          INTEGER,

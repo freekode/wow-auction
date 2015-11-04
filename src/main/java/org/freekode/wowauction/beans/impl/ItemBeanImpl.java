@@ -48,7 +48,7 @@ public class ItemBeanImpl implements ItemBean {
     }
 
     @Override
-    public ItemInfoEntity buildItemInfo(String name, String level, String url, String icon,
+    public ItemInfoEntity buildItemInfo(String name, Integer level, String url, String icon,
                                         Integer quality, Integer itemClass, Integer itemSubclass, Integer inventorySlot,
                                         ItemEntity item) {
         ItemInfoEntity info = new ItemInfoEntity();

@@ -19,7 +19,7 @@ public interface ItemBean {
 
     List<ItemEntity> updateAll(List<ItemEntity> items);
 
-    ItemInfoEntity buildItemInfo(String name, String level, String url, String icon,
+    ItemInfoEntity buildItemInfo(String name, Integer level, String url, String icon,
                                  Integer quality, Integer itemClass, Integer itemSubclass, Integer inventorySlot,
                                  ItemEntity item);
 }

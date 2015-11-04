@@ -55,11 +55,11 @@ public class ItemInfo extends BaseTransfer<ItemInfoEntity> implements Initializa
         entity.setName(name);
     }
 
-    public String getLevel() {
+    public Integer getLevel() {
         return entity.getLevel();
     }
 
-    public void setLevel(String level) {
+    public void setLevel(Integer level) {
         entity.setLevel(level);
     }
 

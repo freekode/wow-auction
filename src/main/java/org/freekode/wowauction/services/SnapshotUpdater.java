@@ -146,7 +146,7 @@ public class SnapshotUpdater {
                     Map<String, String> infoMap = WowheadAPI.getItemInfo(item.getIdentifier());
 
 
-                    ItemInfoEntity info = itemBean.buildItemInfo(infoMap.get("name"), infoMap.get("level"), infoMap.get("link"),
+                    ItemInfoEntity info = itemBean.buildItemInfo(infoMap.get("name"), new Integer(infoMap.get("level")), infoMap.get("link"),
                             infoMap.get("icon") + ".jpg", new Integer(infoMap.get("quality")), new Integer(infoMap.get("class")),
                             new Integer(infoMap.get("subclass")), new Integer(infoMap.get("inventorySlot")), item);
 

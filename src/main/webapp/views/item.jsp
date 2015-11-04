@@ -160,6 +160,7 @@
                             <td>{{ item.identifier }}</td>
                             <td>
                                 <a href="{{ item.itemInfo.url }}" class="item__a" target="_blank">
+
                                     <div class="inline">
                                         <div class="icon__medium"
                                              ng-style="{'background' : 'no-repeat url(http://wow.zamimg.com/images/wow/icons/medium/{{item.itemInfo.icon}})'}"></div>
@@ -168,8 +169,7 @@
                                     </div>
                                 </a>
 
-                                <a href="${pageContext.request.contextPath}/item/{{ item.identifier }}"
-                                   class="inline" ng-class="qualityClass(item.itemInfo)">
+                                <a class="inline" ng-class="qualityClass(item.itemInfo)">
                                     {{ item.itemInfo.name }}
                                 </a>
                             </td>

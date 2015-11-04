@@ -43,6 +43,9 @@ public class ItemEntity {
     @OneToOne(mappedBy = "item", cascade = CascadeType.ALL)
     private ItemInfoEntity itemInfo;
 
+    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL)
+    private ItemCalculationEntity itemCalculation;
+
 
     public ItemEntity() {
     }
@@ -114,6 +117,14 @@ public class ItemEntity {
 
     public void setItemInfo(ItemInfoEntity itemInfo) {
         this.itemInfo = itemInfo;
+    }
+
+    public ItemCalculationEntity getItemCalculation() {
+        return itemCalculation;
+    }
+
+    public void setItemCalculation(ItemCalculationEntity itemCalculation) {
+        this.itemCalculation = itemCalculation;
     }
 
     @Override
