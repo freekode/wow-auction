@@ -18,8 +18,13 @@ public class SnapshotApiController {
     private SnapshotService snapshotService;
 
 
-    @RequestMapping(value = "/24h/{realmId}")
+    @RequestMapping(value = "/24h/realm/{realmId}")
     public @ResponseBody ResponseData<List<SnapshotData>> getSnapshots24h(@PathVariable Integer realmId) {
         return new ResponseData<>(snapshotService.get24h(realmId));
+    }
+
+    @RequestMapping(value = "/realm/{realmId}")
+    public @ResponseBody ResponseData<List<SnapshotData>> getAllSnapshots(@PathVariable Integer realmId) {
+        return new ResponseData<>(snapshotService.findByRealm(realmId));
     }
 }

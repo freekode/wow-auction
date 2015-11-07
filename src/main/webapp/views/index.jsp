@@ -6,14 +6,12 @@
 
 <t:layout>
     <jsp:attribute name="head">
-        <spring:url value="/static/css/graph.css" var="graphCss"/>
-        <spring:url value="/static/js/lib/d3.min.js" var="d3Js"/>
-        <spring:url value="/static/js/graph.js" var="graphJs"/>
+        <spring:url value="/static/js/lib/highcharts.js" var="highchartsJs"/>
+        <spring:url value="/static/js/lib/dark-unica.js" var="darkunicaJs"/>
         <spring:url value="/static/js/index.js" var="indexJs"/>
 
-        <link href="${graphCss}" rel="stylesheet"/>
-        <script src="${d3Js}"></script>
-        <script src="${graphJs}"></script>
+        <script src="${highchartsJs}"></script>
+        <script src="${darkunicaJs}"></script>
         <script src="${indexJs}"></script>
         <script>
 

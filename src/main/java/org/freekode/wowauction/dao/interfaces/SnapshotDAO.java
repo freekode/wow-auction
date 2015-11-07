@@ -21,6 +21,8 @@ public interface SnapshotDAO {
 
     List<Snapshot> findAll(Set options);
 
+    public List<Snapshot> find(Integer realmId, Set options);
+
     List<SnapshotEntity> findByBid(BidEntity bid);
 
     List<Snapshot> findBetweenDates(int realmId, Date startTime, Date endTime, Set options);

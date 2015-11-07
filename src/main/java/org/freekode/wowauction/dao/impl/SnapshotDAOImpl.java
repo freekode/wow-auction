@@ -1,7 +1,9 @@
 package org.freekode.wowauction.dao.impl;
 
 import org.freekode.wowauction.dao.interfaces.SnapshotDAO;
+import org.freekode.wowauction.models.ItemEntity;
 import org.freekode.wowauction.tools.Utils;
+import org.freekode.wowauction.transfer.Item;
 import org.freekode.wowauction.transfer.Snapshot;
 import org.freekode.wowauction.models.BidEntity;
 import org.freekode.wowauction.models.RealmEntity;
@@ -67,8 +69,34 @@ public class SnapshotDAOImpl implements SnapshotDAO {
 
     @SuppressWarnings("unchecked")
     @Override
+    public List<Snapshot> find(Integer realmId, Set options) {
+        StringBuilder hql = new StringBuilder("select s from SnapshotEntity s where (1=1) ");
+
+        if (realmId != null) {
+            hql.append("and (s.realm.id = :realmId) ");
+        }
+
+        Query query = entityManager.createQuery(hql.append("order by s.lastModified").toString());
+
+        if (realmId != null) {
+            query.setParameter("realmId", realmId);
+        }
+
+
+        List<SnapshotEntity> entities = query.getResultList();
+        List<Snapshot> list = new ArrayList<>();
+        for (SnapshotEntity entity : entities) {
+            list.add(new Snapshot(entity));
+        }
+        Utils.initCollection(list, options);
+
+        return list;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
     public List<Snapshot> findAll(Set options) {
-        Query query = entityManager.createQuery("select snapshot from SnapshotEntity snapshot");
+        Query query = entityManager.createQuery("select s from SnapshotEntity s order by s.lastModified");
 
         List<SnapshotEntity> entities = query.getResultList();
 

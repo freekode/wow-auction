@@ -34,6 +34,11 @@ public class SnapshotBeanImpl implements SnapshotBean {
     }
 
     @Override
+    public List<Snapshot> find(Integer realmId, Set options) {
+        return snapshotDAO.find(realmId, options);
+    }
+
+    @Override
     public List<Snapshot> findAll(Set options) {
         return snapshotDAO.findAll(options);
     }

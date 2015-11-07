@@ -12,11 +12,13 @@ import org.freekode.wowauction.tools.WorldOfWarcraftAPI;
 import org.freekode.wowauction.tools.WowheadAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 
 @Component
+@Transactional
 public class SnapshotUpdater {
     private static final Logger logger = LogManager.getLogger(SnapshotUpdater.class);
 

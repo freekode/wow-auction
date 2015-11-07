@@ -33,4 +33,13 @@ public class SnapshotService {
 
         return snapshots;
     }
+
+    public List<SnapshotData> findByRealm(Integer realmId) {
+        List<SnapshotData> snapshots = new ArrayList<>();
+        for (Snapshot snapshot : snapshotBean.find(realmId, null)) {
+            snapshots.add(new SnapshotData(snapshot));
+        }
+
+        return snapshots;
+    }
 }

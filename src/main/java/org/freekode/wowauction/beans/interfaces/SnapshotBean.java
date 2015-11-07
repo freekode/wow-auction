@@ -19,6 +19,8 @@ public interface SnapshotBean {
 
     Snapshot getSnapshot(int id, Set options);
 
+    List<Snapshot> find(Integer realmId, Set options);
+
     List<Snapshot> findAll(Set options);
 
     List<Snapshot> findBetweenDates(int realmId, Date startTime, Date endTime, Set options);

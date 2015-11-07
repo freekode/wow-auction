@@ -13,7 +13,11 @@ var API = function () {
      */
     var resources = {
         snapshots24h: {
-            url: '/api/snapshot/24h/{realmId}',
+            url: '/api/snapshot/24h/realm/{realmId}',
+            type: 'get'
+        },
+        allSnapshots: {
+            url: '/api/snapshot/realm/{realmId}',
             type: 'get'
         },
         getItemList: {
@@ -116,8 +120,16 @@ var API = function () {
      * Возвращает снепшоты за 24 часа для реалма
      * @param param объект с id реалма
      */
-    this.getSnapshots24h = function (param) {
+    this.findSnapshots24h = function (param) {
         return _send(_makeUrl(resources.snapshots24h, param));
+    };
+
+    /**
+     * Возвращает все снепшоты для реалма
+     * @param param объект с id реалма
+     */
+    this.findAllSnapshots = function (param) {
+        return _send(_makeUrl(resources.allSnapshots, param));
     };
 
     /**

@@ -7,21 +7,44 @@ app.controller("IndexCtrl", function ($scope) {
 
 
     $scope.changeRealm = function () {
-        api.getSnapshots24h({realmId: $scope.realmId}).done(function(data) {
-            var graphData = [];
+        api.findAllSnapshots({realmId: $scope.realmId}).done(function (data) {
+            var graphData = [{
+                name: 'Existing',
+                data: []
+            }, {
+                name: 'Overall',
+                data: []
+            }, {
+                name: 'Closed',
+                data: []
+            }, {
+                name: 'New',
+                data: []
+            }];
 
             data.map(function (elem) {
-                graphData.push({
-                    date: new Date(elem.lastModified),
-                    existing: elem.existing,
-                    overall: elem.closed + elem.existing + elem.newAmount,
-
-                    closed: elem.closed,
-                    newAmount: elem.newAmount
-                });
+                graphData[0].data.push([elem.lastModified, elem.existing]);
+                graphData[1].data.push([elem.lastModified, elem.closed + elem.existing + elem.newAmount]);
+                graphData[2].data.push([elem.lastModified, elem.closed]);
+                graphData[3].data.push([elem.lastModified, elem.newAmount]);
             });
 
-            indexGraph(graphData, 'graph');
+            $('#graph').highcharts({
+                chart: {
+                    zoomType: 'x'
+                },
+                title: {
+                    text: 'All items'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    //tickInterval: 1.5 * 3600 * 1000,
+                    //dateTimeLabelFormats: {
+                    //    day: '%H:%M'
+                    //}
+                },
+                series: graphData
+            });
         });
     };
 });
