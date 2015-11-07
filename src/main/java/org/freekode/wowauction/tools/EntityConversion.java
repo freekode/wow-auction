@@ -13,8 +13,8 @@ public class EntityConversion {
         for (Map<String, String> auctionMap : auctionList) {
             ItemEntity item = new ItemEntity();
             item.setIdentifier(auctionMap.get("item"));
-            item.setUniqueId(auctionMap.get("seed"));
-            item.setSuffixId(auctionMap.get("rand"));
+            item.setSeed(auctionMap.get("seed"));
+            item.setRand(auctionMap.get("rand"));
             item.setContext(auctionMap.get("context"));
 
             BidEntity bid = new BidEntity();

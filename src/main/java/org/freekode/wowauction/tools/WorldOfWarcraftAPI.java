@@ -12,12 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 public class WorldOfWarcraftAPI {
-
-//    {
-//        "auc":1997233627, "item":109156, "owner":"Baliks", "ownerRealm":"BronzeDragonflight", "bid":168497, "buyout":
-//        168497, "quantity":1, "timeLeft":"VERY_LONG", "rand":0, "seed":0, "context":0
-//    }
-
     public static List<Map<String, String>> getAuctions(String url) {
         JSONObject fullJson = (JSONObject) JSONValue.parse(HttpRequest.sendGet(url));
         JSONArray bidsJson = (JSONArray) fullJson.get("auctions");
@@ -46,11 +40,11 @@ public class WorldOfWarcraftAPI {
         return auctions;
     }
 
-    public static Map<String, String> getSnapshot(String region, String name) {
+    public static Map<String, String> getSnapshot(String region, String name, String apiKey) {
         Map<String, String> values = new HashMap<>();
         try {
-            String url = "http://" + region + ".battle.net/api/wow/auction/data/" +
-                    URLEncoder.encode(name, "UTF-8").replace("+", "%20");
+            String url = "https://" + region + ".api.battle.net/wow/auction/data/" +
+                    URLEncoder.encode(name, "UTF-8").replace("+", "%20") + "?apikey=" + apiKey;
 
             JSONArray filesJson = (JSONArray) ((JSONObject) JSONValue.parse(HttpRequest.sendGet(url))).get("files");
 
@@ -71,7 +65,7 @@ public class WorldOfWarcraftAPI {
     }
 
     public static List<Map<String, String>> getRealms(String region) {
-        String url = "http://" + region + ".battle.net/api/wow/realm/status";
+        String url = "https://" + region + ".battle.net/api/wow/realm/status";
 
         JSONArray realmsJson = (JSONArray) ((JSONObject) JSONValue.parse(HttpRequest.sendGet(url))).get("realms");
 

@@ -50,12 +50,12 @@ public class Item extends BaseTransfer<ItemEntity> implements Initializable {
         return entity.getIdentifier();
     }
 
-    public String getSuffixId() {
-        return entity.getSuffixId();
+    public String getRand() {
+        return entity.getRand();
     }
 
-    public String getUniqueId() {
-        return entity.getUniqueId();
+    public String getSeed() {
+        return entity.getSeed();
     }
 
     public String getContext() {

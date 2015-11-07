@@ -23,8 +23,8 @@ public class ItemData {
     public ItemData(Item item) {
         this.id = item.getId();
         this.identifier = item.getIdentifier();
-        this.suffixId = item.getSuffixId();
-        this.uniqueId = item.getUniqueId();
+        this.suffixId = item.getRand();
+        this.uniqueId = item.getSeed();
         this.context = item.getContext();
         this.createdAt = item.getCreatedAt();
 

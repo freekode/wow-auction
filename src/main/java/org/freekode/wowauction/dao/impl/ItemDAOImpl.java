@@ -1,10 +1,10 @@
 package org.freekode.wowauction.dao.impl;
 
+import com.sun.istack.internal.Nullable;
 import org.freekode.wowauction.dao.interfaces.ItemDAO;
 import org.freekode.wowauction.models.CatalogEntryEntity;
 import org.freekode.wowauction.models.ItemEntity;
 import org.freekode.wowauction.tools.Utils;
-import org.freekode.wowauction.transfer.CatalogEntry;
 import org.freekode.wowauction.transfer.Item;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,8 +42,8 @@ public class ItemDAOImpl implements ItemDAO {
             ItemEntity existingItem = isExistsByConstraint(item);
             if (existingItem != null) {
                 existingItem.setIdentifier(item.getIdentifier());
-                existingItem.setSuffixId(item.getSuffixId());
-                existingItem.setUniqueId(item.getUniqueId());
+                existingItem.setRand(item.getRand());
+                existingItem.setSeed(item.getSeed());
                 existingItem.setContext(item.getContext());
                 existingItem.setCreatedAt(item.getCreatedAt());
                 existingItem.setItemInfo(item.getItemInfo());
@@ -59,9 +59,9 @@ public class ItemDAOImpl implements ItemDAO {
     @SuppressWarnings("unchecked")
     @Override
     public ItemEntity isExistsByConstraint(ItemEntity item) {
-        Query query = entityManager.createQuery("select item from ItemEntity item where item.identifier = :identifier and item.uniqueId = :uniqueId");
+        Query query = entityManager.createQuery("select item from ItemEntity item where item.identifier = :identifier and item.seed = :seed");
         query.setParameter("identifier", item.getIdentifier());
-        query.setParameter("uniqueId", item.getUniqueId());
+        query.setParameter("seed", item.getSeed());
 
         List<ItemEntity> items = query.getResultList();
         if (!items.isEmpty()) {
@@ -84,8 +84,8 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public List<Item> find(String identifier, String suffixId, String uniqueId, String context,
-                           String name, Integer minLevel, Integer maxLevel, CatalogEntryEntity quality,
+    public List<Item> find(@Nullable String identifier, @Nullable String suffixId, @Nullable String uniqueId, @Nullable String context,
+                           @Nullable String name, @Nullable Integer minLevel, @Nullable Integer maxLevel, @Nullable CatalogEntryEntity quality,
                            CatalogEntryEntity itemClass, CatalogEntryEntity itemSubclass, CatalogEntryEntity inventorySlot,
                            Set options) {
 

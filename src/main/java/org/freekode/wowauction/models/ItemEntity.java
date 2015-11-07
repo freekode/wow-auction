@@ -22,12 +22,12 @@ public class ItemEntity {
     /**
      * enchant identifier, can ber negative, in json represented as rand
      */
-    private String suffixId;
+    private String rand;
 
     /**
      * unique id differentiate between two identical items with different enchantment, represented as seed
      */
-    private String uniqueId;
+    private String seed;
 
     /**
      * i have no idea
@@ -63,12 +63,12 @@ public class ItemEntity {
         this.identifier = identifier;
     }
 
-    public String getUniqueId() {
-        return uniqueId;
+    public String getSeed() {
+        return seed;
     }
 
-    public void setUniqueId(String uniqueId) {
-        this.uniqueId = uniqueId;
+    public void setSeed(String seed) {
+        this.seed = seed;
     }
 
     public Integer getId() {
@@ -95,12 +95,12 @@ public class ItemEntity {
         this.bids = bids;
     }
 
-    public String getSuffixId() {
-        return suffixId;
+    public String getRand() {
+        return rand;
     }
 
-    public void setSuffixId(String suffixId) {
-        this.suffixId = suffixId;
+    public void setRand(String rand) {
+        this.rand = rand;
     }
 
     public String getContext() {
@@ -135,14 +135,14 @@ public class ItemEntity {
         ItemEntity item = (ItemEntity) o;
 
         if (!identifier.equals(item.identifier)) return false;
-        return uniqueId.equals(item.uniqueId);
+        return seed.equals(item.seed);
 
     }
 
     @Override
     public int hashCode() {
         int result = identifier.hashCode();
-        result = 31 * result + uniqueId.hashCode();
+        result = 31 * result + seed.hashCode();
         return result;
     }
 }

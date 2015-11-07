@@ -6,18 +6,11 @@
 
 <t:layout>
     <jsp:attribute name="head">
-        <spring:url value="/static/css/graph.css" var="graphCss"/>
-        <spring:url value="/static/js/lib/d3.min.js" var="d3Js"/>
-        <spring:url value="/static/js/graph.js" var="graphJs"/>
         <spring:url value="/static/js/items.js" var="itemsJs"/>
+        <script src="${itemsJs}"></script>
 
         <base href="${pageContext.request.contextPath}/items/">
 
-        <link href="${graphCss}" rel="stylesheet"/>
-
-        <script src="${d3Js}"></script>
-        <script src="${graphJs}"></script>
-        <script src="${itemsJs}"></script>
 
         <script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/async/1.4.2/async.min.js"/>

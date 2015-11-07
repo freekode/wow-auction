@@ -1,5 +1,6 @@
 package org.freekode.wowauction.tools;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,9 +13,19 @@ public class HttpRequest {
         StringBuilder response = new StringBuilder();
 
         try {
-            HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+            HttpURLConnection con = null;
+
+            if ("http".equals(url.split(":")[0])) {
+                con = (HttpURLConnection) new URL(url).openConnection();
+            } else if ("https".equals(url.split(":")[0])) {
+                con = (HttpsURLConnection) new URL(url).openConnection();
+            }
+
+            if (con == null) {
+                return null;
+            }
+
             con.setRequestMethod("GET");
-//            con.setRequestProperty("User-Agent", USER_AGENT);
 
             int responseCode = con.getResponseCode();
             if (responseCode == 200) {

@@ -37,11 +37,7 @@ app.controller("IndexCtrl", function ($scope) {
                     text: 'All items'
                 },
                 xAxis: {
-                    type: 'datetime',
-                    //tickInterval: 1.5 * 3600 * 1000,
-                    //dateTimeLabelFormats: {
-                    //    day: '%H:%M'
-                    //}
+                    type: 'datetime'
                 },
                 series: graphData
             });

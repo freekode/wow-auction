@@ -6,18 +6,13 @@
 
 <t:layout>
     <jsp:attribute name="head">
-        <spring:url value="/static/css/graph.css" var="graphCss"/>
-        <spring:url value="/static/js/lib/d3.min.js" var="d3Js"/>
-        <spring:url value="/static/js/graph.js" var="graphJs"/>
-        <spring:url value="/static/js/items.js" var="itemsJs"/>
+        <spring:url value="/static/js/lib/highcharts.js" var="highchartsJs"/>
+        <spring:url value="/static/js/lib/dark-unica.js" var="darkunicaJs"/>
+        <spring:url value="/static/js/item.js" var="indexJs"/>
 
-        <base href="${pageContext.request.contextPath}/items/">
-
-        <link href="${graphCss}" rel="stylesheet"/>
-
-        <script src="${d3Js}"></script>
-        <script src="${graphJs}"></script>
-        <script src="${itemsJs}"></script>
+        <script src="${highchartsJs}"></script>
+        <script src="${darkunicaJs}"></script>
+        <script src="${indexJs}"></script>
 
         <script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/async/1.4.2/async.min.js"/>
@@ -123,68 +118,8 @@
     </jsp:attribute>
 
     <jsp:body>
-        <div ng-controller="ItemsCtrl">
-            <div ng-view></div>
+        <div ng-controller="ItemCtrl">
 
-            <div class="row">
-                <div class="col-xs-1">
-                    <input type="text" class="form-control" style="width:60px;" placeholder="Amount"
-                           ng-model="itemListSearch.amount">
-                </div>
-                <div class="col-xs-3">
-                    <div class="form-inline">
-                        <button type="button" class="btn btn-info" ng-click="prevPage()">&laquo;</button>
-                        <input type="text" class="form-control" style="width:60px;text-align:center;" placeholder="Page"
-                               ng-model="itemListSearch.page"/>
-                        <button type="button" class="btn btn-info" ng-click="nextPage()">&raquo;</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-12">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>name</th>
-                            <th>level</th>
-                            <th>quality</th>
-                            <th>class</th>
-                            <th>sub class</th>
-                            <th>inventory slot</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="item in items">
-                            <td>{{ item.identifier }}</td>
-                            <td>
-                                <a href="{{ item.itemInfo.url }}" class="item__a" target="_blank">
-
-                                    <div class="inline">
-                                        <div class="icon__medium"
-                                             ng-style="{'background' : 'no-repeat url(http://wow.zamimg.com/images/wow/icons/medium/{{item.itemInfo.icon}})'}"></div>
-                                        <div class="icon__hover__medium"></div>
-                                        <div class="icon__border__medium"></div>
-                                    </div>
-                                </a>
-
-                                <a class="inline" ng-class="qualityClass(item.itemInfo)">
-                                    {{ item.itemInfo.name }}
-                                </a>
-                            </td>
-                            <td>{{ item.itemInfo.level }}</td>
-                            <td ng-class="qualityClass(item.itemInfo)">
-                                {{ item.itemInfo.quality.value }}
-                            </td>
-                            <td>{{ item.itemInfo.itemClass.value }}</td>
-                            <td>{{ item.itemInfo.itemSubclass.value }}</td>
-                            <td>{{ item.itemInfo.inventorySlot.value }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
         </div>
     </jsp:body>
 </t:layout>

@@ -6,7 +6,9 @@ import org.freekode.wowauction.beans.interfaces.BidBean;
 import org.freekode.wowauction.beans.interfaces.ItemBean;
 import org.freekode.wowauction.beans.interfaces.RealmBean;
 import org.freekode.wowauction.beans.interfaces.SnapshotBean;
+import org.freekode.wowauction.dao.interfaces.ConstantDAO;
 import org.freekode.wowauction.models.*;
+import org.freekode.wowauction.tools.ConstantKeys;
 import org.freekode.wowauction.tools.EntityConversion;
 import org.freekode.wowauction.tools.WorldOfWarcraftAPI;
 import org.freekode.wowauction.tools.WowheadAPI;
@@ -34,6 +36,9 @@ public class SnapshotUpdater {
     @Autowired
     private RealmBean realmBean;
 
+    @Autowired
+    private ConstantDAO constantDAO;
+
 
     public void scheduleUpdate() {
         updateAuction();
@@ -45,7 +50,8 @@ public class SnapshotUpdater {
         for (RealmEntity realm : realmBean.findForUpdate()) {
             logger.info("realm = " + realm);
 
-            Map<String, String> newSnapshotMap = WorldOfWarcraftAPI.getSnapshot(realm.getRegion().toString(), realm.getSlug());
+            Map<String, String> newSnapshotMap = WorldOfWarcraftAPI.getSnapshot(realm.getRegion().toString(),
+                    realm.getSlug(), constantDAO.getByName(ConstantKeys.WOW_API_KEY));
             SnapshotEntity newSnapshot = new SnapshotEntity();
             newSnapshot.setRealm(realm);
             newSnapshot.setFile(newSnapshotMap.get("url"));
@@ -143,20 +149,20 @@ public class SnapshotUpdater {
 
 
                 // ok, now retrieve additional info about items
-                logger.info("get info about new items");
-                for (ItemEntity item : createdItems) {
-                    Map<String, String> infoMap = WowheadAPI.getItemInfo(item.getIdentifier());
-
-
-                    ItemInfoEntity info = itemBean.buildItemInfo(infoMap.get("name"), new Integer(infoMap.get("level")), infoMap.get("link"),
-                            infoMap.get("icon") + ".jpg", new Integer(infoMap.get("quality")), new Integer(infoMap.get("class")),
-                            new Integer(infoMap.get("subclass")), new Integer(infoMap.get("inventorySlot")), item);
-
-                    item.setItemInfo(info);
-                }
-
-                logger.info("save items information");
-                itemBean.updateAll(createdItems);
+//                logger.info("get info about new items");
+//                for (ItemEntity item : createdItems) {
+//                    Map<String, String> infoMap = WowheadAPI.getItemInfo(item.getIdentifier());
+//
+//
+//                    ItemInfoEntity info = itemBean.buildItemInfo(infoMap.get("name"), new Integer(infoMap.get("level")), infoMap.get("link"),
+//                            infoMap.get("icon") + ".jpg", new Integer(infoMap.get("quality")), new Integer(infoMap.get("class")),
+//                            new Integer(infoMap.get("subclass")), new Integer(infoMap.get("inventorySlot")), item);
+//
+//                    item.setItemInfo(info);
+//                }
+//
+//                logger.info("save items information");
+//                itemBean.updateAll(createdItems);
             }
         }
 
