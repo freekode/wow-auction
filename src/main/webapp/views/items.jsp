@@ -152,7 +152,7 @@
                         <tr ng-repeat="item in items">
                             <td>{{ item.identifier }}</td>
                             <td>
-                                <a href="{{ item.itemInfo.url }}" class="item__a" target="_blank">
+                                <a href="http://www.wowhead.com/item={{ item.identifier }}" class="item__a" target="_blank">
                                     <div class="inline">
                                         <div class="icon__medium"
                                              ng-style="{'background' : 'no-repeat url(http://wow.zamimg.com/images/wow/icons/medium/{{item.itemInfo.icon}})'}"></div>

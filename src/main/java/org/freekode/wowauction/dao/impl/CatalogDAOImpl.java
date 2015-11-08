@@ -1,13 +1,9 @@
 package org.freekode.wowauction.dao.impl;
 
 import org.freekode.wowauction.dao.interfaces.CatalogDAO;
-import org.freekode.wowauction.models.BidEntity;
 import org.freekode.wowauction.models.CatalogEntryEntity;
-import org.freekode.wowauction.models.ItemEntity;
-import org.freekode.wowauction.models.SnapshotEntity;
 import org.freekode.wowauction.tools.Utils;
 import org.freekode.wowauction.transfer.CatalogEntry;
-import org.freekode.wowauction.transfer.Item;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

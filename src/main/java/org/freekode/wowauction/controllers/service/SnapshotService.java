@@ -1,7 +1,7 @@
 package org.freekode.wowauction.controllers.service;
 
-import org.freekode.wowauction.controllers.data.SnapshotData;
 import org.freekode.wowauction.beans.interfaces.SnapshotBean;
+import org.freekode.wowauction.controllers.data.SnapshotData;
 import org.freekode.wowauction.transfer.Snapshot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

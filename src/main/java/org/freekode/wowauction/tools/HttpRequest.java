@@ -1,5 +1,7 @@
 package org.freekode.wowauction.tools;
 
+import org.codehaus.plexus.util.IOUtil;
+
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +12,7 @@ import java.net.URL;
 public class HttpRequest {
     public static String sendGet(String url) {
         BufferedReader in = null;
-        StringBuilder response = new StringBuilder();
+        StringBuilder response = null;
 
         try {
             HttpURLConnection con;
@@ -26,8 +28,9 @@ public class HttpRequest {
 
             int responseCode = con.getResponseCode();
             if (responseCode == 200) {
-
                 in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                response = new StringBuilder();
                 String inputLine;
 
                 while ((inputLine = in.readLine()) != null) {
@@ -38,13 +41,10 @@ public class HttpRequest {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         } finally {
             if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                IOUtil.close(in);
             }
         }
 

@@ -48,16 +48,40 @@ public class ItemBeanImpl implements ItemBean {
     }
 
     @Override
-    public ItemInfoEntity buildItemInfo(String name, Integer level, String url, String icon,
-                                        Integer quality, Integer itemClass, Integer itemSubclass, Integer inventorySlot,
+    public Item getByIdentifier(String identifier, Set options) {
+        List<Item> items = findItem(identifier, null, null, null, options);
+
+        if (!items.isEmpty()) {
+            return items.get(0);
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<Item> findAll(Set options) {
+        return itemDAO.findItem(null, null, null, null, options);
+    }
+
+    @Override
+    public List<Item> findItem(String identifier, String rand, String seed, String context, Set options) {
+        return itemDAO.findItem(identifier, rand, seed, context, options);
+    }
+
+    @Override
+    public ItemInfoEntity buildItemInfo(String name, Integer level, String icon, Integer quality, Integer itemClass,
+                                        Integer itemSubclass, Integer inventorySlot, Long sellPrice,
                                         ItemEntity item) {
         ItemInfoEntity info = new ItemInfoEntity();
 
         info.setName(name);
         info.setItemLevel(level);
-        info.setUrl(url);
         info.setIcon(icon);
         info.setItem(item);
+
+        if (sellPrice > 0) {
+            info.setSellPrice(sellPrice);
+        }
 
         CatalogEntry itemQuality = catalogBean.getQualityType(quality);
         if (itemQuality != null) {

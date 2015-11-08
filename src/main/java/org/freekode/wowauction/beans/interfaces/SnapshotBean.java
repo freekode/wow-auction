@@ -1,10 +1,10 @@
 package org.freekode.wowauction.beans.interfaces;
 
 
-import org.freekode.wowauction.models.RealmEntity;
-import org.freekode.wowauction.transfer.Snapshot;
 import org.freekode.wowauction.models.BidEntity;
+import org.freekode.wowauction.models.RealmEntity;
 import org.freekode.wowauction.models.SnapshotEntity;
+import org.freekode.wowauction.transfer.Snapshot;
 
 import java.util.Date;
 import java.util.List;

@@ -71,12 +71,8 @@ public class ItemInfo extends BaseTransfer<ItemInfoEntity> implements Initializa
         entity.setIcon(icon);
     }
 
-    public String getUrl() {
-        return entity.getUrl();
-    }
-
-    public void setUrl(String url) {
-        entity.setUrl(url);
+    public Long getSellPrice() {
+        return entity.getSellPrice();
     }
 
     public CatalogEntry getQuality() {

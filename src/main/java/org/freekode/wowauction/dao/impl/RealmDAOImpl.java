@@ -1,9 +1,9 @@
 package org.freekode.wowauction.dao.impl;
 
 import org.freekode.wowauction.dao.interfaces.RealmDAO;
+import org.freekode.wowauction.models.RealmEntity;
 import org.freekode.wowauction.tools.Utils;
 import org.freekode.wowauction.transfer.Realm;
-import org.freekode.wowauction.models.RealmEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

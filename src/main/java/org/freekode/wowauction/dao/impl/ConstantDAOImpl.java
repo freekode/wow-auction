@@ -20,7 +20,7 @@ public class ConstantDAOImpl implements ConstantDAO {
     @Override
     public String getByName(String name) {
         Query query = entityManager.createNativeQuery("select c.value from constants c where c.name = '" + name + "'");
-        List<String> list  = query.getResultList();
+        List<String> list = query.getResultList();
 
         if (!list.isEmpty()) {
             return list.get(0);

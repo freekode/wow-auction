@@ -13,7 +13,12 @@ import java.util.Map;
 
 public class WorldOfWarcraftAPI {
     public static List<Map<String, String>> getAuctions(String url) {
-        JSONObject fullJson = (JSONObject) JSONValue.parse(HttpRequest.sendGet(url));
+        String response = HttpRequest.sendGet(url);
+        if (response == null) {
+            return null;
+        }
+
+        JSONObject fullJson = (JSONObject) JSONValue.parse(response);
         JSONArray bidsJson = (JSONArray) fullJson.get("auctions");
 
 
@@ -46,7 +51,12 @@ public class WorldOfWarcraftAPI {
             String url = "https://" + region + ".api.battle.net/wow/auction/data/" +
                     URLEncoder.encode(name, "UTF-8").replace("+", "%20") + "?apikey=" + apiKey;
 
-            JSONArray filesJson = (JSONArray) ((JSONObject) JSONValue.parse(HttpRequest.sendGet(url))).get("files");
+            String response = HttpRequest.sendGet(url);
+            if (response == null) {
+                return null;
+            }
+
+            JSONArray filesJson = (JSONArray) ((JSONObject) JSONValue.parse(response)).get("files");
 
             if (filesJson.size() > 1) {
                 System.out.println("Not work with more than one auctions");
@@ -83,7 +93,29 @@ public class WorldOfWarcraftAPI {
         return realms;
     }
 
-    public static Map<String, Object> getItemInfo(String region, String itemId) {
-        return null;
+    public static Map<String, Object> getItemInfo(String region, String itemId, String apiKey) {
+        Map<String, Object> values = new HashMap<>();
+        String url = "https://" + region + ".api.battle.net/wow/item/" + itemId + "?apikey=" + apiKey;
+
+        String response = HttpRequest.sendGet(url);
+        if (response == null) {
+            return null;
+        }
+
+        JSONObject fullJson = (JSONObject) JSONValue.parse(response);
+
+        values.put("id", fullJson.get("id"));
+        values.put("name", fullJson.get("name"));
+        values.put("itemLevel", fullJson.get("itemLevel"));
+        values.put("icon", fullJson.get("icon"));
+        values.put("quality", fullJson.get("quality"));
+        values.put("itemClass", fullJson.get("itemClass"));
+        values.put("itemSubclass", fullJson.get("itemSubClass"));
+        values.put("inventoryType", fullJson.get("inventoryType"));
+        values.put("sellPrice", fullJson.get("sellPrice"));
+        values.put("description", fullJson.get("description"));
+
+        return values;
+
     }
 }

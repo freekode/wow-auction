@@ -1,11 +1,11 @@
 package org.freekode.wowauction.beans.impl;
 
-import org.freekode.wowauction.dao.interfaces.SnapshotDAO;
 import org.freekode.wowauction.beans.interfaces.SnapshotBean;
-import org.freekode.wowauction.models.RealmEntity;
-import org.freekode.wowauction.transfer.Snapshot;
+import org.freekode.wowauction.dao.interfaces.SnapshotDAO;
 import org.freekode.wowauction.models.BidEntity;
+import org.freekode.wowauction.models.RealmEntity;
 import org.freekode.wowauction.models.SnapshotEntity;
+import org.freekode.wowauction.transfer.Snapshot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

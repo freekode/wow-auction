@@ -1,7 +1,6 @@
 package org.freekode.wowauction.dao.impl;
 
 import org.freekode.wowauction.dao.interfaces.ItemDAO;
-import org.freekode.wowauction.models.CatalogEntryEntity;
 import org.freekode.wowauction.models.ItemEntity;
 import org.freekode.wowauction.tools.Utils;
 import org.freekode.wowauction.transfer.Item;

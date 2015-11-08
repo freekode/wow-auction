@@ -7,14 +7,15 @@ import org.freekode.wowauction.beans.interfaces.ItemBean;
 import org.freekode.wowauction.beans.interfaces.RealmBean;
 import org.freekode.wowauction.beans.interfaces.SnapshotBean;
 import org.freekode.wowauction.dao.interfaces.ConstantDAO;
-import org.freekode.wowauction.models.*;
+import org.freekode.wowauction.models.BidEntity;
+import org.freekode.wowauction.models.ItemEntity;
+import org.freekode.wowauction.models.RealmEntity;
+import org.freekode.wowauction.models.SnapshotEntity;
 import org.freekode.wowauction.tools.ConstantKeys;
 import org.freekode.wowauction.tools.EntityConversion;
 import org.freekode.wowauction.tools.WorldOfWarcraftAPI;
-import org.freekode.wowauction.tools.WowheadAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -51,6 +52,11 @@ public class SnapshotUpdater {
 
             Map<String, String> newSnapshotMap = WorldOfWarcraftAPI.getSnapshot(realm.getRegion().toString(),
                     realm.getSlug(), constantDAO.getByName(ConstantKeys.WOW_API_KEY));
+            if (newSnapshotMap == null) {
+                logger.error("can not receive snapshot for realm = " + realm.toString());
+                continue;
+            }
+
             SnapshotEntity newSnapshot = new SnapshotEntity();
             newSnapshot.setRealm(realm);
             newSnapshot.setFile(newSnapshotMap.get("url"));
@@ -63,6 +69,11 @@ public class SnapshotUpdater {
 
 
                 List<Map<String, String>> auctionList = WorldOfWarcraftAPI.getAuctions(newSnapshot.getFile());
+                if (auctionList == null) {
+                    logger.error("can not receive auction list for snapshot = " + newSnapshot.toString());
+                    continue;
+                }
+
                 logger.info("full auction list size = " + auctionList.size());
 
 
@@ -147,23 +158,6 @@ public class SnapshotUpdater {
                 // save new bids with connection
                 logger.info("save new bids");
                 bidBean.saveAll(newBids);
-
-
-                // ok, now retrieve additional info about items
-//                logger.info("get info about new items");
-//                for (ItemEntity item : createdItems) {
-//                    Map<String, String> infoMap = WowheadAPI.getItemInfo(item.getIdentifier());
-//
-//
-//                    ItemInfoEntity info = itemBean.buildItemInfo(infoMap.get("name"), new Integer(infoMap.get("level")), infoMap.get("link"),
-//                            infoMap.get("icon") + ".jpg", new Integer(infoMap.get("quality")), new Integer(infoMap.get("class")),
-//                            new Integer(infoMap.get("subclass")), new Integer(infoMap.get("inventorySlot")), item);
-//
-//                    item.setItemInfo(info);
-//                }
-//
-//                logger.info("save items information");
-//                itemBean.updateAll(createdItems);
             }
         }
 

@@ -2,8 +2,8 @@ package org.freekode.wowauction.beans.impl;
 
 import org.freekode.wowauction.beans.interfaces.RealmBean;
 import org.freekode.wowauction.dao.interfaces.RealmDAO;
-import org.freekode.wowauction.transfer.Realm;
 import org.freekode.wowauction.models.RealmEntity;
+import org.freekode.wowauction.transfer.Realm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

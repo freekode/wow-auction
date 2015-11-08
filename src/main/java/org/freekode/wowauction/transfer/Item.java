@@ -1,8 +1,8 @@
 package org.freekode.wowauction.transfer;
 
-import org.freekode.wowauction.tools.Utils;
 import org.freekode.wowauction.models.BidEntity;
 import org.freekode.wowauction.models.ItemEntity;
+import org.freekode.wowauction.tools.Utils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,7 +12,9 @@ import java.util.Set;
 public class Item extends BaseTransfer<ItemEntity> implements Initializable {
     private ItemInfo itemInfo;
 
-    private List<Bid> bids;
+    private List<Bid> closedBids;
+
+    private List<Bid> openBids;
 
 
     public Item() {
@@ -31,13 +33,18 @@ public class Item extends BaseTransfer<ItemEntity> implements Initializable {
     @Override
     public void init(Set options) {
         if (options != null && options.contains(Options.INIT_ITEM_BIDS)) {
-            bids = new ArrayList<>();
+            closedBids = new ArrayList<>();
+            openBids = new ArrayList<>();
 
             Utils.initCollection(entity.getBids(), options);
             for (BidEntity bidEntity : entity.getBids()) {
                 Bid bid = new Bid(bidEntity);
                 bid.init(options);
-                bids.add(bid);
+                if (bid.getClosed()) {
+                    closedBids.add(bid);
+                } else {
+                    openBids.add(bid);
+                }
             }
         }
     }
@@ -66,12 +73,24 @@ public class Item extends BaseTransfer<ItemEntity> implements Initializable {
         return entity.getCreatedAt();
     }
 
-    public List<Bid> getBids() {
-        return bids;
-    }
-
     public ItemInfo getItemInfo() {
         return itemInfo;
+    }
+
+    public List<Bid> getClosedBids() {
+        return closedBids;
+    }
+
+    public void setClosedBids(List<Bid> closedBids) {
+        this.closedBids = closedBids;
+    }
+
+    public List<Bid> getOpenBids() {
+        return openBids;
+    }
+
+    public void setOpenBids(List<Bid> openBids) {
+        this.openBids = openBids;
     }
 
     public enum Options {

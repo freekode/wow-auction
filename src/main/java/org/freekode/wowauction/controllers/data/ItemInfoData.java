@@ -5,8 +5,8 @@ import org.freekode.wowauction.transfer.ItemInfo;
 public class ItemInfoData {
     private String name;
     private Integer itemLevel;
-    private String url;
     private String icon;
+    private Long sellPrice;
     private CatalogEntryData quality;
     private CatalogEntryData itemClass;
     private CatalogEntryData itemSubclass;
@@ -19,8 +19,8 @@ public class ItemInfoData {
     public ItemInfoData(ItemInfo itemInfo) {
         name = itemInfo.getName();
         itemLevel = itemInfo.getItemLevel();
-        url = itemInfo.getUrl();
         icon = itemInfo.getIcon();
+        sellPrice = itemInfo.getSellPrice();
 
         if (itemInfo.getQuality() != null) {
             quality = new CatalogEntryData(itemInfo.getQuality());
@@ -53,14 +53,6 @@ public class ItemInfoData {
 
     public void setItemLevel(Integer itemLevel) {
         this.itemLevel = itemLevel;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getIcon() {
@@ -101,5 +93,13 @@ public class ItemInfoData {
 
     public void setInventorySlot(CatalogEntryData inventorySlot) {
         this.inventorySlot = inventorySlot;
+    }
+
+    public Long getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(Long sellPrice) {
+        this.sellPrice = sellPrice;
     }
 }

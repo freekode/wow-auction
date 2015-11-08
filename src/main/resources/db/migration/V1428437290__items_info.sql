@@ -4,7 +4,7 @@ CREATE TABLE items_info (
   itemLevel       INTEGER,
   url             CHARACTER VARYING,
   icon            CHARACTER VARYING,
-  sellPrice       INTEGER,
+  sellPrice       BIGINT,
   itemId          INTEGER,
   qualityId       INTEGER,
   itemClassId     INTEGER,

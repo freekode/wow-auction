@@ -34,6 +34,9 @@ app.controller("IndexCtrl", function ($scope) {
 
             graphData.dataSets.map(function (dataSet, i) {
                 $('<div class="chart">').appendTo('#graph').highcharts({
+                    rangeSelector: {
+                        selected: 1
+                    },
                     chart: {
                         marginLeft: 40, // Keep all charts left aligned
                         spacingTop: 20,

@@ -1,8 +1,8 @@
 package org.freekode.wowauction.controllers.api;
 
 import org.freekode.wowauction.controllers.data.ResponseData;
-import org.freekode.wowauction.controllers.service.SnapshotService;
 import org.freekode.wowauction.controllers.data.SnapshotData;
+import org.freekode.wowauction.controllers.service.SnapshotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,12 +19,16 @@ public class SnapshotApiController {
 
 
     @RequestMapping(value = "/24h/realm/{realmId}")
-    public @ResponseBody ResponseData<List<SnapshotData>> getSnapshots24h(@PathVariable Integer realmId) {
+    public
+    @ResponseBody
+    ResponseData<List<SnapshotData>> getSnapshots24h(@PathVariable Integer realmId) {
         return new ResponseData<>(snapshotService.get24h(realmId));
     }
 
     @RequestMapping(value = "/realm/{realmId}")
-    public @ResponseBody ResponseData<List<SnapshotData>> getAllSnapshots(@PathVariable Integer realmId) {
+    public
+    @ResponseBody
+    ResponseData<List<SnapshotData>> getAllSnapshots(@PathVariable Integer realmId) {
         return new ResponseData<>(snapshotService.findByRealm(realmId));
     }
 }

@@ -1,8 +1,8 @@
 package org.freekode.wowauction.transfer;
 
-import org.freekode.wowauction.tools.Utils;
 import org.freekode.wowauction.models.RealmEntity;
 import org.freekode.wowauction.models.SnapshotEntity;
+import org.freekode.wowauction.tools.Utils;
 
 import java.util.ArrayList;
 import java.util.Date;

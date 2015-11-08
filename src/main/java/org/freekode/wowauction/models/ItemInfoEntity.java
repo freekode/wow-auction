@@ -15,9 +15,9 @@ public class ItemInfoEntity {
 
     private Integer itemLevel;
 
-    private String url;
-
     private String icon;
+
+    private Long sellPrice;
 
     @ManyToOne
     @JoinColumn(name = "qualityId")
@@ -115,16 +115,16 @@ public class ItemInfoEntity {
         this.icon = icon;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     @Override
     public String toString() {
         return item.getIdentifier() + "; " + name;
+    }
+
+    public Long getSellPrice() {
+        return sellPrice;
+    }
+
+    public void setSellPrice(Long sellPrice) {
+        this.sellPrice = sellPrice;
     }
 }

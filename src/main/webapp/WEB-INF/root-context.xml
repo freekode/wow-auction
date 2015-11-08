@@ -8,9 +8,13 @@
     <context:annotation-config/>
     <context:component-scan base-package="org.freekode.wowauction"/>
 
-    <task:scheduler id="scheduler"/>
-    <task:scheduled-tasks scheduler="scheduler">
-        <task:scheduled ref="snapshotUpdater" method="scheduleUpdate" cron="0 */10 * * * ?"/>
+    <task:scheduler id="schedulerSnapshot"/>
+    <task:scheduler id="schedulerItemInfo"/>
+    <task:scheduled-tasks scheduler="schedulerSnapshot">
+        <task:scheduled ref="snapshotUpdater" method="scheduleUpdate" cron="0 */15 * * * ?"/>
+    </task:scheduled-tasks>
+    <task:scheduled-tasks scheduler="schedulerItemInfo">
+        <task:scheduled ref="itemInfoUpdater" method="scheduleUpdate" cron="0 0 */1 * * ?"/>
     </task:scheduled-tasks>
 
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
@@ -19,6 +23,7 @@
 
     <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
         <property name="dataSource" ref="dataSource"/>
+        <property name="outOfOrder" value="true"/>
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"

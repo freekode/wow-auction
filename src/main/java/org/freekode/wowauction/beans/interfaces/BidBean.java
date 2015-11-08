@@ -5,7 +5,6 @@ import org.freekode.wowauction.models.BidEntity;
 import org.freekode.wowauction.models.SnapshotEntity;
 
 import java.util.List;
-import java.util.Set;
 
 public interface BidBean {
     List<BidEntity> saveAll(List<BidEntity> bids);
