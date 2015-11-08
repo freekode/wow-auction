@@ -20,7 +20,6 @@ import java.util.*;
 
 
 @Component
-@Transactional
 public class SnapshotUpdater {
     private static final Logger logger = LogManager.getLogger(SnapshotUpdater.class);
 
@@ -104,6 +103,7 @@ public class SnapshotUpdater {
 
 
                 // add for still existing bids new snapshot
+                logger.info("add new snapshot to existing bids");
                 for (BidEntity bid : existingBids) {
                     Set<SnapshotEntity> snapshots = new HashSet<>(snapshotBean.findByBid(bid));
                     snapshots.add(newSnapshot);
@@ -111,6 +111,7 @@ public class SnapshotUpdater {
                 }
 
                 // add snapshot for new bids
+                logger.info("set snapshot for new bids");
                 for (BidEntity bid : newBids) {
                     bid.setSnapshots(new HashSet<>(Collections.singletonList(newSnapshot)));
                 }

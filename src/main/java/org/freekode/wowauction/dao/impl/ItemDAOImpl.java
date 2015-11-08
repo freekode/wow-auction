@@ -1,6 +1,5 @@
 package org.freekode.wowauction.dao.impl;
 
-import com.sun.istack.internal.Nullable;
 import org.freekode.wowauction.dao.interfaces.ItemDAO;
 import org.freekode.wowauction.models.CatalogEntryEntity;
 import org.freekode.wowauction.models.ItemEntity;
@@ -84,45 +83,21 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public List<Item> find(@Nullable String identifier, @Nullable String suffixId, @Nullable String uniqueId, @Nullable String context,
-                           @Nullable String name, @Nullable Integer minLevel, @Nullable Integer maxLevel, @Nullable CatalogEntryEntity quality,
-                           CatalogEntryEntity itemClass, CatalogEntryEntity itemSubclass, CatalogEntryEntity inventorySlot,
-                           Set options) {
+    public List<Item> findItem(String identifier, String rand, String seed, String context, Set options) {
 
         StringBuilder hql = new StringBuilder("select i from ItemEntity i where (1=1) ");
 
         if (identifier != null) {
             hql.append("and (i.identifier = :identifier) ");
         }
-        if (suffixId != null) {
-            hql.append("and (i.suffixId = :suffixId) ");
+        if (rand != null) {
+            hql.append("and (i.rand = :rand) ");
         }
-        if (uniqueId != null) {
-            hql.append("and (i.uniqueId = :uniqueId) ");
+        if (seed != null) {
+            hql.append("and (i.seed = :seed) ");
         }
         if (context != null) {
             hql.append("and (i.context = :context) ");
-        }
-        if (name != null) {
-            hql.append("and (i.itemInfo.name = :name) ");
-        }
-        if (minLevel != null) {
-            hql.append("and (i.itemInfo.level >= :minLevel) ");
-        }
-        if (maxLevel != null) {
-            hql.append("and (i.itemInfo.level <= :maxLevel) ");
-        }
-        if (quality != null) {
-            hql.append("and (i.itemInfo.quality = :quality) ");
-        }
-        if (itemClass != null) {
-            hql.append("and (i.itemInfo.itemClass <= :itemClass) ");
-        }
-        if (itemSubclass != null) {
-            hql.append("and (i.itemInfo.itemSubclass <= :itemSubclass) ");
-        }
-        if (inventorySlot != null) {
-            hql.append("and (i.itemInfo.inventorySlot <= :inventorySlot) ");
         }
 
         Query query = entityManager.createQuery(hql.toString());
@@ -130,35 +105,14 @@ public class ItemDAOImpl implements ItemDAO {
         if (identifier != null) {
             query.setParameter("identifier", identifier);
         }
-        if (suffixId != null) {
-            query.setParameter("suffixId", suffixId);
+        if (rand != null) {
+            query.setParameter("rand", rand);
         }
-        if (uniqueId != null) {
-            query.setParameter("uniqueId", uniqueId);
+        if (seed != null) {
+            query.setParameter("seed", seed);
         }
         if (context != null) {
             query.setParameter("context", context);
-        }
-        if (name != null) {
-            query.setParameter("name", name);
-        }
-        if (minLevel != null) {
-            query.setParameter("minLevel", minLevel);
-        }
-        if (maxLevel != null) {
-            query.setParameter("maxLevel", maxLevel);
-        }
-        if (quality != null) {
-            query.setParameter("quality", quality);
-        }
-        if (itemClass != null) {
-            query.setParameter("itemClass", itemClass);
-        }
-        if (itemSubclass != null) {
-            query.setParameter("itemSubclass", itemSubclass);
-        }
-        if (inventorySlot != null) {
-            query.setParameter("inventorySlot", inventorySlot);
         }
 
 

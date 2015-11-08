@@ -13,17 +13,14 @@ public class HttpRequest {
         StringBuilder response = new StringBuilder();
 
         try {
-            HttpURLConnection con = null;
+            HttpURLConnection con;
 
-            if ("http".equals(url.split(":")[0])) {
-                con = (HttpURLConnection) new URL(url).openConnection();
-            } else if ("https".equals(url.split(":")[0])) {
+            if ("https".equals(url.split(":")[0])) {
                 con = (HttpsURLConnection) new URL(url).openConnection();
+            } else {
+                con = (HttpURLConnection) new URL(url).openConnection();
             }
 
-            if (con == null) {
-                return null;
-            }
 
             con.setRequestMethod("GET");
 

@@ -82,4 +82,8 @@ public class WorldOfWarcraftAPI {
 
         return realms;
     }
+
+    public static Map<String, Object> getItemInfo(String region, String itemId) {
+        return null;
+    }
 }

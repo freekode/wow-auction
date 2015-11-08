@@ -54,7 +54,7 @@ public class ItemBeanImpl implements ItemBean {
         ItemInfoEntity info = new ItemInfoEntity();
 
         info.setName(name);
-        info.setLevel(level);
+        info.setItemLevel(level);
         info.setUrl(url);
         info.setIcon(icon);
         info.setItem(item);

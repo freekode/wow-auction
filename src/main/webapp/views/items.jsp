@@ -141,7 +141,7 @@
                         <tr>
                             <th>id</th>
                             <th>name</th>
-                            <th>level</th>
+                            <th>itemLevel</th>
                             <th>quality</th>
                             <th>class</th>
                             <th>sub class</th>
@@ -166,7 +166,7 @@
                                     {{ item.itemInfo.name }}
                                 </a>
                             </td>
-                            <td>{{ item.itemInfo.level }}</td>
+                            <td>{{ item.itemInfo.itemLevel }}</td>
                             <td ng-class="qualityClass(item.itemInfo)">
                                 {{ item.itemInfo.quality.value }}
                             </td>

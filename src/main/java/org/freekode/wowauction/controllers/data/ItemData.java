@@ -9,8 +9,8 @@ import java.util.Set;
 public class ItemData {
     private Integer id;
     private String identifier;
-    private String suffixId;
-    private String uniqueId;
+    private String rand;
+    private String seed;
     private String context;
     private Set<Bid> bids;
     private ItemInfoData itemInfo;
@@ -23,8 +23,8 @@ public class ItemData {
     public ItemData(Item item) {
         this.id = item.getId();
         this.identifier = item.getIdentifier();
-        this.suffixId = item.getRand();
-        this.uniqueId = item.getSeed();
+        this.rand = item.getRand();
+        this.seed = item.getSeed();
         this.context = item.getContext();
         this.createdAt = item.getCreatedAt();
 
@@ -49,20 +49,20 @@ public class ItemData {
         this.identifier = identifier;
     }
 
-    public String getSuffixId() {
-        return suffixId;
+    public String getRand() {
+        return rand;
     }
 
-    public void setSuffixId(String suffixId) {
-        this.suffixId = suffixId;
+    public void setRand(String rand) {
+        this.rand = rand;
     }
 
-    public String getUniqueId() {
-        return uniqueId;
+    public String getSeed() {
+        return seed;
     }
 
-    public void setUniqueId(String uniqueId) {
-        this.uniqueId = uniqueId;
+    public void setSeed(String seed) {
+        this.seed = seed;
     }
 
     public String getContext() {
